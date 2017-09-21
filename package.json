@@ -1,0 +1,55 @@
+{
+  "name": "webgl-tools",
+  "version": "1.0.1",
+  "description": "webgl-tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "budo ./index.js:main.js --dir ./public --open --live -- -t babelify -t glslify",
+    "build": "browserify -t babelify -g glslify ./index.js | uglifyjs -o public/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JordanMachado/webgl-tools.git"
+  },
+  "keywords": [
+    "webgl",
+    "webgl2",
+    "canvas",
+    "context",
+    "gl",
+    "web",
+    "tools"
+  ],
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      "transform-es2015-modules-commonjs"
+    ]
+  },
+  "author": "Jordan Machado <jordan@goodboydigital.com> (http://jojo.ninja)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JordanMachado/webgl-tools/issues"
+  },
+  "homepage": "https://github.com/JordanMachado/webgl-tools#readme",
+  "dependencies": {
+    "gl-matrix": "^2.3.2",
+    "glsl-film-grain": "^1.0.4",
+    "glsl-noise": "0.0.0",
+    "glslify": "^6.0.1",
+    "gsap": "^1.19.1",
+    "jsartoolkit": "0.0.0",
+    "parse-obj": "0.0.0",
+    "raf": "^3.3.0",
+    "simplex-noise": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babelify": "^7.3.0",
+    "budo": "^9.4.7"
+  }
+}
