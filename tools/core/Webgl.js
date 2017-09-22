@@ -16,7 +16,7 @@ class CreateContextWebgl {
     this.canvas.style.height = `${height}px`;
     this.width = width * window.devicePixelRatio;
     this.height = height * window.devicePixelRatio;
-    this.context = this.gl = this.canvas.getContext(type, contextOptions);
+    window.gl = this.context = this.gl = this.canvas.getContext(type, contextOptions);
 
     // no webgl2
     if(!!!this.context) {
