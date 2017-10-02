@@ -1,5 +1,5 @@
 import Debug from '../utils/Debug';
-import {Texture} from './Texture';
+import Texture from './Texture';
 export default class FBO {
   constructor(gl, width, height, options = {}) {
     Debug.log(`FBO created width: ${width} height: ${height}`);

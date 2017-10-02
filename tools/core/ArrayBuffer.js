@@ -25,8 +25,9 @@ export default class ArrayBuffer {
   }
   attribPointer(attribute) {
     if (attribute === undefined) {
-      Debug.error(`Attribute not used in shader`);
-      return;
+      console.log();
+      // Debug.error(`Attribute not used in shader`);
+      // return;
     }
     if(this.length === -1) {
       this.attribute = attribute;

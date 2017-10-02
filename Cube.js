@@ -124,9 +124,9 @@ export default class Cube extends Object3D {
       -1.0, 1.0, 1.0,
       -1.0, 1.0, -1.0
     ]
-    const width = 0.5;
-    const height = 0.5;
-    const depth = 0.5;
+    const width = 0.2;
+    const height = 0.2;
+    const depth = 0.2;
     for (let i = 0; i < vertices.length; i += 3) {
       vertices[i] *= width;
       vertices[i + 1] *= height;
