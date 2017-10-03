@@ -1,6 +1,20 @@
 import { COLOR_BUFFER_BIT, DEPTH_BUFFER_BIT } from '../const/webglConst';
 import _fallback from '../utils/fallback';
 import Debug from '../utils/Debug';
+import { mat4, mat3 } from 'gl-matrix';
+
+
+function camelize(str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+    if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+    return index == 0 ? match.toLowerCase() : match.toUpperCase();
+  });
+}
+
+let modelViewMatrix = mat4.create();
+let inverseModelViewMatrix = mat4.create();
+let normalMatrix4 = mat4.create();
+let normalMatrix3 = mat3.create();
 class CreateContextWebgl {
   constructor({
     type = 'webgl',
@@ -16,7 +30,7 @@ class CreateContextWebgl {
     this.canvas.style.height = `${height}px`;
     this.width = width * window.devicePixelRatio;
     this.height = height * window.devicePixelRatio;
-    this.context = this.gl = this.canvas.getContext(type, contextOptions);
+    window.gl = this.context = this.gl = this.canvas.getContext(type, contextOptions);
 
     // no webgl2
     if(!!!this.context) {
@@ -51,10 +65,51 @@ class CreateContextWebgl {
     this.gl.clearColor(r, v, b, a);
   }
   clear(r, v, b, a) {
-
-
     this.gl.clear(COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT);
+  }
+  useProgram(program) {
+    if (this.shader === shader) return;
+    this.shader = shader;
+    this.gl.useProgram(shader.program);
+  }
+  setDefaultUniforms(mesh, camera) {
+    mesh.shader.program.uniforms.projectionMatrix = camera.projection;
+    mesh.shader.program.uniforms.viewMatrix = camera.view;
+    mesh.shader.program.uniforms.worldMatrix = mesh.matrix;
 
+    if (mesh.geometry.normals) {
+      mat4.identity(modelViewMatrix);
+      mat4.multiply(modelViewMatrix, camera.view, mesh.matrix);
+      mat4.invert(inverseModelViewMatrix, modelViewMatrix);
+      mat4.transpose(normalMatrix4, inverseModelViewMatrix);
+      mesh.shader.program.uniforms.normalMatrix = mat3.fromMat4(normalMatrix3,normalMatrix4);
+    }
+
+  }
+  setUniforms(mesh) {
+    for (const key in mesh.shader.uniforms) {
+      if(mesh.shader.program.uniforms.hasOwnProperty(key))
+        mesh.shader.program.uniforms[key] = mesh.shader.uniforms[key];
+    }
+  }
+  bindBuffer(mesh) {
+   for (const key in mesh.geometry.attributes) {
+     let str = `a ${key}`;
+
+     let aKey = camelize(str.substring(0, str.length - 1));
+     mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
+    //  normals.attribPointer(mesh.program.attributes.aNormal);
+
+   }
+ }
+  render(mesh, camera) {
+
+    mesh.shader.program.bind();
+    this.setDefaultUniforms(mesh, camera);
+    this.setUniforms(mesh);
+    this.bindBuffer(mesh);
+    mesh.geometry.indices.bind()
+    mesh.geometry.indices.draw(mesh.drawType);
 
   }
   resize() {

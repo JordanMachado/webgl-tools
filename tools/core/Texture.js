@@ -1,10 +1,11 @@
 import Numbers from '../const/webglNumber';
-let index = 0;
+let index = -1;
 export default class Texture {
   constructor(context, width, height, format, type) {
       index++;
     this.gl = context;
     this.id = this.gl.createTexture();
+    this._bindIndex = 0;
 
     this.width = width || -1;
     this.height = height || -1;
@@ -51,6 +52,7 @@ export default class Texture {
     this.bind();
     this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, value);
     this._magFilter = value;
+    this.unbind();
   }
   get magFilter() {
     return Numbers[this._magFilter];
@@ -59,6 +61,7 @@ export default class Texture {
     this.bind();
     this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, value);
     this._minFilter = value;
+    this.unbind();
   }
   get minFilter() {
     return Numbers[this._minFilter];
@@ -66,8 +69,8 @@ export default class Texture {
   set wrapS(value) {
     this.bind();
     this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, value);
-
     this._wrapS = value;
+    this.unbind();
   }
   get wrapS() {
     return Numbers[this._wrapS];
@@ -75,8 +78,8 @@ export default class Texture {
   set wrapT(value) {
     this.bind();
     this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, value);
-
     this._wrapT = value;
+    this.unbind();
   }
   get wrapT() {
     return Numbers[this._wrapT];
@@ -93,10 +96,14 @@ export default class Texture {
   get format() {
     return Numbers[this._format];
   }
-  bind(unit) {
-    if(unit)
-      this.gl.activeTexture(this.gl.TEXTURE0 + unit);
+  bindIndex(index) {
+    this._bindIndex = index;
+  }
+  bind() {
+    // console.log(this._bindIndex);
+    this.gl.activeTexture(this.gl.TEXTURE0 + this._bindIndex || 0);
     this.gl.bindTexture(this.gl.TEXTURE_2D, this.id);
+    // this.unbind();
   }
   unbind() {
     this.gl.bindTexture(this.gl.TEXTURE_2D, null);

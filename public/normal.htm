@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://www.filterforge.com/filters/1160-normal-seamless.html -->
+<html><script type="text/javascript">
+    var spector;
+    var captureOnLoad = false;
+
+    (function() {
+        var __SPECTOR_Origin_EXTENSION_GetContext = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.__SPECTOR_Origin_EXTENSION_GetContext = __SPECTOR_Origin_EXTENSION_GetContext;
+
+        HTMLCanvasElement.prototype.getContext = function () {
+            var context = null;
+            if (!arguments.length) {
+                return context;
+            }
+
+            if (arguments.length === 1) {
+                context = this.__SPECTOR_Origin_EXTENSION_GetContext(arguments[0]);
+                if (context === null) {
+                    return context;
+                }
+            }
+            else if (arguments.length === 2) {
+                context = this.__SPECTOR_Origin_EXTENSION_GetContext(arguments[0], arguments[1]);
+                if (context === null) {
+                    return context;
+                }
+            }
+
+            var contextNames = ["webgl", "experimental-webgl", "webgl2", "experimental-webgl2"];
+            if (contextNames.indexOf(arguments[0]) !== -1) {
+                context.canvas.setAttribute("__spector_context_type", arguments[0]);
+                if (captureOnLoad) {
+                    // Ensures canvas is in the dom to capture the one we are currently tracking.
+                    if (this.parentElement || false) {
+                        spector.captureContext(context, 500);
+                        captureOnLoad = false;
+                    }
+                }
+            }
+
+            return context;
+        }
+    })()</script><script>(function main() {
+    // Create enabled event
+    function fireEnabledEvent() {
+        // If gli exists, then we are already present and shouldn't do anything
+        if (!window.gli) {
+            setTimeout(function () {
+                var enabledEvent = document.createEvent("Event");
+                enabledEvent.initEvent("WebGLEnabledEvent", true, true);
+                document.dispatchEvent(enabledEvent);
+            }, 0);
+        } else {
+            //console.log("WebGL Inspector already embedded on the page - disabling extension");
+        }
+    };
+
+    // Grab the path root from the extension
+    document.addEventListener("WebGLInspectorReadyEvent", function (e) {
+        var pathElement = document.getElementById("__webglpathroot");
+        if (window["gliloader"]) {
+            gliloader.pathRoot = pathElement.innerText;
+        } else {
+            // TODO: more?
+            window.gliCssUrl = pathElement.innerText + "gli.all.css";
+        }
+    }, false);
+
+    // Rewrite getContext to snoop for webgl
+    var originalGetContext = HTMLCanvasElement.prototype.getContext;
+    if (!HTMLCanvasElement.prototype.getContextRaw) {
+        HTMLCanvasElement.prototype.getContextRaw = originalGetContext;
+    }
+    HTMLCanvasElement.prototype.getContext = function () {
+        var ignoreCanvas = this.internalInspectorSurface;
+        if (ignoreCanvas) {
+            return originalGetContext.apply(this, arguments);
+        }
+
+        var result = originalGetContext.apply(this, arguments);
+        if (result == null) {
+            return null;
+        }
+
+        var contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
+        var requestingWebGL = contextNames.indexOf(arguments[0]) != -1;
+        if (requestingWebGL) {
+            // Page is requesting a WebGL context!
+            fireEnabledEvent(this);
+
+            // If we are injected, inspect this context
+            if (window.gli) {
+                if (gli.host.inspectContext) {
+                    // TODO: pull options from extension
+                    result = gli.host.inspectContext(this, result);
+                    // NOTE: execute in a timeout so that if the dom is not yet
+                    // loaded this won't error out.
+                    window.setTimeout(function() {
+                        var hostUI = new gli.host.HostUI(result);
+                        result.hostUI = hostUI; // just so we can access it later for debugging
+                    }, 0);
+                }
+            }
+        }
+
+        return result;
+    };
+})();</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ROBOTS" content="ALL">
+<meta name="keywords" content="seamless texture, normal map, seamless tiling, rock stone">
+<meta name="description" content="The Hard rock texture texture was created by zeemak in Filter Forge, a Photoshop plug-in. A hard rock texture with a slight reflective surface colored in brown and yellow earthtones">
+
+<title>Hard rock texture - Normal Map - Seamless Tiling</title>
+<link href="./normal_files/kernel_main.css" type="text/css" rel="stylesheet">
+<link href="./normal_files/template_040b3efdb80445f5532938d7ec3ef1ef_a9365805372ec2d54e5886abf7f111ef.css" type="text/css" data-template-style="true" rel="stylesheet">
+<link href="./normal_files/styles.css" rel="stylesheet" type="text/css">
+<link type="image/x-icon" rel="shortcut icon" href="https://www.filterforge.com/fficon.ico">
+</head>
+
+<body style="background-image:url(/images/filters/1160-normal.jpg)">
+  
+<div id="container">
+	<p class="breadcrumbs"><a href="https://www.filterforge.com/">Home</a>&nbsp;&gt;&nbsp;<a href="https://www.filterforge.com/filters/">Filters</a>&nbsp;&gt;&nbsp;<a href="https://www.filterforge.com/filters/category46-page1.html">Stone</a>&nbsp;&gt;&nbsp;<a href="https://www.filterforge.com/filters/1160.html">Hard rock texture</a>&nbsp;&gt;&nbsp;<a href="https://www.filterforge.com/filters/1160-normal.html">Normal Map</a>&nbsp;&gt;&nbsp;</p>
+	<h1>Seamless Tiling</h1><div id="bodytext">
+<p>Most filters in <a href="https://www.filterforge.com/"><strong>Filter Forge</strong></a> support seamless tiling – you can generate seamless textures, web backgrounds and tiling patterns without any need to remove the seams. 
+</p>
+</div></div>
+
+</body></html>

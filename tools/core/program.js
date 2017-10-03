@@ -12,6 +12,7 @@ const uniformMap = {
  FLOAT_VEC2: 'uniform2f',
  FLOAT_VEC3: 'uniform3f',
  SAMPLER_2D: 'uniform1i',
+ FLOAT_MAT3: 'uniformMatrix3fv',
  FLOAT_MAT4: 'uniformMatrix4fv'
  }
 
@@ -98,22 +99,25 @@ export default class Program {
     for (let i = 0; i < nbActiveUniforms; ++i)  {
       let uniform = this.gl.getActiveUniform(this.program, i);
       let uLocation = this.gl.getUniformLocation( this.program, uniform.name );
+      // console.log(uniform, uLocation);
       let uFunction = uniformMap[webglNumber[uniform.type]];
       Debug.log(`Uniform generated: ${uniform.name}`)
       this.uniforms[uniform.name] = null;
       Object.defineProperty(this.uniforms, uniform.name, {
         get: () => {
+
            return uniform.value;
          },
          set: (value) => {
-          //  console.log(value);
             uniform.value = value;
 
             if (uFunction.indexOf('Matrix') === -1) {
               if(!value.length) {
                 this.gl[uFunction](uLocation, value);
                 if(uFunction === 'uniform1i') {
-                  value.bind();
+                  // console.log(value.id, uLocation);
+
+                  // value.bind();
                 }
               }
               else
@@ -122,16 +126,6 @@ export default class Program {
             } else {
               this.gl[uFunction](uLocation, this.gl.FALSE, value);
             }
-          //  if(!value.length) {
-          //     this.gl[uFunction](uLocation, value);
-          //  } else {
-          //    if (uFunction.indexOf('Matrix') === -1) {
-          //      this.gl[uFunction].apply( this.gl, Array.prototype.concat.apply( uLocation, value) );
-           //
-          //    } else {
-          //      this.gl[uFunction](uLocation, this.gl.FALSE, value);
-          //    }
-          //  }
          }
        });
 
