@@ -21,18 +21,14 @@ const primitive = new Sphere(1, {
   segments: 16
 });
 
-const program = new Vanilla.Program({
-  context: gl,
-  vertexShader: glslify('./shader/base.vert'),
-  fragmentShader: glslify('./shader/base.frag'),
-
-});
-
 let mesh = new Mesh(
   new Geometry(primitive),
-  new Shader(program, {
-    time: 0
-  }
+  new Shader(
+    glslify('./shader/base.vert'),
+    glslify('./shader/base.frag'),
+    {
+      time: 0
+    }
 ));
 
 render();

@@ -12,6 +12,10 @@ import PerspectiveCamera from './camera/PerspectiveCamera';
 import GLNumber from './const/webglNumber';
 import GLConst from './const/webglConst';
 
+import Geometry from './high/Geometry';
+import Mesh from './high/Mesh';
+import Shader from './high/Shader';
+
 import glm from 'gl-matrix';
 
 export {
@@ -32,4 +36,9 @@ export {
   // const
   GLNumber,
   GLConst,
+
+  // high api
+  Geometry,
+  Mesh,
+  Shader,
 }
