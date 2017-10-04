@@ -28,6 +28,11 @@ function init() {
   scene = new Scene();
   render();
 }
+window.addEventListener('resize', resize);
+function resize() {
+  scene.resize();
+
+}
 function render() {
   raf(render);
   scene.render();

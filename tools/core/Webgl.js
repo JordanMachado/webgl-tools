@@ -92,7 +92,7 @@ class CreateContextWebgl {
       if(mesh.shader.program.uniforms.hasOwnProperty(key)) {
         if(mesh.shader.uniforms[key] instanceof Texture) {
           mesh.shader.uniforms[key].bindIndex(count)
-          mesh.shader.uniforms[key].bind(count);
+          mesh.shader.uniforms[key].bind();
           count++
         }
         mesh.shader.program.uniforms[key] = mesh.shader.uniforms[key];

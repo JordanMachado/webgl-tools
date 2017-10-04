@@ -9,10 +9,9 @@ uniform float exposure;
 
 void main()
 {
-    const float gamma = 2.2;
-    const float expo = 0.2;
+
     vec3 hdrColor = texture2D(scene, vUv).rgb;
-    vec3 bloomColor = texture2D(bloomBlur, vUv).rgb;
+    vec3 bloomColor = texture2D(bloomBlur, vec2(vUv.x,1.0 - vUv.y)).rgb;
     hdrColor += bloomColor; // additive blending
 
     gl_FragColor = vec4(hdrColor, 1.0);

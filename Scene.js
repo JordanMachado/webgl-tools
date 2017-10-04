@@ -6,9 +6,11 @@ export default class Scene {
   constructor() {
 
     this.webgl = new Vanilla.Webgl();
+    this.webgl.clearColor(1,1,1,1)
     this.webgl.append();
 
     this.camera = new Vanilla.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    this.camera.lookAt([0,0,5],[0,0,0])
     this.controls = new OrbitalCameraControl(this.camera.view, 5, window);
 
     const primitive = new Vanilla.Primitive.sphere();
@@ -62,15 +64,18 @@ export default class Scene {
           bloomBlur: this.fboB.colors,
         }
     ));
+    this.tick = 0;
   }
   render() {
-    this.controls.update();
+    // this.controls.update();
+    this.tick += 0.01;
 
     var writeBuffer = this.fboA
     var readBuffer = this.fboB
 
     this.webgl.clear();
-    // this.mesh.y -= 0.01;
+    this.mesh.rz += 0.01;
+    this.mesh.rx += 0.02;
 
     // classique scene
     this.fbo.bind();
@@ -100,7 +105,7 @@ export default class Scene {
       }
       gl.clearColor(0, 0, 0, 0)
       gl.clear(gl.COLOR_BUFFER_BIT)
-      this.blurryPass.shader.uniforms.direction = i % 2 === 0 ? [3, 0] : [0, 3]
+      this.blurryPass.shader.uniforms.direction = i % 2 === 0 ? [0.8, 0] : [0, 0.8]
       this.webgl.render(this.blurryPass, this.camera);
 
       writeBuffer.unbind()
@@ -120,5 +125,9 @@ export default class Scene {
     this.webgl.render(this.final, this.camera);
     // this.final.shader.uniforms.scene = this.fboB.colors;
 
+  }
+  resize() {
+    this.camera.aspect = window.innerWidth/ window.innerHeight;
+    this.webgl.resize();
   }
 }

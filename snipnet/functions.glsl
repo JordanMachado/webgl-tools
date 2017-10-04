@@ -23,3 +23,26 @@ vec3 rotate(vec3 v, vec3 axis, float angle) {
     mat4 m = rotationMatrix(axis, angle);
     return (m * vec4(v, 1.0)).xyz;
 }
+
+
+vec2 envMapEquirect(vec3 wcNormal, float flipEnvMap) {
+  //I assume envMap texture has been flipped the WebGL way (pixel 0,0 is a the bottom)
+  //therefore we flip wcNorma.y as acos(1) = 0
+  float phi = acos(-wcNormal.y);
+  float theta = atan(flipEnvMap * wcNormal.x, wcNormal.z) + PI;
+  return vec2(theta / TwoPI, phi / PI);
+}
+
+vec2 envMapEquirect(vec3 wcNormal) {
+    //-1.0 for left handed coordinate system oriented texture (usual case)
+    return envMapEquirect(wcNormal, -1.0);
+}
+
+float diffuse(vec3 N, vec3 L) {
+    return max(dot(N, normalize(L)), 0.0);
+}
+
+
+vec3 diffuse(vec3 N, vec3 L, vec3 C) {
+    return diffuse(N, L) * C;
+}

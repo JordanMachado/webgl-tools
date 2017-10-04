@@ -116,9 +116,6 @@ export default class Program {
                 if(uFunction === 'uniform1i') {
                   // console.log(value);
                   this.gl[uFunction](uLocation, value._bindIndex);
-
-                  // console.log(value.id, uLocation);
-
                   // value.bind();
                 } else {
                   this.gl[uFunction](uLocation, value);

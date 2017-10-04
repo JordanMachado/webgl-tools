@@ -16,6 +16,7 @@ export default class Texture {
     this.magFilter = this.gl.NEAREST;
     this.wrapS = this.gl.CLAMP_TO_EDGE;
     this.wrapT = this.gl.CLAMP_TO_EDGE;
+    this._bindIndex = null;
 
   }
   upload(image) {
@@ -28,7 +29,7 @@ export default class Texture {
     }
 
     this.gl.bindTexture(this.gl.TEXTURE_2D, this.id);
-    this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, true);
+    this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, false);
     this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this._type, image);
   }
   uploadData(data, width, height, depth) {
@@ -99,11 +100,9 @@ export default class Texture {
   bindIndex(index) {
     this._bindIndex = index;
   }
-  bind(unit = 0) {
-    // console.log(this._bindIndex);
-    // console.log('active',unit);
+  bind() {
 
-    this.gl.activeTexture(this.gl.TEXTURE0 + unit);
+    this.gl.activeTexture(this.gl.TEXTURE0 + this._bindIndex);
     this.gl.bindTexture(this.gl.TEXTURE_2D, this.id);
     // this.unbind();
   }
