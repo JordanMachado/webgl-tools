@@ -75,11 +75,11 @@ class CreateContextWebgl {
   setDefaultUniforms(mesh, camera) {
     mesh.shader.program.uniforms.projectionMatrix = camera.projection;
     mesh.shader.program.uniforms.viewMatrix = camera.view;
-    mesh.shader.program.uniforms.worldMatrix = mesh.matrix;
+    mesh.shader.program.uniforms.worldMatrix = mesh.matrixWorld;
 
     if (mesh.geometry.normals) {
       mat4.identity(modelViewMatrix);
-      mat4.multiply(modelViewMatrix, camera.view, mesh.matrix);
+      mat4.multiply(modelViewMatrix, camera.view, mesh.matrixWorld);
       mat4.invert(inverseModelViewMatrix, modelViewMatrix);
       mat4.transpose(normalMatrix4, inverseModelViewMatrix);
       mesh.shader.program.uniforms.normalMatrix = mat3.fromMat4(normalMatrix3,normalMatrix4);
@@ -120,7 +120,11 @@ class CreateContextWebgl {
     mesh.geometry.indices.bind()
     mesh.geometry.indices.draw(mesh.drawType);
     this.gl.bindTexture(this.gl.TEXTURE_2D, null);
-
+    if(mesh.children.length > 0) {
+      for (var i = 0; i < mesh.children.length; i++) {
+        this.render(mesh.children[i], camera);
+      }
+    }
 
   }
   resize() {
