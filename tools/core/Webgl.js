@@ -2,7 +2,7 @@ import { COLOR_BUFFER_BIT, DEPTH_BUFFER_BIT } from '../const/webglConst';
 import _fallback from '../utils/fallback';
 import Debug from '../utils/Debug';
 import { mat4, mat3 } from 'gl-matrix';
-
+import Texture from './Texture';
 
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
@@ -87,9 +87,18 @@ class CreateContextWebgl {
 
   }
   setUniforms(mesh) {
+    let count = 0;
     for (const key in mesh.shader.uniforms) {
-      if(mesh.shader.program.uniforms.hasOwnProperty(key))
+      if(mesh.shader.program.uniforms.hasOwnProperty(key)) {
+        if(mesh.shader.uniforms[key] instanceof Texture) {
+          mesh.shader.uniforms[key].bindIndex(count)
+          mesh.shader.uniforms[key].bind(count);
+          count++
+        }
         mesh.shader.program.uniforms[key] = mesh.shader.uniforms[key];
+        // console.log(mesh.shader.program.uniforms[key]);
+
+      }
     }
   }
   bindBuffer(mesh) {
@@ -110,6 +119,8 @@ class CreateContextWebgl {
     this.bindBuffer(mesh);
     mesh.geometry.indices.bind()
     mesh.geometry.indices.draw(mesh.drawType);
+    this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+
 
   }
   resize() {

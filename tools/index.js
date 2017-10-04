@@ -15,6 +15,7 @@ import GLConst from './const/webglConst';
 import Geometry from './high/Geometry';
 import Mesh from './high/Mesh';
 import Shader from './high/Shader';
+import Primitive from './high/Primitive';
 
 import glm from 'gl-matrix';
 
@@ -41,4 +42,5 @@ export {
   Geometry,
   Mesh,
   Shader,
+  Primitive,
 }

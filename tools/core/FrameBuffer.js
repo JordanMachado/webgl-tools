@@ -1,5 +1,5 @@
 import Debug from '../utils/Debug';
-import {Texture} from './Texture';
+import Texture from './Texture';
 export default class FBO {
   constructor(gl, width, height, options = {}) {
     Debug.log(`FBO created width: ${width} height: ${height}`);
@@ -65,9 +65,8 @@ export default class FBO {
   unbind() {
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height );
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, null);
 
-    // this.colors.unbind();
+    this.colors.unbind();
 
 
   }

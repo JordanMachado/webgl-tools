@@ -1,50 +1,34 @@
-import * as Vanilla from './tools';
-import Geometry from './tools/high/Geometry';
-import Mesh from './tools/high/Mesh';
-import Shader from './tools/high/Shader';
-import Sphere from 'primitive-sphere';
-import OrbitalCameraControl from 'orbital-camera-control';
-const glslify = require('glslify');
-
 import raf from 'raf';
+import Scene from './Scene';
+window.assets = {};
+let count = 0;
 
 
+loaderImg();
+function loaderImg() {
 
-let webgl = new Vanilla.Webgl();
-webgl.append();
-
-const camera = new Vanilla.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.lookAt([0,0,10], [0,0,0])
-const controls = new OrbitalCameraControl(camera.view, 5, window)
-
-const primitive = new Sphere(1, {
-  segments: 16
-});
-
-let mesh = new Mesh(
-  new Geometry(primitive),
-  new Shader(
-    glslify('./shader/base.vert'),
-    glslify('./shader/base.frag'),
-    {
-      time: 0
+  let images = [
+    'matcap.png',
+    'hdr.jpg',
+  ];
+  for (var i = 0; i < images.length; i++) {
+    let img = new Image();
+    let id  = images[i];
+    img.src = id;
+    img.onload = () => {
+      window.assets[id.slice(0, -4)] = img;
+      count++;
+      if(count === images.length)
+        init();
     }
-));
-
-render();
-
-
-let time = 0;
+  }
+}
+let scene;
+function init() {
+  scene = new Scene();
+  render();
+}
 function render() {
   raf(render);
-
-  controls.update();
-
-  time += 0.01;
-  webgl.clear();
-  gl.enable(gl.DEPTH_TEST);
-
-  mesh.shader.uniforms.time = Math.cos(time);
-  webgl.render(mesh, camera);
-
+  scene.render();
 }

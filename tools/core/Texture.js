@@ -99,9 +99,11 @@ export default class Texture {
   bindIndex(index) {
     this._bindIndex = index;
   }
-  bind() {
+  bind(unit = 0) {
     // console.log(this._bindIndex);
-    this.gl.activeTexture(this.gl.TEXTURE0 + this._bindIndex || 0);
+    // console.log('active',unit);
+
+    this.gl.activeTexture(this.gl.TEXTURE0 + unit);
     this.gl.bindTexture(this.gl.TEXTURE_2D, this.id);
     // this.unbind();
   }

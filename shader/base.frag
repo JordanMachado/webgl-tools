@@ -5,5 +5,5 @@ varying vec2 vUv;
 uniform float time;
 void main() {
 
-  gl_FragColor = vec4(vNormal * time, 1.0);
+  gl_FragColor = vec4(vNormal, 1.0);
 }

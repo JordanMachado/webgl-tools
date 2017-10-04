@@ -99,13 +99,13 @@ export default class Program {
     for (let i = 0; i < nbActiveUniforms; ++i)  {
       let uniform = this.gl.getActiveUniform(this.program, i);
       let uLocation = this.gl.getUniformLocation( this.program, uniform.name );
-      // console.log(uniform, uLocation);
+
       let uFunction = uniformMap[webglNumber[uniform.type]];
       Debug.log(`Uniform generated: ${uniform.name}`)
       this.uniforms[uniform.name] = null;
+      // console.log('cc');
       Object.defineProperty(this.uniforms, uniform.name, {
         get: () => {
-
            return uniform.value;
          },
          set: (value) => {
@@ -113,11 +113,16 @@ export default class Program {
 
             if (uFunction.indexOf('Matrix') === -1) {
               if(!value.length) {
-                this.gl[uFunction](uLocation, value);
                 if(uFunction === 'uniform1i') {
+                  // console.log(value);
+                  this.gl[uFunction](uLocation, value._bindIndex);
+
                   // console.log(value.id, uLocation);
 
                   // value.bind();
+                } else {
+                  this.gl[uFunction](uLocation, value);
+
                 }
               }
               else
