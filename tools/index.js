@@ -5,6 +5,7 @@ import Object3D from './core/Object3D';
 import Program from './core/Program';
 import Texture from './core/Texture';
 import Webgl from './core/Webgl';
+import State from './core/State';
 
 import OrthographicCamera from './camera/OrthographicCamera';
 import PerspectiveCamera from './camera/PerspectiveCamera';
@@ -43,4 +44,5 @@ export {
   Mesh,
   Shader,
   Primitive,
+  State,
 }

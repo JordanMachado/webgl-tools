@@ -34,8 +34,7 @@ export default class Scene {
   }
   render() {
     this.controls.update();
-    gl.enable(gl.DEPTH_TEST);
-    this.mesh.rx += 0.01;
+    Vanilla.State.enable(gl.DEPTH_TEST)
     this.webgl.render(this.mesh, this.camera);
   }
   resize() {
