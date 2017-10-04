@@ -10,6 +10,9 @@ class Debug {
     if (!this.verbose) return;
     console.groupEnd();
   }
+  print(message) {
+    console.log(`%c ${message} `, 'background: #222; color: #ffffff');
+  }
   log(message) {
     if (!this.verbose) return;
     console.log(`%c ${message} `, 'background: #222; color: #ffffff');

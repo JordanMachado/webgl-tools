@@ -68,7 +68,6 @@ export default class Program {
     if (success) return shader;
 
     console.log(this.gl.getShaderInfoLog(shader));
-    console.log(source);
 
     this.gl.deleteShader(shader);
     return null;

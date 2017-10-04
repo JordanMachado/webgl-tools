@@ -18,9 +18,14 @@ import Mesh from './high/Mesh';
 import Shader from './high/Shader';
 import Primitive from './high/Primitive';
 
-import glm from 'gl-matrix';
 
-export {
+
+import Utils from './utils/Utils';
+import ArrayUtils from './utils/ArrayUtils';
+import Debug from './utils/Debug';
+
+import glm from 'gl-matrix';
+const vanilla = {
   glm,
   // core
   Webgl,
@@ -45,4 +50,12 @@ export {
   Shader,
   Primitive,
   State,
+
+  // Utils
+  Utils,
+  utils:Utils,
+  ArrayUtils,
+  Debug,
+  debug:Debug,
 }
+export default vanilla;

@@ -49,7 +49,7 @@ class CreateContextWebgl {
       this.canvas.width = width * window.devicePixelRatio;
       this.canvas.height = height * window.devicePixelRatio;
       this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
-      Debug.log(`Vanilla`);
+      Debug.print(`Vanilla GL`);
       Debug.log(`${type} created`);
 
     }
