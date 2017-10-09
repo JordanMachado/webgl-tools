@@ -119,7 +119,7 @@ class CreateContextWebgl {
     this.bindBuffer(mesh);
     mesh.geometry.indices.bind()
     mesh.geometry.indices.draw(mesh.drawType);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+    // this.gl.bindTexture(this.gl.TEXTURE_2D, null);
     if(mesh.children.length > 0) {
       for (var i = 0; i < mesh.children.length; i++) {
         this.render(mesh.children[i], camera);

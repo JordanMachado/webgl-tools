@@ -9,7 +9,8 @@ function loaderImg() {
 
   let images = [
     'matcap.png',
-    'hdr.jpg',
+    'matcap2.jpg',
+    'matcap3.jpg',
   ];
   for (var i = 0; i < images.length; i++) {
     let img = new Image();

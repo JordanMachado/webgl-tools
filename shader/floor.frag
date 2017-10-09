@@ -66,14 +66,19 @@ varying vec3 vNormal;
 varying vec2 vUv;
 varying vec4 clipSpace;
 
+varying float fogFactor;
+varying float vNoise;
+const vec3 fogColor = vec3(.85);
+
 uniform sampler2D uReflection;
 uniform float uTime;
 void main() {
   vec2 ndc = (clipSpace.xy/clipSpace.w) / 2.0 + 0.5;
-  float noise = cnoise(ndc * 20. + uTime) * 0.03;
+  float noise = cnoise(vec2(ndc.x, ndc.y + uTime * 0.1) * 50. );
   // float noise = 0.0;
 
-  vec4 color = texture2D(uReflection, vec2(ndc.x + noise, 1.0-ndc.y +noise));
+  vec4 color = texture2D(uReflection, vec2(1.0-ndc.x + noise * 0.02, ndc.y +noise * 0.02));
   gl_FragColor = vec4(color.rgb, 1.0);
-  // gl_FragColor = vec4(vec3(noise), 1.0);
+  gl_FragColor.rgb = mix(fogColor, gl_FragColor.rgb, fogFactor);
+  // gl_FragColor = vec4(vec3(noise * 100.), 1.0);
 }
