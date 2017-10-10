@@ -101,12 +101,28 @@ export default class Texture {
     this._bindIndex = index;
   }
   bind() {
-
     this.gl.activeTexture(this.gl.TEXTURE0 + this._bindIndex);
     this.gl.bindTexture(this.gl.TEXTURE_2D, this.id);
     // this.unbind();
   }
   unbind() {
     this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+  }
+  // shortcuts
+  nearest() {
+    this.minFilter = this.gl.NEAREST;
+    this.magFilter = this.gl.NEAREST;
+  }
+  linear() {
+    this.minFilter = this.gl.LINEAR;
+    this.magFilter = this.gl.LINEAR;
+  }
+  repeat() {
+    this.wrapS = this.gl.REPEAT;
+    this.wrapT = this.gl.REPEAT;
+  }
+  clamp() {
+    this.wrapS = this.gl.CLAMP_TO_EDGE;
+    this.wrapT = this.gl.CLAMP_TO_EDGE;
   }
 }

@@ -44,8 +44,11 @@ function generateFaces(vertices, indices) {
 		return faces;
 }
 
+function randomPointInGeometry(geometry, nbPoints) {
+
+}
+
 function generateTangents(vertices, uvs) {
-  console.log(vertices.length, uvs.length);
   let tangents = []
   let bitangents = []
   let v0 = vec3.create();
@@ -107,6 +110,11 @@ function generateTangents(vertices, uvs) {
     bitangents.push(bitangent)
     bitangents.push(bitangent)
 
+    return {
+      tangents,
+      bitangents
+    }
+
 
     // vec2.sub(deltaPos1, uv1, uv0)
     // console.log(deltaPos1);
@@ -138,5 +146,6 @@ function sub(b, a) {
 export default {
   flatten,
   generateFaces,
-  generateTangents
+  generateTangents,
+  randomPointInGeometry
 };

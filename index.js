@@ -8,9 +8,9 @@ loaderImg();
 function loaderImg() {
 
   let images = [
-    'matcap.png',
-    'matcap2.jpg',
-    'matcap3.jpg',
+    'ice-normal.jpg',
+    'brick-map.jpg',
+    'brick-normal.png',
   ];
   for (var i = 0; i < images.length; i++) {
     let img = new Image();
