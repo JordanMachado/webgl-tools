@@ -17,6 +17,16 @@ export default class Geometry {
       this.addIndices(data.indices || data.cells);
     }
   }
+  addInstancedAttribute(name, data, divisor) {
+    this.instanced = true;
+    this.attributes[name] = new ArrayBuffer({
+      context: gl,
+      data: ArrayUtils.flatten(data),
+      divisor,
+    });
+    this[name] = this.attributes[name];
+    return this;
+  }
   addAttribute(name, data) {
 
     this.attributes[name] = new ArrayBuffer({

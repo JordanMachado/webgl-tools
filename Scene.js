@@ -7,44 +7,46 @@ import OrbitalCameraControl from 'orbital-camera-control';
 export default class Scene {
   constructor() {
     this.webgl = new G.Webgl();
-    this.webgl.clearColor(0.1, 0.1, 0.1,1)
+    let bgC = G.utils.hexToRgb('#080808');
+
+    this.webgl.clearColor(bgC[0], bgC[1], bgC[2],1)
     this.webgl.append();
 
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.controls = new OrbitalCameraControl(this.camera.view, 10, window);
+    this.controls = new OrbitalCameraControl(this.camera.view, 20, window);
     window.controls = this.controls;
-    const primitive = new G.Primitive.cube();
-    this.time = 0;
-    let geometry = new G.Geometry(primitive)
-    let map = new G.Texture(gl);
-    map.upload(assets['brick-map']);
-    map.linear();
 
-    console.log(G.ArrayUtils.randomPointInGeometry);
-    let normal = new G.Texture(gl);
-    normal.upload(assets['brick-normal']);
-    normal.linear();
-    gl.getExtension('OES_standard_derivatives');
+    const primitive = new G.Primitive.sphere(5);
+    // console.log(primitive);
+
+    let geometry = new G.Geometry(new G.Primitive.cube(0.05,0.05,0.3))
+    // console.log(window.assets.skull.positions);
+    // for (var i = 0; i < array.length; i++) {
+    //   array[i]
+    // }
+    geometry.addInstancedAttribute('offsets', G.ArrayUtils.flatten(primitive.positions), 1);
+    geometry.addInstancedAttribute('primnormals', G.ArrayUtils.flatten(primitive.normals), 1);
+
+
     this.mesh = new G.Mesh(
       geometry,
       new G.Shader(
-        glslify('./shader/base.vert'),
-        glslify('./shader/base.frag'), {
-          uTime: this.time,
-          uMap: map,
-          uNormalMap: normal,
-          uNormalScale: [1,1]
+        glslify('./shader/instancing.vert'),
+        glslify('./shader/instancing.frag'), {
+          uTime: 0,
+          uLightColor: G.utils.hexToRgb('#03176c'),
+          uColor: G.utils.hexToRgb('#0a0a0a')
         }
     ));
 
 
 
 
+
   }
   render() {
-    this.time += 0.01;
-
-    this.mesh.shader.uniforms.uTime = this.time * 0.8;
+    this.mesh.shader.uniforms.uTime += 0.01;
+    this.mesh.ry += 0.002;
     this.webgl.clear();
     G.State.enable(gl.DEPTH_TEST)
     this.controls.update();

@@ -3,10 +3,15 @@ import { ARRAY_BUFFER, STATIC_DRAW, UNSIGNED_SHORT } from '../const/webglConst';
 import Debug from '../utils/Debug';
 
 export default class ArrayBuffer {
-  constructor({ context, data, usage }) {
+  constructor({ context, data, usage, divisor }) {
     this.gl = context;
     this.buffer = this.gl.createBuffer();
     this.usage = usage || STATIC_DRAW;
+    this.divisor = divisor;
+    if(this.divisor) {
+      this.instanced = true;
+    }
+
     this.length = -1;
     this.data(data);
   }
@@ -39,7 +44,7 @@ export default class ArrayBuffer {
   attribPointerInstanced(attribute, divisor) {
     this.attribPointer(attribute)
     let ext = this.gl.getExtension("ANGLE_instanced_arrays");
-    ext.vertexAttribDivisorANGLE(attribute.location, divisor);
+    ext.vertexAttribDivisorANGLE(attribute.location, this.divisor || divisor);
   }
   computeLenght(attribSize) {
     this.length = this._data.length / attribSize;

@@ -106,8 +106,11 @@ class CreateContextWebgl {
      let str = `a ${key}`;
 
      let aKey = camelize(str.substring(0, str.length - 1));
-     mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
-    //  normals.attribPointer(mesh.program.attributes.aNormal);
+     if(mesh.geometry.attributes[key].instanced) {
+       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey]);
+     } else {
+       mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
+     }
 
    }
  }
@@ -118,7 +121,11 @@ class CreateContextWebgl {
     this.setUniforms(mesh);
     this.bindBuffer(mesh);
     mesh.geometry.indices.bind()
-    mesh.geometry.indices.draw(mesh.drawType);
+    if(mesh.geometry.instanced) {
+      mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.attributes.offsets._data.length/3);
+    } else {
+      mesh.geometry.indices.draw(mesh.drawType);
+    }
     // this.gl.bindTexture(this.gl.TEXTURE_2D, null);
     if(mesh.children.length > 0) {
       for (var i = 0; i < mesh.children.length; i++) {
