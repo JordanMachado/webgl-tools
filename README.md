@@ -14,4 +14,18 @@ npm start
 
 ### Experiments
 
-* [a link](https://github.com/user/repo/blob/branch/other_file.md)
+* [3D texture](http://jojo.ninja/gl/3dtexture/)
+* [Curl noise instancing](http://jojo.ninja/gl/curl/)
+* [Circle](http://jojo.ninja/gl/circle/)
+* [gradient-sphere](http://jojo.ninja/gl/gradient-sphere/)
+* [instancinglookat](http://jojo.ninja/gl/instancinglookat/)
+* [instancingcube2](http://jojo.ninja/gl/instancingcube2/)
+* [waves](http://jojo.ninja/gl/waves/)
+* [reflection](http://jojo.ninja/gl/reflection/)
+* [pattern](http://jojo.ninja/gl/pattern1/)
+
+
+
+
+
+
