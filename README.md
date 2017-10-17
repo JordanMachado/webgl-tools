@@ -14,6 +14,7 @@ npm start
 
 ### Experiments
 
+* [Curly](http://jojo.ninja/gl/curly/)
 * [Reflection](http://jojo.ninja/gl/reflection/)
 * [Curl noise instancing](http://jojo.ninja/gl/curl/)
 * [Circle](http://jojo.ninja/gl/circle/)
@@ -24,6 +25,7 @@ npm start
 * [Waves](http://jojo.ninja/gl/waves/)
 * [3D texture](http://jojo.ninja/gl/3dtexture/)
 
+![Alt text](http://jojo.ninja/gl/curly.jpg "curly")
 ![Alt text](http://jojo.ninja/gl/demo.jpg "demos")
 
 
