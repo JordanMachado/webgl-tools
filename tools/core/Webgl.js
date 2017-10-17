@@ -50,6 +50,7 @@ class CreateContextWebgl {
       this.canvas.height = height * window.devicePixelRatio;
       this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
       Debug.print(`Vanilla GL`);
+      Debug.print(`https://github.com/JordanMachado/webgl-tools`);
       Debug.log(`${type} created`);
 
     }
@@ -122,7 +123,7 @@ class CreateContextWebgl {
     this.bindBuffer(mesh);
     mesh.geometry.indices.bind()
     if(mesh.geometry.instanced) {
-      mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.attributes.offsets._data.length/3);
+      mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.attributes.offsets._data.length/4);
     } else {
       mesh.geometry.indices.draw(mesh.drawType);
     }

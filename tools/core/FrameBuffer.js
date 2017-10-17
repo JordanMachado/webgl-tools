@@ -16,7 +16,7 @@ export default class FBO {
     this.colors.wrapT = gl.CLAMP_TO_EDGE;
     this.colors.wrapS = gl.CLAMP_TO_EDGE;
     var ext = this.gl.getExtension("OES_texture_float");
-    this.colors.type = this.gl.UNSIGNED_BYTE;
+    this.colors.type = this.gl.FLOAT;
     this.colors.uploadData(null, width, height);
 
     if(options.depth) {

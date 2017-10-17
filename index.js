@@ -11,8 +11,8 @@ function loaderImg() {
 
   let images = [
     'ice-normal.jpg',
-    'brick-map.jpg',
-    'brick-normal.png',
+    // 'brick-map.jpg',
+    // 'brick-normal.png',
   ];
   for (var i = 0; i < images.length; i++) {
     let img = new Image();
@@ -23,27 +23,29 @@ function loaderImg() {
       count++;
       if(count === images.length) {
         loaded++
-      }
-      if(loaded ===2)
         init();
+
+      }
+      // if(loaded ===2)
+        // init();
     }
   }
 
-    var client = new XMLHttpRequest();
-    client.open('GET', 'skull.obj');
-    client.onload = function(e) {
-      loaded++
-
-      // parseObj
-      window.assets['skull'] = ObjParser(client.responseText);
-      // console.log(client.responseText);
-      if(loaded ===2)
-        init();
-    }
-
-    client.onreadystatechange = function() {
-    }
-    client.send();
+    // var client = new XMLHttpRequest();
+    // client.open('GET', 'tree4b_lod0.obj');
+    // client.onload = function(e) {
+    //   loaded++
+    //
+    //   // parseObj
+    //   window.assets['tree4b_lod0'] = ObjParser(client.responseText);
+    //   // console.log(client.responseText);
+    //   if(loaded ===2)
+    //     init();
+    // }
+    //
+    // client.onreadystatechange = function() {
+    // }
+    // client.send();
 }
 let scene;
 function init() {
