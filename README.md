@@ -12,8 +12,6 @@ npm install
 npm start
 ```
 
-![Alt text](http://jojo.ninja/gl/demo.jpg "demos")
-
 ### Experiments
 
 * [Reflection](http://jojo.ninja/gl/reflection/)
@@ -25,6 +23,8 @@ npm start
 * [Instancingcube2](http://jojo.ninja/gl/instancingcube2/)
 * [Waves](http://jojo.ninja/gl/waves/)
 * [3D texture](http://jojo.ninja/gl/3dtexture/)
+
+![Alt text](http://jojo.ninja/gl/demo.jpg "demos")
 
 
 
