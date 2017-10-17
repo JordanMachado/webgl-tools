@@ -1,16 +1,17 @@
-# Webgl tools [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+# Webgl tools WIP[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
 
 ## Instalation
 ```bash
-npm install --save webgl-tools
-```
-## Usage
-
-```js
-const webgl = require('webgl-tools');
-//OR
-import * as webgl from 'webgl-tools'
+git clone https://github.com/JordanMachado/webgl-tool
+npm install
 ```
 
-#### ` todo `
+## Run it
+```bash
+npm start
+```
+
+### Experiments
+
+* [a link](https://github.com/user/repo/blob/branch/other_file.md)
