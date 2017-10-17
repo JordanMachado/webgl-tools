@@ -12,6 +12,8 @@ npm install
 npm start
 ```
 
+![Alt text](http://jojo.ninja/gl/demo.jpg "demos")
+
 ### Experiments
 
 * [Reflection](http://jojo.ninja/gl/reflection/)
