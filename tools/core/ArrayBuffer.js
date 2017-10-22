@@ -30,7 +30,7 @@ export default class ArrayBuffer {
   }
   attribPointer(attribute) {
     if (attribute === undefined) {
-      console.log(arguments);
+      // console.log(arguments);
       // Debug.error(`Attribute not used in shader`);
       return;
     }
@@ -45,6 +45,7 @@ export default class ArrayBuffer {
   attribPointerInstanced(attribute, divisor) {
     this.attribPointer(attribute)
     let ext = this.gl.getExtension("ANGLE_instanced_arrays");
+    // console.log(ext);
     ext.vertexAttribDivisorANGLE(attribute.location, this.divisor || divisor);
   }
   computeLenght(attribSize) {

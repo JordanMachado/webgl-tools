@@ -77,7 +77,7 @@ void main() {
   float noise = cnoise(vec2(ndc.x, ndc.y + uTime * 0.1) * 50. );
   // float noise = 0.0;
 
-  vec4 color = texture2D(uReflection, vec2(1.0-ndc.x + noise * 0.008, ndc.y +noise * 0.008));
+  vec4 color = texture2D(uReflection, vec2(ndc.x + noise * 0.008, 1.0-ndc.y +noise * 0.008));
   gl_FragColor = vec4(color.rgb, 1.0);
   gl_FragColor.rgb = mix(fogColor, gl_FragColor.rgb, fogFactor);
   // gl_FragColor = vec4(vec3(noise * 100.), 1.0);

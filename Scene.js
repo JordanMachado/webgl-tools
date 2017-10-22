@@ -7,6 +7,7 @@ import PingPong from './PingPong';
 export default class Scene {
   constructor() {
     this.webgl = new G.Webgl();
+    window.webgl = this.webgl;
     let bgC = G.utils.hexToRgb('#f7f7f7');
 
     this.webgl.clearColor(bgC[0], bgC[1], bgC[2], 1)
@@ -16,6 +17,13 @@ export default class Scene {
     this.controls = new OrbitalCameraControl(this.camera.view, 10, window);
     this.controls.lock(true)
     this.controls.lockZoom(true)
+
+    window.addEventListener('click', ()=>{
+      this.screen = true;
+      var img = new Image();
+      img.src = this.webgl.canvas.toDataURL();
+      window.document.body.appendChild(img);
+    })
 
     const primitive = new G.Primitive.sphere(2.5);
 
@@ -130,6 +138,13 @@ export default class Scene {
 
     this.webgl.render(this.mesh, this.camera);
     this.webgl.render(this.floor, this.camera);
+
+    if(this.screen) {
+      this.screen = false;
+      var img = new Image();
+      img.src = this.webgl.canvas.toDataURL();
+      window.document.body.appendChild(img);
+    }
 
 
     // G.State.disable(gl.DEPTH_TEST);
