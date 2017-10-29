@@ -3,13 +3,14 @@ import _fallback from '../utils/fallback';
 import Debug from '../utils/Debug';
 import { mat4, mat3 } from 'gl-matrix';
 import Texture from './Texture';
-
+import Extension from './Extension';
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
     if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
     return index == 0 ? match.toLowerCase() : match.toUpperCase();
   });
 }
+
 
 let modelViewMatrix = mat4.create();
 let inverseModelViewMatrix = mat4.create();
@@ -31,6 +32,8 @@ class CreateContextWebgl {
     this.width = width * window.devicePixelRatio;
     this.height = height * window.devicePixelRatio;
     window.gl = this.context = this.gl = this.canvas.getContext(type, contextOptions);
+    this.extension = new Extension(gl);
+
 
     // no webgl2
     if(!!!this.context) {
@@ -103,6 +106,21 @@ class CreateContextWebgl {
     }
   }
   bindBuffer(mesh) {
+    if(gl.vao && !mesh.vao) {
+      mesh.vao = gl.createVertexArray();
+      gl.bindVertexArray(mesh.vao);
+      this.attr(mesh);
+      gl.bindVertexArray(null);
+    } else {
+      if(mesh.vao) {
+        gl.bindVertexArray(mesh.vao);
+      } else {
+        this.attr(mesh);
+      }
+    }
+
+ }
+ attr(mesh) {
    for (const key in mesh.geometry.attributes) {
      let str = `a ${key}`;
 
@@ -112,22 +130,23 @@ class CreateContextWebgl {
      } else {
        mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
      }
-
    }
+
  }
-  render(mesh, camera) {
+ render(mesh, camera) {
 
     mesh.shader.program.bind();
     this.setDefaultUniforms(mesh, camera);
     this.setUniforms(mesh);
     this.bindBuffer(mesh);
     mesh.geometry.indices.bind()
+
     if(mesh.geometry.instanced) {
       mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.attributes.offsets._data.length/4);
     } else {
       mesh.geometry.indices.draw(mesh.drawType);
     }
-    // this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+
     if(mesh.children.length > 0) {
       for (var i = 0; i < mesh.children.length; i++) {
         this.render(mesh.children[i], camera);

@@ -19,7 +19,8 @@
         padding: 0;
         width: 100%;
         height: 100%;
-        /*overflow: hidden;*/
+        overflow: hidden;
+        font-family: helvetica;
       }
       canvas {
         position: absolute;
@@ -27,17 +28,20 @@
         height: 100%;
         background: black;
       }
-      p {
-        margin:0;
-        bottom: 0;
-        padding: 15px;
+      #debug {
         position: absolute;
-        font-family: helvetica;
-        font-weight: bold;
-        text-transform: uppercase;
-        background: -webkit-linear-gradient(#eee, #333);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        left: 10px;
+        bottom: 20px;
+        background: rgba(0,0,0,0.2);
+
+      }
+      a {
+        position: relative;
+        color:white;
+        background: black;
+        padding: 10px;
+        cursor: pointer;
+
       }
     </style>
   </head>
