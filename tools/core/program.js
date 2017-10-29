@@ -12,6 +12,7 @@ const uniformMap = {
  FLOAT_VEC2: 'uniform2f',
  FLOAT_VEC3: 'uniform3f',
  SAMPLER_2D: 'uniform1i',
+ SAMPLER_CUBE: 'uniform1i',
  FLOAT_MAT3: 'uniformMatrix3fv',
  FLOAT_MAT4: 'uniformMatrix4fv'
  }
@@ -98,11 +99,11 @@ export default class Program {
     for (let i = 0; i < nbActiveUniforms; ++i)  {
       let uniform = this.gl.getActiveUniform(this.program, i);
       let uLocation = this.gl.getUniformLocation( this.program, uniform.name );
-
       let uFunction = uniformMap[webglNumber[uniform.type]];
       Debug.log(`Uniform generated: ${uniform.name}`)
+      Debug.log(`Uniform generated: ${uniform.type}`)
       this.uniforms[uniform.name] = null;
-      // console.log('cc');
+
       Object.defineProperty(this.uniforms, uniform.name, {
         get: () => {
            return uniform.value;

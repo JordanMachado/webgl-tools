@@ -4,6 +4,7 @@ import FrameBuffer from './core/FrameBuffer';
 import Object3D from './core/Object3D';
 import Program from './core/Program';
 import Texture from './core/Texture';
+import TextureCube from './core/TextureCube';
 import Webgl from './core/Webgl';
 import State from './core/State';
 
@@ -30,6 +31,7 @@ const vanilla = {
   // core
   Webgl,
   Texture,
+  TextureCube,
   Program,
   Object3D,
   FrameBuffer,

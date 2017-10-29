@@ -1,8 +1,6 @@
 import Numbers from '../const/webglNumber';
-let index = -1;
 export default class Texture {
   constructor(context, width, height, format, type) {
-      index++;
     this.gl = context;
     this.id = this.gl.createTexture();
     this._bindIndex = 0;

@@ -10,9 +10,12 @@ function loaderImg() {
   let loaded = 0;
 
   let images = [
-    'ice-normal.jpg',
-    // 'brick-map.jpg',
-    // 'brick-normal.png',
+    'cubemap/back.png',
+    'cubemap/bottom.png',
+    'cubemap/front.png',
+    'cubemap/left.png',
+    'cubemap/right.png',
+    'cubemap/top.png',
   ];
   for (var i = 0; i < images.length; i++) {
     let img = new Image();
@@ -24,6 +27,7 @@ function loaderImg() {
       if(count === images.length) {
         loaded++
         init();
+        console.table(window.assets)
 
       }
       // if(loaded ===2)
