@@ -3,7 +3,10 @@ const glslify = require('glslify');
 import OrbitalCameraControl from 'orbital-camera-control';
 import Query from './Query';
 import PingPong from './PingPong';
-G.debug.verbose = false;
+
+if(!Query.debug) {
+  G.debug.verbose = false;  
+}
 
 let img;
 let btn = document.createElement('a');

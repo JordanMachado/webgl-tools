@@ -101,7 +101,6 @@ export default class Program {
       let uLocation = this.gl.getUniformLocation( this.program, uniform.name );
       let uFunction = uniformMap[webglNumber[uniform.type]];
       Debug.log(`Uniform generated: ${uniform.name}`)
-      Debug.log(`Uniform generated: ${uniform.type}`)
       this.uniforms[uniform.name] = null;
 
       Object.defineProperty(this.uniforms, uniform.name, {
@@ -114,9 +113,7 @@ export default class Program {
             if (uFunction.indexOf('Matrix') === -1) {
               if(!value.length) {
                 if(uFunction === 'uniform1i') {
-                  // console.log(value);
                   this.gl[uFunction](uLocation, value._bindIndex);
-                  // value.bind();
                 } else {
                   this.gl[uFunction](uLocation, value);
 

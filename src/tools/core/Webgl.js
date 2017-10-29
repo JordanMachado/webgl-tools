@@ -3,7 +3,7 @@ import _fallback from '../utils/fallback';
 import Debug from '../utils/Debug';
 import { mat4, mat3 } from 'gl-matrix';
 import Texture from './Texture';
-import Extension from './Extension';
+import Ext from './Extension';
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
     if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
@@ -32,7 +32,9 @@ class CreateContextWebgl {
     this.width = width * window.devicePixelRatio;
     this.height = height * window.devicePixelRatio;
     window.gl = this.context = this.gl = this.canvas.getContext(type, contextOptions);
-    this.extension = new Extension(gl);
+    Ext.setGl(gl);
+    Ext.active('OES_vertex_array_object');
+    Ext.active('ANGLE_instanced_arrays');
 
 
     // no webgl2
@@ -106,7 +108,8 @@ class CreateContextWebgl {
     }
   }
   bindBuffer(mesh) {
-    if(gl.vao && !mesh.vao) {
+
+    if(gl.createVertexArray && !mesh.vao) {
       mesh.vao = gl.createVertexArray();
       gl.bindVertexArray(mesh.vao);
       this.attr(mesh);

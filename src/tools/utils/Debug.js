@@ -18,7 +18,7 @@ class Debug {
     console.log(`%c ${message} `, 'background: #222; color: #ffffff');
   }
   error(message, obj = '') {
-    if (!this.verbose) return;
+    // if (!this.verbose) return;
     console.log(`%c ${message} `,'background: #f65959; color: #ffffff', obj);
   }
 }
