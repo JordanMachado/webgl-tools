@@ -38,14 +38,8 @@ export default class Texture {
       var ext = this.gl.getExtension("OES_texture_float");
       this.type = this.gl.FLOAT;
     }
-
       this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this._format, width, height, 0, this._format, this._type, data || null);
-
       this.unbind();
-
-
-
-
   }
   set magFilter(value) {
     this.bind();

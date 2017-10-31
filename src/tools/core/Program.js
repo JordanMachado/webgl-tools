@@ -111,16 +111,19 @@ export default class Program {
             uniform.value = value;
 
             if (uFunction.indexOf('Matrix') === -1) {
+
               if(!value.length) {
                 if(uFunction === 'uniform1i') {
                   this.gl[uFunction](uLocation, value._bindIndex);
                 } else {
+
                   this.gl[uFunction](uLocation, value);
 
                 }
               }
-              else
+              else {
                 this.gl[uFunction].apply( this.gl, Array.prototype.concat.apply( uLocation, value) );
+              }
 
             } else {
               this.gl[uFunction](uLocation, this.gl.FALSE, value);

@@ -5,7 +5,7 @@ import Query from './Query';
 import PingPong from './PingPong';
 
 if(!Query.debug) {
-  G.debug.verbose = false;  
+  G.debug.verbose = false;
 }
 
 let img;
@@ -24,7 +24,7 @@ export default class Scene {
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     this.controls = new OrbitalCameraControl(this.camera.view, 10, window);
-
+    this.time = 0;
     // this.controls.lock(true)
     // this.controls.lockZoom(true)
 
@@ -39,22 +39,35 @@ export default class Scene {
       getAsset('cubemap/front.png'),
     ]
 
+    let texturesF = [
+      getAsset('cubemap/fake/posx.jpg'),
+      getAsset('cubemap/fake/negx.jpg'),
+      getAsset('cubemap/fake/posy.jpg'),
+      getAsset('cubemap/fake/negy.jpg'),
+      getAsset('cubemap/fake/posz.jpg'),
+      getAsset('cubemap/fake/negz.jpg'),
+    ]
+
+
     const textureCube = new G.TextureCube(gl, textures);
+    const textureCubeF = new G.TextureCube(gl, texturesF);
     this.mesh = new G.Mesh(
       new G.Geometry(G.Primitive.cube(50, 50, 50)),
       new G.Shader(
         glslify('./shader/textureCube.vert'),
         glslify('./shader/textureCube.frag'), {
-          uTexture: textureCube
+          uTexture: textureCube,
         }
       ));
 
       this.mesh2 = new G.Mesh(
         new G.Geometry(G.Primitive.sphere()),
         new G.Shader(
-          glslify('./shader/base.vert'),
-          glslify('./shader/base.frag'), {
-            uTexture: textureCube
+          glslify('./shader/envMap.vert'),
+          glslify('./shader/envMap.frag'), {
+            uTexture: textureCube,
+            uTextureFake: textureCubeF,
+            uTime: 0,
           }
         ));
 
@@ -87,7 +100,10 @@ export default class Scene {
     gl.cullFace(gl.FRONT);
 
     this.webgl.render(this.mesh, this.camera);
+    G.State.disable(gl.CULL_FACE);
     this.webgl.render(this.mesh2, this.camera);
+    this.mesh2.shader.uniforms.uTime = this.time;
+
 
 
     if(this.screen) {

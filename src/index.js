@@ -12,6 +12,13 @@ const loader = assetsLoader({
     'assets/cubemap/left.png',
     'assets/cubemap/right.png',
     'assets/cubemap/top.png',
+
+    'assets/cubemap/fake/negx.jpg',
+    'assets/cubemap/fake/negy.jpg',
+    'assets/cubemap/fake/negz.jpg',
+    'assets/cubemap/fake/posx.jpg',
+    'assets/cubemap/fake/posy.jpg',
+    'assets/cubemap/fake/posz.jpg',
   ]
 });
 

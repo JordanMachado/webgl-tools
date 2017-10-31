@@ -3,6 +3,7 @@ import _fallback from '../utils/fallback';
 import Debug from '../utils/Debug';
 import { mat4, mat3 } from 'gl-matrix';
 import Texture from './Texture';
+import TextureCube from './TextureCube';
 import Ext from './Extension';
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
@@ -82,6 +83,7 @@ class CreateContextWebgl {
     mesh.shader.program.uniforms.projectionMatrix = camera.projection;
     mesh.shader.program.uniforms.viewMatrix = camera.view;
     mesh.shader.program.uniforms.worldMatrix = mesh.matrixWorld;
+    mesh.shader.program.uniforms.worldMatrix = mesh.matrixWorld;
 
     if (mesh.geometry.normals) {
       mat4.identity(modelViewMatrix);
@@ -96,7 +98,7 @@ class CreateContextWebgl {
     let count = 0;
     for (const key in mesh.shader.uniforms) {
       if(mesh.shader.program.uniforms.hasOwnProperty(key)) {
-        if(mesh.shader.uniforms[key] instanceof Texture) {
+        if(mesh.shader.uniforms[key] instanceof Texture || mesh.shader.uniforms[key] instanceof TextureCube) {
           mesh.shader.uniforms[key].bindIndex(count)
           mesh.shader.uniforms[key].bind();
           count++
@@ -134,6 +136,7 @@ class CreateContextWebgl {
        mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
      }
    }
+
 
  }
  render(mesh, camera) {
