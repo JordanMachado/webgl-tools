@@ -69,3 +69,34 @@ vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
 		return normalize( tsn * mapN );
 
 	}
+
+  vec4 getMapColor(sampler2D texture, sampler2D textureDepth, vec4 vShadowCoord, vec3 uPointSource) {
+    vec4 color = baseColor;
+
+    vec4 shadowCoord = vShadowCoord / vShadowCoord.w;
+
+    vec2 uv = shadowCoord.xy;
+    float d = texture2D(textureDepth, uv).r;
+
+    float visibility = 1.0;
+    if(d < shadowCoord.z - uBias) {
+        visibility = 0.0;
+    }
+
+    float a = acos(dot(normalize(uPointSource), vNormal));
+    if (a > MIN_ANGLE) {
+        visibility = 0.0;
+    }
+
+    vec4 colorMap = texture2D(texture, uv);
+    visibility *= colorMap.a;
+
+    color.rgb = mix(baseColor.rgb, colorMap.rgb, visibility);
+    // color.a = colorMap.a;
+
+    return color;
+}
+
+float d = distance(vTextureCoord, vec2(.5));
+    d = 1.0 - smoothstep(0.0, 0.5, d);
+    d *= 0.5;

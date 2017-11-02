@@ -12,8 +12,10 @@ export default class PerspectiveCamera extends Object3D {
     this.top = top;
     this.zNear = zNear;
     this.zFar = zFar;
-    this.projection = glm.mat4.create();
-    this.projection = glm.mat4.ortho(this.projection,
+    this._projection = glm.mat4.create();
+    this._view = glm.mat4.create();
+
+    this._projection = glm.mat4.ortho(this._projection,
       left,
       right,
       bottom,
@@ -24,11 +26,11 @@ export default class PerspectiveCamera extends Object3D {
   }
   lookAt(aEye, aCenter, aUp = [0, 1, 0]) {
     glm.vec3.copy(this.position, aEye);
-    glm.mat4.identity(this.matrix);
-    glm.mat4.lookAt(this.matrix, aEye, aCenter, aUp);
+    glm.mat4.identity(this._view);
+    glm.mat4.lookAt(this._view, aEye, aCenter, aUp);
   }
   updateProjectionMatrix() {
-    this.projection = glm.mat4.ortho(this.projection,
+    this._projection = glm.mat4.ortho(this._projection,
       this.left,
       this.right,
       this.bottom,
@@ -37,5 +39,16 @@ export default class PerspectiveCamera extends Object3D {
       this.zFar,
     );
   }
+  get aspect() {
+    return this._apsect;
+  }
+  set aspect(value) {
+    this._apsect = value;
+    // this.updateProjectionMatrix();
+  }
+
+  get view() {	return this._view;	}
+
+  get projection() {	return this._projection;	}
 
 }

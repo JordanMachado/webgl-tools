@@ -8,5 +8,5 @@ varying vec3 vUv;
 
 void main() {
   vec4 colors = textureCube(uTexture, vUv);
-  gl_FragColor = vec4(colors.rgb, 1.0);
+  gl_FragColor = vec4(colors, 1.0);
 }

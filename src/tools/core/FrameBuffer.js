@@ -26,7 +26,7 @@ export default class FBO {
 
       //
       // this.renderBuffer = gl.createRenderbuffer();
-      this.depth = new Texture(gl, 512, 512, gl.UNSIGNED_SHORT,gl.DEPTH_COMPONENT);
+      this.depth = new Texture(gl, width, height, gl.UNSIGNED_SHORT,gl.DEPTH_COMPONENT);
       this.depth.minFilter = gl.NEAREST;
       this.depth.magFilter = gl.NEAREST;
       this.depth.wrapT = gl.CLAMP_TO_EDGE;

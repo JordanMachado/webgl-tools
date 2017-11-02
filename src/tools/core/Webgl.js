@@ -111,7 +111,7 @@ class CreateContextWebgl {
   }
   bindBuffer(mesh) {
 
-    if(gl.createVertexArray && !mesh.vao) {
+    if(gl.createVertexArray && !mesh.vao && true) {
       mesh.vao = gl.createVertexArray();
       gl.bindVertexArray(mesh.vao);
       this.attr(mesh);
