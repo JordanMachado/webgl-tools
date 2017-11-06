@@ -34,7 +34,7 @@ npm start
 
 *  [Alfrid](https://github.com/yiwenl/Alfrid) by [@yiwen_lin](https://twitter.com/yiwen_lin?lang=en)
 
-*  [nanoGL](https://github.com/plepers/nanogl) by [@plepers] (https://github.com/plepers)
+*  [nanoGL](https://github.com/plepers/nanogl) by [@plepers](https://github.com/plepers)
 
 *  [medium](https://github.com/amelierosser/medium) by [@amelierosser](https://twitter.com/ixviii_io?lang=en)
 
