@@ -5,7 +5,7 @@ import Query from './Query';
 import PingPong from './PingPong';
 import { mat4, mat3 } from 'gl-matrix';
 import {readGbo} from 'gbo-reader';
-if(!Query.debug) {
+if(!Query.verbose) {
   G.debug.verbose = false;
 }
 
@@ -134,13 +134,14 @@ export default class Scene {
                 uShadowMatrix: this.mvpDepth,
               }
             ));
+
         this.mesh2.scale = [0.1,0.1,0.1]
 
+        // this.mesh2.drawType = gl.POINTS
 
         });
 
 
-          // this.mesh2.drawType = gl.LINES
 
           // this.mesh2.y = -0.5;
 
