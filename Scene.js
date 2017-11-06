@@ -19,10 +19,10 @@ export default class Scene {
     this.controls.lockZoom(true)
 
     window.addEventListener('click', ()=>{
-      this.screen = true;
-      var img = new Image();
-      img.src = this.webgl.canvas.toDataURL();
-      window.document.body.appendChild(img);
+      // this.screen = true;
+      // var img = new Image();
+      // img.src = this.webgl.canvas.toDataURL();
+      // window.document.body.appendChild(img);
     })
 
     const primitive = new G.Primitive.sphere(2.5);
@@ -140,10 +140,10 @@ export default class Scene {
     this.webgl.render(this.floor, this.camera);
 
     if(this.screen) {
-      this.screen = false;
-      var img = new Image();
-      img.src = this.webgl.canvas.toDataURL();
-      window.document.body.appendChild(img);
+      // this.screen = false;
+      // var img = new Image();
+      // img.src = this.webgl.canvas.toDataURL();
+      // window.document.body.appendChild(img);
     }
 
 

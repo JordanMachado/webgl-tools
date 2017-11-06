@@ -40,13 +40,12 @@ export default class ArrayBuffer {
     }
     this.bind();
     this.gl.vertexAttribPointer(attribute.location, attribute._size, this.gl.FLOAT, false, 0, 0);
-    this.gl.enableVertexAttribArray(attribute.location);
+    this.gl.enableVertexAttribArray(attribute.location, 0);
   }
   attribPointerInstanced(attribute, divisor) {
     this.attribPointer(attribute)
     let ext = this.gl.getExtension("ANGLE_instanced_arrays");
-    // console.log(ext);
-    ext.vertexAttribDivisorANGLE(attribute.location, this.divisor || divisor);
+    ext.vertexAttribDivisorANGLE(attribute.location, divisor);
   }
   computeLenght(attribSize) {
     this.length = this._data.length / attribSize;

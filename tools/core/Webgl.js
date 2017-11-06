@@ -108,31 +108,49 @@ class CreateContextWebgl {
 
      let aKey = camelize(str.substring(0, str.length - 1));
      if(mesh.geometry.attributes[key].instanced) {
-       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey]);
+       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey],  mesh.geometry.attributes[key].divisor);
      } else {
        mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
      }
 
    }
  }
-  render(mesh, camera) {
+ unbind(mesh) {
+   for (const key in mesh.geometry.attributes) {
+     let str = `a ${key}`;
+
+     let aKey = camelize(str.substring(0, str.length - 1));
+     if(mesh.geometry.attributes[key].instanced) {
+       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], 0);
+     }
+
+   }
+ }
+  render(mesh, camera, test) {
 
     mesh.shader.program.bind();
-    this.setDefaultUniforms(mesh, camera);
-    this.setUniforms(mesh);
+    if(!test) {
+      this.setDefaultUniforms(mesh, camera);
+      this.setUniforms(mesh);
+
+    }
     this.bindBuffer(mesh);
+
     mesh.geometry.indices.bind()
     if(mesh.geometry.instanced) {
       mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.attributes.offsets._data.length/4);
     } else {
       mesh.geometry.indices.draw(mesh.drawType);
     }
+    this.unbind(mesh)
     // this.gl.bindTexture(this.gl.TEXTURE_2D, null);
     if(mesh.children.length > 0) {
       for (var i = 0; i < mesh.children.length; i++) {
         this.render(mesh.children[i], camera);
       }
     }
+
+
 
   }
   resize() {
