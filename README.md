@@ -30,6 +30,21 @@ npm start
 
 
 
+# Inspiration & Ressources
+
+*  [Alfrid](https://github.com/yiwenl/Alfrid) by [@yiwen_lin](https://twitter.com/yiwen_lin?lang=en)
+
+*  [nanoGL](https://github.com/plepers/nanogl) by [@plepers] (https://github.com/plepers)
+
+*  [medium](https://github.com/amelierosser/medium) by [@amelierosser](https://twitter.com/ixviii_io?lang=en)
+
+*  [THREE.js](https://github.com/mrdoob/three.js/) by a lot of people ^^
+
+* [webglfundamentals](https://webglfundamentals.org/) by [greggman](https://github.com/greggman)
+
+* [learningwebgl](http://learningwebgl.com/blog/?page_id=1217)
+
+* [tojicode]( https://blog.tojicode.com/) by [greggman]https://twitter.com/Tojiro?lang=fr)
 
 
 
