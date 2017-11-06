@@ -17,6 +17,7 @@ npm start
 * [Curly](http://jojo.ninja/gl/curly/)
 * [Reflection](http://jojo.ninja/gl/reflection/)
 * [Curl noise instancing](http://jojo.ninja/gl/curl/)
+* [CubeMap](http://jojo.ninja/gl/cubemap/)
 * [Circle](http://jojo.ninja/gl/circle/)
 * [Instancinglookat](http://jojo.ninja/gl/instancinglookat/)
 * [Pattern](http://jojo.ninja/gl/pattern1/)
@@ -25,8 +26,7 @@ npm start
 * [Waves](http://jojo.ninja/gl/waves/)
 * [3D texture](http://jojo.ninja/gl/3dtexture/)
 
-![Alt text](http://jojo.ninja/gl/curly.jpg "curly")
-![Alt text](http://jojo.ninja/gl/demo.jpg "demos")
+![Alt text](http://jojo.ninja/gl/demo.png "demos")
 
 
 
