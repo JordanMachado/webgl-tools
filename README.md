@@ -42,6 +42,8 @@ npm start
 
 * [webglfundamentals](https://webglfundamentals.org/) by [greggman](https://github.com/greggman)
 
+* [learningwebgl](https://learnopengl.com/) by [JOEY DE VRIES](https://joeydevries.com/#home)
+
 * [learningwebgl](http://learningwebgl.com/blog/?page_id=1217)
 
 * [tojicode]( https://blog.tojicode.com/) by [greggman]https://twitter.com/Tojiro?lang=fr)
