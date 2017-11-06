@@ -46,7 +46,7 @@ export default class ArrayBuffer {
     this.attribPointer(attribute)
     let ext = this.gl.getExtension("ANGLE_instanced_arrays");
     // console.log(ext);
-    ext.vertexAttribDivisorANGLE(attribute.location, this.divisor || divisor);
+    ext.vertexAttribDivisorANGLE(attribute.location, divisor);
   }
   computeLenght(attribSize) {
     this.length = this._data.length / attribSize;

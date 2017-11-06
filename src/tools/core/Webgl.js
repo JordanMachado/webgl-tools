@@ -110,20 +110,29 @@ class CreateContextWebgl {
     }
   }
   bindBuffer(mesh) {
-
-    if(gl.createVertexArray && !mesh.vao && true) {
-      mesh.vao = gl.createVertexArray();
-      gl.bindVertexArray(mesh.vao);
-      this.attr(mesh);
-      gl.bindVertexArray(null);
-    } else {
-      if(mesh.vao) {
-        gl.bindVertexArray(mesh.vao);
-      } else {
+    // TODO
+    // if(gl.createVertexArray && !mesh.vao && true) {
+    //   mesh.vao = gl.createVertexArray();
+    //   gl.bindVertexArray(mesh.vao);
+    //   this.attr(mesh);
+    //   gl.bindVertexArray(null);
+    // } else {
+    //   if(mesh.vao) {
+    //     gl.bindVertexArray(mesh.vao);
+    //   } else {
         this.attr(mesh);
-      }
-    }
+      // }
+    // }
+ }
+ unbindBuffer(mesh) {
+   for (const key in mesh.geometry.attributes) {
+     let str = `a ${key}`;
 
+     let aKey = camelize(str.substring(0, str.length - 1));
+     if(mesh.geometry.attributes[key].instanced) {
+       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], 0);
+     }
+   }
  }
  attr(mesh) {
    for (const key in mesh.geometry.attributes) {
@@ -131,7 +140,7 @@ class CreateContextWebgl {
 
      let aKey = camelize(str.substring(0, str.length - 1));
      if(mesh.geometry.attributes[key].instanced) {
-       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey]);
+       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], mesh.geometry.attributes[key].divisor);
      } else {
        mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
      }
@@ -152,6 +161,7 @@ class CreateContextWebgl {
     } else {
       mesh.geometry.indices.draw(mesh.drawType);
     }
+    this.unbindBuffer(mesh);
 
     if(mesh.children.length > 0) {
       for (var i = 0; i < mesh.children.length; i++) {
