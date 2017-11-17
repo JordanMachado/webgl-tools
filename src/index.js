@@ -6,8 +6,8 @@ import Scene from './Scene';
 
 const loader = assetsLoader({
   assets: [
-    'assets/cubemap/back.png',
-      { url: 'assets/girl.gbo', type: 'bin' },
+    'assets/img/ground_asphalt_05_normal.jpg',
+    'assets/img/height.png',
   ]
 });
 

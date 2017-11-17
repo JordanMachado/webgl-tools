@@ -36,6 +36,7 @@ class CreateContextWebgl {
     Ext.setGl(gl);
     Ext.active('OES_vertex_array_object');
     Ext.active('ANGLE_instanced_arrays');
+    Ext.active('OES_standard_derivatives');
 
 
     // no webgl2

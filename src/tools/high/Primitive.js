@@ -59,23 +59,27 @@ const primtives = {
         const u = x / subdivisionsX;
         const v = y / subdivisionsY;
 
-        positions = positions.concat([triangleX, triangleY, 0]);
-        positions = positions.concat([triangleX + spacerX, triangleY, 0]);
-        positions = positions.concat([
+
+        positions.push(triangleX, triangleY,0)
+
+        positions.push(triangleX + spacerX, triangleY,0)
+
+        positions.push(
           triangleX + spacerX,
           triangleY + spacerY,
           0
-        ]);
-        positions = positions.concat([triangleX, triangleY + spacerY, 0]);
-        normals = normals.concat([0, 0, 1]);
-        normals = normals.concat([0, 0, 1]);
-        normals = normals.concat([0, 0, 1]);
-        normals = normals.concat([0, 0, 1]);
+        );
+        positions.push(triangleX, triangleY + spacerY, 0);
 
-        uvs = uvs.concat([u, v]);
-        uvs = uvs.concat([u + spacerU, v]);
-        uvs = uvs.concat([u + spacerU, v + spacerV]);
-        uvs = uvs.concat([u, v + spacerV]);
+        normals.push(0, 0, 1);
+        normals.push(0, 0, 1);
+        normals.push(0, 0, 1);
+        normals.push(0, 0, 1);
+
+        uvs.push(u, v);
+        uvs.push(u + spacerU, v);
+        uvs.push(u + spacerU, v + spacerV);
+        uvs.push(u, v + spacerV);
 
         indices.push(index * 4 + 0);
         indices.push(index * 4 + 1);
@@ -93,7 +97,8 @@ const primtives = {
       positions,
       indices,
       normals,
-      uvs
+      uvs,
+      flat:true
     }
   },
   cube: (width = 1, height = 1, depth = 1) => {

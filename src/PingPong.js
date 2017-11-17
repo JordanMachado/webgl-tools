@@ -9,8 +9,8 @@ export default class Pingpong {
     this.quad = new G.Mesh(
       new G.Geometry(G.Primitive.quad(1, 1)),
       new G.Shader(
-        glslify('./shader/particles/base.vert'),
-        glslify('./shader/particles/sim.frag'), {
+        glslify('./shaders/particles/base.vert'),
+        glslify('./shaders/particles/sim.frag'), {
           uTexture: startData,
           uOrigin: startData,
           uTime: 0
