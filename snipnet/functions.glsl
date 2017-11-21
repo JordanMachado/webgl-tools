@@ -97,6 +97,16 @@ vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
     return color;
 }
 
+mat3 calcLookAtMatrix(vec3 camPosition, vec3 camTarget, float roll) {
+  vec3 ww = normalize(camTarget - camPosition);
+  vec3 uu = normalize(cross(ww, vec3(sin(roll), cos(roll), 0.0)));
+  vec3 vv = normalize(cross(uu, ww));
+
+  return mat3(uu, vv, ww);
+}
+mat3 lookat = calcLookAtMatrix(vec3(0.0, 0.0 , 10.0), vec3(0.0), 0.0);
+
+
 float d = distance(vTextureCoord, vec2(.5));
     d = 1.0 - smoothstep(0.0, 0.5, d);
     d *= 0.5;

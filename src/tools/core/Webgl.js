@@ -5,6 +5,7 @@ import { mat4, mat3 } from 'gl-matrix';
 import Texture from './Texture';
 import TextureCube from './TextureCube';
 import Ext from './Extension';
+import Utils from '../utils/Utils';
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
     if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
@@ -70,9 +71,15 @@ class CreateContextWebgl {
     }
   }
   clearColor(r, v, b, a) {
-    this.gl.clearColor(r, v, b, a);
+    if(arguments.length === 2) {
+       const color = Utils.hexToRgb(r);
+      this.gl.clearColor(color[0], color[1], color[2], v);
+    } else {
+      this.gl.clearColor(r, v, b, a);
+    }
+
   }
-  clear(r, v, b, a) {
+  clear() {
     this.gl.clear(COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT);
   }
   useProgram(program) {
@@ -138,11 +145,14 @@ class CreateContextWebgl {
  attr(mesh) {
    for (const key in mesh.geometry.attributes) {
      let str = `a ${key}`;
+     // console.log(key);
 
      let aKey = camelize(str.substring(0, str.length - 1));
+
      if(mesh.geometry.attributes[key].instanced) {
        mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], mesh.geometry.attributes[key].divisor);
      } else {
+
        mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
      }
    }
