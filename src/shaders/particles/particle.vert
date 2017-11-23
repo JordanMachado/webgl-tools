@@ -5,16 +5,25 @@ attribute vec4 aOffset;
 attribute vec3 aNormal;
 attribute vec2 aUv;
 attribute vec2 aUv2;
+attribute vec3 aColor;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 worldMatrix;
 uniform mat3 normalMatrix;
 uniform sampler2D uBuffer;
+uniform sampler2D uBufferVel;
+uniform sampler2D uPositions;
 uniform vec3 mouse;
 
 varying vec2 vUv;
+varying vec3 vColor;
 varying vec3 vNormal;
+
+
+const float density = 0.009;
+const float gradient = 5.1;
+varying float fogFactor;
 
 mat3 calcLookAtMatrix(vec3 camPosition, vec3 camTarget, float roll) {
   vec3 ww = normalize(camTarget - camPosition);
@@ -24,15 +33,62 @@ mat3 calcLookAtMatrix(vec3 camPosition, vec3 camTarget, float roll) {
   return mat3(uu, vv, ww);
 }
 
+mat4 rotationMatrix(vec3 axis, float angle) {
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+
+    return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
+                oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
+                oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
+                0.0,                                0.0,                                0.0,                                1.0);
+}
+
+vec3 rotate(vec3 v, vec3 axis, float angle) {
+    mat4 m = rotationMatrix(axis, angle);
+    return (m * vec4(v, 1.0)).xyz;
+}
+varying vec4 vShadowCoord;
+
+uniform mat4 uShadowMatrix;
 
 void main() {
   vec4 buffer = texture2D(uBuffer,aUv2);
+  vec4 velo = texture2D(uBufferVel,aUv2);
+  vec4 base = texture2D(uPositions,aUv2);
   vUv = vec2(aUv2);
-  vNormal = normalize(aNormal );
-  vec4 p = vec4(aPosition + aOffset.xyz, 1.0);
-  // mat3 lookat = calcLookAtMatrix(vec3(mouse), vec3(0.0), 0.0);
+  // vNormal = rotate(aNormal.xyz, vec3(1.0, 0.0, 0.0), buffer.y*0.02 * buffer.a);
+  // vNormal = rotate(vNormal.xyz, vec3(0.0, 1.0, 0.0), buffer.x*0.02 * buffer.a);
+  // vNormal = normalize( aNormal.xyz);
+  mat3 lookAt = calcLookAtMatrix(buffer.xyz + velo.xyz, buffer.xyz, 0.0);
 
-  p.xyz = (aPosition.xyz) + buffer.xyz * 0.3;
+  vNormal = normalize( lookAt*aNormal.xyz);
+  vec4 p = vec4(aPosition + aOffset.xyz, 1.0);
+  vColor = aColor;
+  // vec3 pp = aPosition.xyz * base.a * calcLookAtMatrix(vec3(0.), buffer.xyz, 1.0);
+  // p.xyz = rotate(pp, vec3(1.0, 0.0, 0.0), buffer.y*0.02 * buffer.a) ;
+  // p.xyz = rotate(p.xyz, vec3(0.0, 1.0, 0.0), buffer.x*0.02 * buffer.a);
+  // p.xyz *= ;
+
+  p.xyz +=  buffer.xyz * 0.1;
+
+  p.xyz =  (aPosition.xyz * base.a * length(buffer.xyz) * 0.007) * lookAt + buffer.xyz * 0.1;
+  // p.z = 0.0;
+  vec4 postoCam = viewMatrix * worldMatrix * p;
+  // postoCam.z = 2.;
+
+
+  float dist = length(postoCam.xyz);
+  vShadowCoord = uShadowMatrix * vec4(p.xyz, 1.0);
+
+
+
+  fogFactor = exp(-pow(dist*density,gradient));
+  fogFactor = clamp(fogFactor, 0.0, 1.0);
+
+
+
   gl_Position = projectionMatrix * viewMatrix *  worldMatrix * p;
 
 }

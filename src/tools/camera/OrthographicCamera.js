@@ -2,7 +2,7 @@
 import glm from 'gl-matrix';
 import Object3D from '../core/Object3D';
 
-export default class PerspectiveCamera extends Object3D {
+export default class OrthographicCamera extends Object3D {
   constructor(left, right, bottom, top, zNear, zFar) {
     super();
 

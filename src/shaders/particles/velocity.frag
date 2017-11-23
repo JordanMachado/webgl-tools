@@ -17,8 +17,8 @@ void main() {
 
       vec3 force = mouse - pos.xyz;
       vec3 nForce = normalize(force);
-      vel.xyz *= 0.993;
-      vel.xyz += nForce * 0.1;
+      vel.xyz *= 0.99 +  (pos.a*0.01);
+      vel.xyz += nForce * (pos.a * 0.3);
 
 
       gl_FragColor = vec4(vel.xyz,1.0);
