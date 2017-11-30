@@ -24,6 +24,7 @@ import Primitive from './high/Primitive';
 import Utils from './utils/Utils';
 import ArrayUtils from './utils/ArrayUtils';
 import Debug from './utils/Debug';
+import Vector3 from './math/Vector3';
 
 import glm from 'gl-matrix';
 const vanilla = {
@@ -59,5 +60,6 @@ const vanilla = {
   ArrayUtils,
   Debug,
   debug:Debug,
+  Vector3,
 }
 export default vanilla;

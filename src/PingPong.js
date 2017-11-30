@@ -57,7 +57,7 @@ export default class Pingpong {
   update() {
     this.time += 0.01;
     this.quad.shader.uniforms.uTime = this.time
-    this.renderer.render(this.fboDebug, this.camera)
+    // this.renderer.render(this.fboDebug, this.camera)
 
     let temp = this.fboIn;
      this.fboIn = this.fboOut;

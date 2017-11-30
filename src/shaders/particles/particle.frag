@@ -3,6 +3,8 @@ precision highp float;
 uniform vec3 uLightColor;
 uniform sampler2D uShadowMap;
 uniform sampler2D uBuffer;
+uniform vec3 fogColor;
+
 
 varying vec3 vNormal;
 varying vec2 vUv;
@@ -23,7 +25,7 @@ varying float fogFactor;
 void main() {
 	vec4 buffer = texture2D(uBuffer,vUv);
 
-  vec3 light =  diffuse(vNormal, vec3(0.0,1.,.2), vec3(0.9));
+  vec3 light =  diffuse(vNormal, vec3(0.0,1.,.0),uLightColor);
 
 
 	vec4 shadowCoord = vShadowCoord / vShadowCoord.w;
@@ -32,12 +34,9 @@ void main() {
 	float visibility = 1.0;
 
 	if ( shadow.r < shadowCoord.z - 0.005){
-		visibility = 0.8;
+		visibility = 0.5;
 	}
 	gl_FragColor = vec4((visibility * light) + (vColor * visibility), 1.0);
-	// gl_FragColor = vec4(vColor, 1.0);
-	// gl_FragColor.rgb = mix(vec3(0.9), gl_FragColor.rgb, fogFactor);
-	gl_FragColor = vec4(vec3(visibility * light) + vec3(0.4), 1.0);
 
-  // gl_FragColor = vec4(vec3(1.0,0.0,0.0), 1.0);
+	gl_FragColor.rgb = mix(fogColor, gl_FragColor.rgb, fogFactor);
 }

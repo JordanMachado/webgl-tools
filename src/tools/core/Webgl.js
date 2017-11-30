@@ -138,6 +138,8 @@ class CreateContextWebgl {
 
      let aKey = camelize(str.substring(0, str.length - 1));
      if(mesh.geometry.attributes[key].instanced) {
+       if(mesh.shader.program.attributes[aKey])
+       
        mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], 0);
      }
    }
@@ -150,9 +152,11 @@ class CreateContextWebgl {
      let aKey = camelize(str.substring(0, str.length - 1));
 
      if(mesh.geometry.attributes[key].instanced) {
+       if(mesh.shader.program.attributes[aKey])
        mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], mesh.geometry.attributes[key].divisor);
      } else {
 
+      if(mesh.shader.program.attributes[aKey])
        mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
      }
    }

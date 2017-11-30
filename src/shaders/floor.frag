@@ -1,5 +1,7 @@
 precision highp float;
 uniform sampler2D uShadowMap;
+uniform vec3 fogColor;
+uniform vec3 floorColor;
 
 varying vec3 vNormal;
 varying vec2 vUv;
@@ -16,8 +18,8 @@ void main() {
   if ( shadow.r < shadowCoord.z - 0.005){
     visibility = 0.5;
   }
-  gl_FragColor = vec4(vec3(visibility) * vec3(0.9), 1.0);
+  gl_FragColor = vec4(vec3(visibility) * floorColor, 1.0);
   // gl_FragColor = vec4(vec3(vUv,1.0), 1.0);
-  gl_FragColor.rgb = mix(vec3(0.7), gl_FragColor.rgb, fogFactor);
+  gl_FragColor.rgb = mix(fogColor, gl_FragColor.rgb, fogFactor);
 
 }

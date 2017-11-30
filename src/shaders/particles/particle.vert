@@ -21,7 +21,7 @@ varying vec3 vColor;
 varying vec3 vNormal;
 
 
-const float density = 0.009;
+const float density = 0.007;
 const float gradient = 5.1;
 varying float fogFactor;
 
@@ -58,36 +58,21 @@ void main() {
   vec4 velo = texture2D(uBufferVel,aUv2);
   vec4 base = texture2D(uPositions,aUv2);
   vUv = vec2(aUv2);
-  // vNormal = rotate(aNormal.xyz, vec3(1.0, 0.0, 0.0), buffer.y*0.02 * buffer.a);
-  // vNormal = rotate(vNormal.xyz, vec3(0.0, 1.0, 0.0), buffer.x*0.02 * buffer.a);
-  // vNormal = normalize( aNormal.xyz);
   mat3 lookAt = calcLookAtMatrix(buffer.xyz + velo.xyz, buffer.xyz, 0.0);
 
   vNormal = normalize( lookAt*aNormal.xyz);
   vec4 p = vec4(aPosition + aOffset.xyz, 1.0);
   vColor = aColor;
-  // vec3 pp = aPosition.xyz * base.a * calcLookAtMatrix(vec3(0.), buffer.xyz, 1.0);
-  // p.xyz = rotate(pp, vec3(1.0, 0.0, 0.0), buffer.y*0.02 * buffer.a) ;
-  // p.xyz = rotate(p.xyz, vec3(0.0, 1.0, 0.0), buffer.x*0.02 * buffer.a);
-  // p.xyz *= ;
-
-  p.xyz +=  buffer.xyz * 0.1;
 
   p.xyz =  (aPosition.xyz * base.a * length(buffer.xyz) * 0.007) * lookAt + buffer.xyz * 0.1;
-  // p.z = 0.0;
   vec4 postoCam = viewMatrix * worldMatrix * p;
-  // postoCam.z = 2.;
 
 
   float dist = length(postoCam.xyz);
   vShadowCoord = uShadowMatrix * vec4(p.xyz, 1.0);
 
-
-
   fogFactor = exp(-pow(dist*density,gradient));
   fogFactor = clamp(fogFactor, 0.0, 1.0);
-
-
 
   gl_Position = projectionMatrix * viewMatrix *  worldMatrix * p;
 

@@ -1,5 +1,8 @@
 import G from './tools';
 const glslify = require('glslify');
+import deviceType from 'ua-device-type';
+window.ddevice = deviceType(navigator.userAgent);
+
 import OrbitalCameraControl from 'orbital-camera-control';
 import Query from './Query';
 import PingPong from './PingPong';
@@ -18,15 +21,16 @@ export default class Scene {
     window.scene = this;
     this.webgl = new G.Webgl();
 
-    this.webgl.clearColor('#cccccc', 1);
+    this.bgC = '#f7e0ff';
+    this.webgl.clearColor(this.bgC, 1);
     this.webgl.append();
 
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
-    this.camera.lookAt([0,0,0],[0,10,0])
-    let s = 40;
+    this.camera.lookAt([0,0,100],[0,0,0])
+    let s = 50;
     this.cameraShadow = new G.OrthographicCamera(-s,s,-s,s, 0.1 ,300);
-    this.cameraShadow.lookAt([0,80,20],[0,0,0])
-    console.log(this.cameraShadow.projection,this.cameraShadow.view);
+    this.cameraShadow.lookAt([0,50,0.1],[0,0,0])
+    // console.log(this.cameraShadow.projection,this.cameraShadow.view);
 
     this.mvpDepth = mat4.create();
 		mat4.multiply(this.mvpDepth, this.cameraShadow.projection, this.cameraShadow.view)
@@ -39,8 +43,9 @@ export default class Scene {
 		mat4.multiply(this.mvpDepth, biaMatrix, this.mvpDepth);
 		// mat4.multiply(this.mvpDepth,  this.mvpDepth,biaMatrix);
 
-    this.controls = new OrbitalCameraControl(this.camera.view, 100, window);
-    this.mouse = [0,0,0];
+    this.controls = new OrbitalCameraControl(this.camera.view, 10, window);
+    this.mouse = [0.1,0.1,1];
+    // this.mouse = [1,1,1];
     window.addEventListener('mousemove', (e)=>{
       this.mouse[0] = (e.clientX/window.innerWidth) * 70
       this.mouse[1] = -(e.clientY/window.innerHeight) * 100 + 100
@@ -69,8 +74,10 @@ export default class Scene {
           btn.download = 'screen';
         })
       }
-      const width = 256;
-      const height = 256;
+
+
+      const width = ddevice ==='desktop'? 256 : 128;
+      const height = ddevice ==='desktop' ? 256 : 128;
       const offsets = new Float32Array(width * height * 4)
       const velocity = new Float32Array(width * height * 4)
       const colors = new Float32Array(width * height * 3)
@@ -83,11 +90,13 @@ export default class Scene {
         G.Utils.hexToRgb('#BEA2F6'),
         G.Utils.hexToRgb('#CCB7F6'),
       ]
-      console.log(this.colors);
+
       let count = 0;
       for (var i = 0; i < width * height * 4; i+=4) {
-        offsets[i] = Math.random() * (4 + 4) - 4
-        offsets[i + 1] = Math.random() * (4 + 4) - 4
+        const r = Math.random() * (Math.PI*2);
+        // console.log( Math.cos(r));
+        offsets[i] = Math.cos(r) *( Math.random() * (4 + 4) - 4)
+        offsets[i + 1] = Math.sin(r) * (Math.random() * (4 + 4) - 4)
         offsets[i + 2] = Math.random() * (4 + 4) - 4
         offsets[i + 3] = Math.random();
         const color = this.colors[Math.floor(Math.random() * this.colors.length)];
@@ -129,7 +138,7 @@ export default class Scene {
           uVelocity:dataVel,
         }
       });
-      console.log(G.Utils.hexToRgb('#ff4470'));
+      // console.log(G.Utils.hexToRgb('#ff4470'));
 
 
       this.gpgpuVel = new PingPong({
@@ -150,13 +159,14 @@ export default class Scene {
       // const primitive = G.Primitive.cube(1,0.2,0.2);
       // const primitive = G.Primitive.cube(0.1,1,0.1);
       // const primitive = G.Primitive.cube(0.1,0.1,1);
-      const primitive = G.Primitive.cube(0.5,0.2,0.2);
+      const primitive = G.Primitive.cube(1,1,1);
       const geometry = new G.Geometry(primitive);
       geometry.addInstancedAttribute('offsets', offsets, 1, true);
       geometry.addInstancedAttribute('uv2s', uvs, 1, true);
       geometry.addInstancedAttribute('colors', colors, 1, true);
       // console.log(geometry);
-      this.fbo = new G.FrameBuffer(gl, window.innerWidth, window.innerHeight, {
+      let shadowMapSize = ddevice ==='desktop' ? 512 : 256;
+      this.fbo = new G.FrameBuffer(gl, shadowMapSize, shadowMapSize, {
         depth:true,
       });
 
@@ -172,6 +182,8 @@ export default class Scene {
           uShadowMap: this.fbo.depth,
           uShadowMatrix:this.mvpDepth,
           uLightColor:G.Utils.hexToRgb('#fd003c'),
+          fogColor: G.Utils.hexToRgb(this.bgC),
+
           // uLightColor:G.Utils.hexToRgb('#fffc00'),
 
         }
@@ -180,13 +192,16 @@ export default class Scene {
 
 
 
+
       this.floor = new G.Mesh(
-        new G.Geometry(G.Primitive.plane(500,500, 1,1)),
+        new G.Geometry(G.Primitive.plane(500,500, 10,10)),
         new G.Shader(
         glslify('./shaders/floor.vert'),
         glslify('./shaders/floor.frag'),
         {
           uShadowMap: this.fbo.depth,
+          fogColor: G.Utils.hexToRgb(this.bgC),
+          floorColor: G.Utils.hexToRgb('#dac9ff'),
 			    uShadowMatrix:this.mvpDepth
         }
       ));
@@ -209,52 +224,73 @@ export default class Scene {
 
 
 
+            this.frame = 0;
 
 
+            // this.position = new G.Vector3();
+
+            // console.log(this.position.x,this.position.y,this.position.z);
+            // this.position.x = 10;
+            // this.position.y = 10;
+            // this.position.z = 10;
+            // this.position.set(1,1,1)
+            // console.log(this.position.get());
+
+            this.mesh = new G.Mesh(
+              new G.Geometry(primitive),
+              new G.Shader(
+              glslify('./shaders/base.vert'),
+              glslify('./shaders/base.frag'),
+              {}
+            ));
+            console.log(this.mesh);
   }
   render() {
     this.time += 0.1;
+    this.frame++;
     this.controls.update();
     this.webgl.clear();
-    G.State.enable(gl.CULL_FACE);
+    // G.State.enable(gl.CULL_FACE);
+    //
+    // this.fbo.bind();
+    // this.fbo.clear();
+    // // FRONT
+    // gl.cullFace(gl.FRONT);
+    // this.webgl.render(this.particles, this.cameraShadow);
+    // this.fbo.unbind();
+    //
+    // G.State.disable(gl.CULL_FACE);
+    //
+    // this.gpgpuVel.quad.shader.uniforms.uPositions = this.gpgpu.fboOutO.colors;
+    // this.gpgpu.quad.shader.uniforms.uVelocity = this.gpgpuVel.fboOutO.colors;
+    //
+    // this.gpgpuVel.update();
+    // this.gpgpu.update();
+    // // console.log(this.gpgpuVel.quad.shader.uniforms.mouse);
+    // this.gpgpuVel.quad.shader.uniforms.mouse = this.mouse
+    //
+    // this.particles.shader.uniforms.mouse = this.mouse
+    //
+    //
+    // this.particles.shader.uniforms.uBuffer = this.gpgpu.fboOutO.colors;
+    // G.State.enable(gl.DEPTH_TEST);
+    // G.State.enable(gl.CULL_FACE);
+    // gl.cullFace(gl.BACK);
+    // this.webgl.render(this.particles, this.camera);
+    // G.State.disable(gl.CULL_FACE);
+    //
+    //
+    // this.webgl.render(this.floor, this.camera);
+    // // this.webgl.render(this.fboDebug, this.camera);
+    //
+    // if(this.screen) {
+    //   this.screen = false;
+    //   img.src = this.webgl.canvas.toDataURL();
+    //   btn.href = img.src;
+    // }
 
-    this.fbo.bind();
-    this.fbo.clear();
-    // FRONT
-    gl.cullFace(gl.FRONT);
-    this.webgl.render(this.particles, this.cameraShadow);
-    this.fbo.unbind();
+    this.webgl.render(this.mesh, this.camera);
 
-    G.State.disable(gl.CULL_FACE);
-
-    this.gpgpuVel.quad.shader.uniforms.uPositions = this.gpgpu.fboOutO.colors;
-    this.gpgpu.quad.shader.uniforms.uVelocity = this.gpgpuVel.fboOutO.colors;
-
-    this.gpgpuVel.update();
-
-    this.gpgpu.update();
-    // console.log(this.gpgpuVel.quad.shader.uniforms.mouse);
-    this.gpgpuVel.quad.shader.uniforms.mouse = this.mouse
-
-    this.particles.shader.uniforms.mouse = this.mouse
-
-
-    this.particles.shader.uniforms.uBuffer = this.gpgpu.fboOutO.colors;
-    G.State.enable(gl.DEPTH_TEST);
-    G.State.enable(gl.CULL_FACE);
-    gl.cullFace(gl.BACK);
-    this.webgl.render(this.particles, this.camera);
-    G.State.disable(gl.CULL_FACE);
-
-
-    this.webgl.render(this.floor, this.camera);
-    this.webgl.render(this.fboDebug, this.camera);
-
-    if(this.screen) {
-      this.screen = false;
-      img.src = this.webgl.canvas.toDataURL();
-      btn.href = img.src;
-    }
 
 
   }

@@ -6,8 +6,8 @@ import Scene from './Scene';
 
 const loader = assetsLoader({
   assets: [
-    'assets/img/ground_asphalt_05_normal.jpg',
-    'assets/img/height.png',
+    // 'assets/img/ground_asphalt_05_normal.jpg',
+    // 'assets/img/height.png',
   ]
 });
 
@@ -16,14 +16,15 @@ window.getAsset = function(id) {
 }
 
 domready(()=> {
-  loader.on('complete', function(assets) {
-   document.body.classList.remove('loading');
-   window.assets = assets;
-   if(Query.debug)
-    console.table(assets);
+  // if()
+  // loader.on('complete', function(assets) {
+   // document.body.classList.remove('loading');
+   // window.assets = assets;
+   // if(Query.debug)
+    // console.table(assets);
    init();
- })
- .start();
+ // })
+ // .start();
 });
 
 let scene;
