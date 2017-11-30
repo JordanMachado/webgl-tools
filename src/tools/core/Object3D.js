@@ -1,14 +1,6 @@
 import * as glm from 'gl-matrix';
 import Vector3 from '../math/Vector3';
-function uuid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
-}
+import uuid from '../utils/UIID'
 
 export default class Object3D {
   constructor() {
@@ -23,16 +15,13 @@ export default class Object3D {
 
     this.scale = new Vector3(1,1,1);
 
-
     this.position.onChange(()=> {
-      // console.log('position');
-    })
+      this._needUpdate = true;
+    });
     this.rotation.onChange (() => {
-      // console.log('rotation');
       this._needUpdate = true;
     });
     this.scale.onChange (() => {
-      // console.log('scale');
       this._needUpdate = true;
     });
 
@@ -51,9 +40,6 @@ export default class Object3D {
       return;
     }
 
-    // glm.mat4.identity(this._matrixTranslation, this._matrixTranslation);
-    // glm.mat4.identity(this._matrixScale, this._matrixScale);
-    // glm.mat4.identity(this._matrixRotation, this._matrixRotation);
     glm.mat4.rotateX(this._matrixRotation, this._matrixIdentity, this.rotation.x);
     glm.mat4.rotateY(this._matrixRotation, this._matrixRotation, this.rotation.y);
     glm.mat4.rotateZ(this._matrixRotation, this._matrixRotation, this.rotation.z);
@@ -95,7 +81,6 @@ export default class Object3D {
     return this._matrix;
   }
   addChild(object) {
-    // if has already a parent only one parent
     if(object.parent) {
       const ndx = object.parent.children.indexOf(this);
       if(ndx >= 0) {

@@ -20,6 +20,7 @@ export default class Geometry {
   }
   addInstancedAttribute(name, data, divisor, flat) {
     this.instanced = true;
+    this.count = 1;
     this.attributes[name] = new ArrayBuffer({
       context: gl,
       data: flat ? data : ArrayUtils.flatten(data),
@@ -27,6 +28,9 @@ export default class Geometry {
     });
     this[name] = this.attributes[name];
     return this;
+  }
+  addCount(count) {
+    this.count = count;
   }
   addAttribute(name, data, flat) {
     this.attributes[name] = new ArrayBuffer({

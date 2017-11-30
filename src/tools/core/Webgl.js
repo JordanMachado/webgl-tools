@@ -139,7 +139,7 @@ class CreateContextWebgl {
      let aKey = camelize(str.substring(0, str.length - 1));
      if(mesh.geometry.attributes[key].instanced) {
        if(mesh.shader.program.attributes[aKey])
-       
+
        mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], 0);
      }
    }
@@ -153,15 +153,16 @@ class CreateContextWebgl {
 
      if(mesh.geometry.attributes[key].instanced) {
        if(mesh.shader.program.attributes[aKey])
-       mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], mesh.geometry.attributes[key].divisor);
+        mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], mesh.geometry.attributes[key].divisor);
+       else {
+         Debug.error(`Attribute ${aKey} not used`);
+       }
      } else {
 
       if(mesh.shader.program.attributes[aKey])
        mesh.geometry.attributes[key].attribPointer(mesh.shader.program.attributes[aKey]);
      }
    }
-
-
  }
  render(mesh, camera) {
 
@@ -172,7 +173,7 @@ class CreateContextWebgl {
     mesh.geometry.indices.bind()
 
     if(mesh.geometry.instanced) {
-      mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.attributes.offsets._data.length/4);
+      mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.count);
     } else {
       mesh.geometry.indices.draw(mesh.drawType);
     }
@@ -183,7 +184,6 @@ class CreateContextWebgl {
         this.render(mesh.children[i], camera);
       }
     }
-
   }
   resize() {
 

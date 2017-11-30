@@ -6,14 +6,13 @@ window.ddevice = deviceType(navigator.userAgent);
 import OrbitalCameraControl from 'orbital-camera-control';
 import Query from './Query';
 import PingPong from './PingPong';
+import Screenshot from './dev/Screenshot';
+
 import { mat4, mat3 } from 'gl-matrix';
 // import {readGbo} from 'gbo-reader';
 if(!Query.verbose) {
   G.debug.verbose = false;
 }
-
-let img;
-let btn = document.createElement('a');
 
 
 export default class Scene {
@@ -43,7 +42,7 @@ export default class Scene {
 		mat4.multiply(this.mvpDepth, biaMatrix, this.mvpDepth);
 		// mat4.multiply(this.mvpDepth,  this.mvpDepth,biaMatrix);
 
-    this.controls = new OrbitalCameraControl(this.camera.view, 10, window);
+    this.controls = new OrbitalCameraControl(this.camera.view, 100, window);
     this.mouse = [0.1,0.1,1];
     // this.mouse = [1,1,1];
     window.addEventListener('mousemove', (e)=>{
@@ -56,23 +55,7 @@ export default class Scene {
 
 
       if(Query.debug) {
-
-        const debug = document.createElement('div');
-        debug.id = 'debug';
-
-        btn.id = 'screenshot'
-        btn.innerHTML = 'screenshot';
-
-        img = new Image();
-
-        debug.appendChild(btn);
-        document.body.appendChild(debug);
-        btn.addEventListener('mousedown', ()=>{
-          this.screen = true;
-        })
-        btn.addEventListener('mouseup', ()=>{
-          btn.download = 'screen';
-        })
+        this.screenshot = new Screenshot(this);
       }
 
 
@@ -156,15 +139,13 @@ export default class Scene {
       });
 
 
-      // const primitive = G.Primitive.cube(1,0.2,0.2);
-      // const primitive = G.Primitive.cube(0.1,1,0.1);
-      // const primitive = G.Primitive.cube(0.1,0.1,1);
-      const primitive = G.Primitive.cube(1,1,1);
+      const primitive = G.Primitive.cube(1,0.2,0.2);
       const geometry = new G.Geometry(primitive);
       geometry.addInstancedAttribute('offsets', offsets, 1, true);
       geometry.addInstancedAttribute('uv2s', uvs, 1, true);
       geometry.addInstancedAttribute('colors', colors, 1, true);
-      // console.log(geometry);
+      geometry.addCount(offsets.length/4);
+
       let shadowMapSize = ddevice ==='desktop' ? 512 : 256;
       this.fbo = new G.FrameBuffer(gl, shadowMapSize, shadowMapSize, {
         depth:true,
@@ -183,15 +164,8 @@ export default class Scene {
           uShadowMatrix:this.mvpDepth,
           uLightColor:G.Utils.hexToRgb('#fd003c'),
           fogColor: G.Utils.hexToRgb(this.bgC),
-
-          // uLightColor:G.Utils.hexToRgb('#fffc00'),
-
         }
       ));
-
-
-
-
 
       this.floor = new G.Mesh(
         new G.Geometry(G.Primitive.plane(500,500, 10,10)),
@@ -205,8 +179,8 @@ export default class Scene {
 			    uShadowMatrix:this.mvpDepth
         }
       ));
-      this.floor.y = -30;
-      this.floor.rx = 90 * Math.PI/180;
+      this.floor.position.y = -30;
+      this.floor.rotation.x = 90 * Math.PI/180;
 
 
 
@@ -243,56 +217,49 @@ export default class Scene {
               glslify('./shaders/base.frag'),
               {}
             ));
+            this.mesh2 = new G.Mesh(
+              new G.Geometry(primitive),
+              new G.Shader(
+              glslify('./shaders/base.vert'),
+              glslify('./shaders/base.frag'),
+              {}
+            ));
+            this.mesh2.position.y = 2;
+            this.mesh.addChild(this.mesh2)
             console.log(this.mesh.position);
+            console.log(this.mesh.position.get());
+            // this.mesh.position.x = 10;
   }
   render() {
     this.time += 0.1;
     this.frame++;
     this.controls.update();
     this.webgl.clear();
-    // G.State.enable(gl.CULL_FACE);
+    G.State.enable(gl.CULL_FACE);
     //
-    // this.fbo.bind();
-    // this.fbo.clear();
+    this.fbo.bind();
+    this.fbo.clear();
     // // FRONT
-    // gl.cullFace(gl.FRONT);
-    // this.webgl.render(this.particles, this.cameraShadow);
-    // this.fbo.unbind();
+    gl.cullFace(gl.FRONT);
+    this.webgl.render(this.particles, this.cameraShadow);
+    this.fbo.unbind();
     //
-    // G.State.disable(gl.CULL_FACE);
-    //
-    // this.gpgpuVel.quad.shader.uniforms.uPositions = this.gpgpu.fboOutO.colors;
-    // this.gpgpu.quad.shader.uniforms.uVelocity = this.gpgpuVel.fboOutO.colors;
-    //
-    // this.gpgpuVel.update();
-    // this.gpgpu.update();
-    // // console.log(this.gpgpuVel.quad.shader.uniforms.mouse);
-    // this.gpgpuVel.quad.shader.uniforms.mouse = this.mouse
-    //
-    // this.particles.shader.uniforms.mouse = this.mouse
-    //
-    //
-    // this.particles.shader.uniforms.uBuffer = this.gpgpu.fboOutO.colors;
-    // G.State.enable(gl.DEPTH_TEST);
-    // G.State.enable(gl.CULL_FACE);
-    // gl.cullFace(gl.BACK);
-    // this.webgl.render(this.particles, this.camera);
-    // G.State.disable(gl.CULL_FACE);
-    //
-    //
-    // this.webgl.render(this.floor, this.camera);
-    // // this.webgl.render(this.fboDebug, this.camera);
-    //
-    // if(this.screen) {
-    //   this.screen = false;
-    //   img.src = this.webgl.canvas.toDataURL();
-    //   btn.href = img.src;
-    // }
-    this.mesh.position.x += 0.001;
-    this.mesh.scale.x += 0.001;
-    // console.log(this.mesh.rotation.x);
-    this.webgl.render(this.mesh, this.camera);
+    G.State.disable(gl.CULL_FACE);
+    this.gpgpuVel.quad.shader.uniforms.uPositions = this.gpgpu.fboOutO.colors;
+    this.gpgpu.quad.shader.uniforms.uVelocity = this.gpgpuVel.fboOutO.colors;
 
+    this.gpgpuVel.update();
+    this.gpgpu.update();
+    this.gpgpuVel.quad.shader.uniforms.mouse = this.mouse
+    this.particles.shader.uniforms.mouse = this.mouse
+    this.particles.shader.uniforms.uBuffer = this.gpgpu.fboOutO.colors;
+    G.State.enable(gl.DEPTH_TEST);
+    G.State.enable(gl.CULL_FACE);
+    gl.cullFace(gl.BACK);
+    this.webgl.render(this.particles, this.camera);
+    G.State.disable(gl.CULL_FACE);
+    this.webgl.render(this.floor, this.camera);
+    // // this.webgl.render(this.fboDebug, this.camera);
 
 
   }

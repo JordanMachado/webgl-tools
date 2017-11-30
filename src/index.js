@@ -3,6 +3,7 @@ import assetsLoader from 'assets-loader';
 import domready from 'domready';
 import Query from './Query';
 import Scene from './Scene';
+import SceneDev from './SceneDev';
 
 const loader = assetsLoader({
   assets: [
@@ -30,7 +31,12 @@ domready(()=> {
 let scene;
 
 function init() {
-  scene = new Scene();
+  if(Query.develop) {
+    scene = new SceneDev()
+  } else {
+    scene = new Scene();    
+  }
+
   render();
   window.addEventListener('resize', resize);
 

@@ -3,6 +3,7 @@ import * as glm from 'gl-matrix';
 class Vector3 {
   constructor(x = 0, y = 0, z = 0) {
     this._xyz = glm.vec3.fromValues(x, y, z);
+    // this._x =
   }
   get() {
     return this._xyz;
