@@ -17,17 +17,22 @@ export default class Object3D {
 
     this._needUpdate = true;
 
-    // this._position = glm.vec3.create();
     this.position = new Vector3();
-    this.position.onChange(function(){
-      this._needUpdate = true;
-    });
+
     this.rotation = new Vector3();
-    this.rotation.onChange(function(){
+
+    this.scale = new Vector3(1,1,1);
+
+
+    this.position.onChange(()=> {
+      // console.log('position');
+    })
+    this.rotation.onChange (() => {
+      // console.log('rotation');
       this._needUpdate = true;
     });
-    this.scale = new Vector3(1,1,1);
-    this.scale.onChange(function(){
+    this.scale.onChange (() => {
+      // console.log('scale');
       this._needUpdate = true;
     });
 
@@ -49,7 +54,6 @@ export default class Object3D {
     // glm.mat4.identity(this._matrixTranslation, this._matrixTranslation);
     // glm.mat4.identity(this._matrixScale, this._matrixScale);
     // glm.mat4.identity(this._matrixRotation, this._matrixRotation);
-
     glm.mat4.rotateX(this._matrixRotation, this._matrixIdentity, this.rotation.x);
     glm.mat4.rotateY(this._matrixRotation, this._matrixRotation, this.rotation.y);
     glm.mat4.rotateZ(this._matrixRotation, this._matrixRotation, this.rotation.z);

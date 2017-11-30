@@ -11,7 +11,7 @@ class Vector3 {
     this._xyz[0]  = x;
     this._xyz[1]  = y;
     this._xyz[2]  = z;
-    this.onChangeFn();
+    this.onChangeCallback();
     return this;
   }
   get x() {
@@ -19,32 +19,32 @@ class Vector3 {
   }
   set x(value) {
     this._xyz[0] = value;
-    this.onChangeFn();
+    this.onChangeCallback();
   }
   get y() {
     return this._xyz[1];
   }
   set y(value) {
     this._xyz[1] = value;
-    this.onChangeFn();
+    this.onChangeCallback();
   }
   get z() {
     return this._xyz[2];
   }
   set z(value) {
     this._xyz[2] = value;
-    this.onChangeFn();
+    this.onChangeCallback();
   }
+
 
 }
 
 
 Object.assign(Vector3.prototype, {
   onChange: function(fn) {
-    Vector3.prototype.onChangeFn = fn
-    return this;
+    this.onChangeCallback = fn
   },
-  onChangeFn: function() {},
+  onChangeCallback: function() {},
 
 });
 

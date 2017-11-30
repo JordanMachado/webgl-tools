@@ -243,7 +243,7 @@ export default class Scene {
               glslify('./shaders/base.frag'),
               {}
             ));
-            console.log(this.mesh);
+            console.log(this.mesh.position);
   }
   render() {
     this.time += 0.1;
@@ -288,7 +288,9 @@ export default class Scene {
     //   img.src = this.webgl.canvas.toDataURL();
     //   btn.href = img.src;
     // }
-
+    this.mesh.position.x += 0.001;
+    this.mesh.scale.x += 0.001;
+    // console.log(this.mesh.rotation.x);
     this.webgl.render(this.mesh, this.camera);
 
 
