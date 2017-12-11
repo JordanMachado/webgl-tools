@@ -1,4 +1,4 @@
-import G from './tools';
+import G from '../';
 const glslify = require('glslify');
 
 
@@ -32,16 +32,16 @@ export default class Pingpong {
     this.fboOut = new G.FrameBuffer(gl, width, height);
     this.fboOutO = this.fboOut;
 
-    this.fboDebug = new G.Mesh(
-      new G.Geometry(G.Primitive.quad(0.3, 0.3)),
-      new G.Shader(
-        glslify('./shaders/debug.vert'),
-        glslify('./shaders/texture.frag'), {
-          uTexture: this.fboOut.colors
-        }
-      ));
-      this.fboDebug.x = -0.7;
-      this.fboDebug.y = -0.7;
+    // this.fboDebug = new G.Mesh(
+    //   new G.Geometry(G.Primitive.quad(0.3, 0.3)),
+    //   new G.Shader(
+    //     glslify('./shaders/debug.vert'),
+    //     glslify('./shaders/texture.frag'), {
+    //       uTexture: this.fboOut.colors
+    //     }
+    //   ));
+    //   this.fboDebug.x = -0.7;
+    //   this.fboDebug.y = -0.7;
 
       this.fboIn.bind();
         this.renderer.render(this.quad,this.camera);

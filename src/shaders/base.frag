@@ -9,7 +9,7 @@ varying vec4 vShadowCoord;
 
 
 void main() {
-  // 
+  //
   // vec4 shadowCoord = vShadowCoord / vShadowCoord.w;
   // vec2 uv = shadowCoord.xy;
   // // vec4 shadow = texture2D( uShadowMap, uv.xy );
@@ -21,5 +21,5 @@ void main() {
   // }
   // gl_FragColor = vec4(vec3(visibility) * vec3(1.0), 1.0);
   // gl_FragColor = vec4(vec3(shadow.rgb), 1.0);
-  gl_FragColor = vec4(vec3(1.0), 1.0);
+  gl_FragColor = vec4(vec3(vUv,1.0), 1.0);
 }

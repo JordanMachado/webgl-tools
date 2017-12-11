@@ -6,7 +6,18 @@ function hexToRgb(hex) {
         parseInt(result[3], 16) / 255
     ] : null;
 }
+function numberToRgb(hex) {
+    hex = parseInt(hex);
+    var hex = Math.floor(hex);
+    return hex ? [
+        ( hex >> 16 & 255 ) / 255,
+        ( hex >> 8 & 255 ) / 255,
+        ( hex & 255 ) / 255
+    ] : null;
+}
+
 
 export default {
   hexToRgb,
+  numberToRgb
 };

@@ -1,15 +1,14 @@
-import G from './tools';
+import G from './gl';
 const glslify = require('glslify');
 import deviceType from 'ua-device-type';
 window.ddevice = deviceType(navigator.userAgent);
 
 import OrbitalCameraControl from 'orbital-camera-control';
-import Query from './Query';
-import PingPong from './PingPong';
+import Query from './dev/Query';
+import PingPong from './gl/utils/PingPong';
 import Screenshot from './dev/Screenshot';
 
 import { mat4, mat3 } from 'gl-matrix';
-// import {readGbo} from 'gbo-reader';
 if(!Query.verbose) {
   G.debug.verbose = false;
 }
