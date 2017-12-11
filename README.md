@@ -16,6 +16,7 @@ npm start
 
 ## [http://exp.jojo.ninja/](http://exp.jojo.ninja/)
 
+* [Shadow particles](http://jojo.ninja/gl/shadow-particles/)
 * [Curly](http://jojo.ninja/gl/curly/)
 * [Reflection](http://jojo.ninja/gl/reflection/)
 * [Curl noise instancing](http://jojo.ninja/gl/curl/)
