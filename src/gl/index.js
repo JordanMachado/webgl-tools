@@ -31,6 +31,7 @@ import Pass from './post/Pass';
 import NoisePass from './post/NoisePass';
 import InvertPass from './post/InvertPass';
 import FXAAPass from './post/FXAAPass';
+import ToonPass from './post/ToonPass';
 
 import glm from 'gl-matrix';
 const vanilla = {
@@ -71,6 +72,7 @@ const vanilla = {
   Pass,
   NoisePass,
   InvertPass,
-  FXAAPass
+  FXAAPass,
+  ToonPass
 }
 export default vanilla;

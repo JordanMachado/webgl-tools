@@ -40,8 +40,14 @@ export default class Scene {
       uResolution: [window.innerWidth * 2, window.innerHeight * 2]
     });
     this.composer.add(this.fxaa)
+
+
+    this.toon = new G.ToonPass({
+      uResolution: [window.innerWidth * 2, window.innerHeight * 2]
+    });
+    this.composer.add(this.toon)
     this.invert = new G.InvertPass();
-    this.composer.add(this.invert)
+    // this.composer.add(this.invert)
 
     this.noise = new G.NoisePass({
       uAmount:0.3,
