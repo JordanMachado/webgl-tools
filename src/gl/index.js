@@ -26,6 +26,12 @@ import ArrayUtils from './utils/ArrayUtils';
 import Debug from './utils/Debug';
 import Vector3 from './math/Vector3';
 
+import Composer from './post/Composer';
+import Pass from './post/Pass';
+import NoisePass from './post/NoisePass';
+import InvertPass from './post/InvertPass';
+import FXAAPass from './post/FXAAPass';
+
 import glm from 'gl-matrix';
 const vanilla = {
   glm,
@@ -61,5 +67,10 @@ const vanilla = {
   Debug,
   debug:Debug,
   Vector3,
+  Composer,
+  Pass,
+  NoisePass,
+  InvertPass,
+  FXAAPass
 }
 export default vanilla;

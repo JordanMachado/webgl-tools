@@ -167,6 +167,7 @@ class CreateContextWebgl {
  render(mesh, camera) {
 
     mesh.shader.program.bind();
+    if(camera)
     this.setDefaultUniforms(mesh, camera);
     this.setUniforms(mesh);
     this.bindBuffer(mesh);
@@ -185,6 +186,7 @@ class CreateContextWebgl {
       }
     }
   }
+
   resize() {
 
     this.canvas.style.width = `${window.innerWidth}px`;

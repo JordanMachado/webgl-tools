@@ -1,6 +1,19 @@
 import Sphere from 'primitive-sphere';
 
 const primtives = {
+  bigTriangle: ()=> {
+    const positions = [
+      -1, -1,
+      -1, 4,
+      4,-1
+    ]
+    const indices = [2,1,0]
+    return {
+      positions,
+      indices,
+      flat:true
+    }
+  },
   quad: (width = 1, height = 1) => {
     const positions = [
       -1, -1,0,
