@@ -9,9 +9,16 @@ class Vector3 {
     return this._xyz;
   }
   set (x, y, z) {
-    this._xyz[0]  = x;
-    this._xyz[1]  = y;
-    this._xyz[2]  = z;
+    if(arguments > 1) {
+      this._xyz[0]  = x;
+      this._xyz[1]  = y;
+      this._xyz[2]  = z;
+    } else {
+      this._xyz[0]  = x;
+      this._xyz[1]  = x;
+      this._xyz[2]  = x;
+    }
+
     this.onChangeCallback();
     return this;
   }

@@ -18,7 +18,7 @@ import dat from 'dat.gui/build/dat.gui.min.js';
       this.config = Query.config;
 
       this.parseConfig(this.config,this.gui.folders.config, 'config');
-
+      this.updateConfig();
     }
   }
   updateConfig() {
@@ -70,7 +70,6 @@ import dat from 'dat.gui/build/dat.gui.min.js';
     }
   }
   addChange(obj, fn) {
-    console.log(obj);
     if(!obj.__changeFns) {
       obj.__changeFns = [];
     }

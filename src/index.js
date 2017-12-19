@@ -1,7 +1,7 @@
 import raf from 'raf';
 import assetsLoader from 'assets-loader';
 import domready from 'domready';
-import Query from './Query';
+import Query from './dev/Query';
 import Scene from './Scene';
 import SceneDev from './SceneDev';
 
@@ -34,7 +34,7 @@ function init() {
   if(Query.develop) {
     scene = new SceneDev()
   } else {
-    scene = new Scene();    
+    scene = new Scene();
   }
 
   render();

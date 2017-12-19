@@ -37,8 +37,6 @@ export default class Scene {
     });
 
     const t = new G.Texture(gl);
-    console.log('t.magFilter,t.minFilter, t.type, t.wrapS, t.wrapT');
-    console.log(t.magFilter,t.minFilter, t.type, t.wrapS, t.wrapT);
 
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
     this.camera.lookAt([0,0,100],[0,0,0])
@@ -52,7 +50,22 @@ export default class Scene {
 
     }
 
-    const primitive = G.Primitive.cube(Query.config.size,Query.config.size,Query.config.size);
+    const primitive = G.Primitive.sphere();
+    // console.log(primitive);
+
+    // const width = 24;
+    // const height = 24;
+    // const offsets = new Float32Array(width * height * 4)
+    // let count = 0;
+    // for (var i = 0; i < width * height * 4; i+=4) {
+    //   offsets[i] = Math.cos(r) *( Math.random() * (4 + 4) - 4)
+    //   offsets[i + 1] = Math.sin(r) * (Math.random() * (4 + 4) - 4)
+    //   offsets[i + 2] = Math.random() * (4 + 4) - 4
+    //   offsets[i + 3] = Math.random();
+    //   count ++;
+    // }
+
+    // const primitive = G.Primitive.cube(Query.config.size,Query.config.size,Query.config.size);
     const geo = new G.Geometry(primitive);
     const mat = new G.Shader(
     glslify('./shaders/base.vert'),
@@ -60,8 +73,11 @@ export default class Scene {
     {})
     this.mesh = new G.Mesh(geo, mat);
     this.mesh2 = new G.Mesh(geo, mat);
+    this.mesh2.scale.set(0.8)
     this.mesh3 = new G.Mesh(geo, mat);
+    this.mesh3.scale.set(0.7)
     this.mesh4 = new G.Mesh(geo, mat);
+    this.mesh4.scale.set(0.6)
 
     this.points = [];
     this.sticks = [];
@@ -85,10 +101,10 @@ export default class Scene {
       oldy:-1,
     })
     this.points.push({
-      x:-2,
-      y:-2,
-      oldx:-2,
-      oldy:-2,
+      x:-1.5,
+      y:-1.5,
+      oldx:-1.5,
+      oldy:-1.5,
     })
     this.sticks.push({
       p0: this.points[0],
@@ -117,7 +133,7 @@ export default class Scene {
       const p = this.points[i];
       if(!p.pinned) {
         let vx = (p.x - p.oldx) * friction;
-        let vy = (p.y - p.oldy) * friction - 0.05;
+        let vy = (p.y - p.oldy) * friction - 0.008;
         p.oldx = p.x;
         p.oldy = p.y;
         p.x+= vx;
@@ -163,9 +179,10 @@ export default class Scene {
     this.webgl.render(this.mesh4, this.camera);
 //
     // this.points[0].x = Math.cos(this.time)
-    // if(Math.random()> 0.96) {
-      this.points[0].x = this.mouse.x
-      this.points[0].y = this.mouse.y
+      this.points[0].x = Math.cos(this.time) + this.mouse.x
+
+
+      this.points[0].y = Math.sin(this.time) - this.mouse.y
     // }
     this.mesh.position.x = this.points[0].x;
     this.mesh.position.y = this.points[0].y;
