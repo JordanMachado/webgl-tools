@@ -26,7 +26,7 @@ export default class Scene {
     this.webgl.append();
 
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
-    this.camera.lookAt([0,0,100],[0,0,0])
+    this.camera.lookAt([0,0,500],[0,0,0])
 
     this.controls = new OrbitalCameraControl(this.camera.view, 10, window);
 
@@ -41,7 +41,7 @@ export default class Scene {
     });
     this.composer.add(this.fxaa)
 
-
+    //
     this.toon = new G.ToonPass({
       uResolution: [window.innerWidth * 2, window.innerHeight * 2]
     });
@@ -49,11 +49,8 @@ export default class Scene {
     this.invert = new G.InvertPass();
     // this.composer.add(this.invert)
 
-    this.noise = new G.NoisePass({
-      uAmount:0.3,
-      uSpeed:1,
-    });
-    this.composer.add(this.noise)
+    this.noise = new G.NoisePass();
+    // this.composer.add(this.noise)
     const primitive = G.Primitive.sphere();
     const geo = new G.Geometry(primitive);
     const mat = new G.Shader(
@@ -64,6 +61,16 @@ export default class Scene {
 
     this.mesh2 = new G.Mesh(geo, mat);
 
+    this.fboHelper = new G.FBOHelper(this.webgl);
+    console.log(this.fboHelper);
+
+    this.fboHelper.attach(this.composer.fboIn.colors);
+
+
+    let s = 256;
+
+    this.webgl.gl.viewport(0, 0, s, s);
+
 
   }
 
@@ -71,6 +78,7 @@ export default class Scene {
     this.time += 0.05;
     this.frame++;
     this.controls.update();
+    this.noise.uniforms.uAmount = Math.cos(this.time)
 
     this.webgl.clear();
     G.State.enable(gl.DEPTH_TEST);
@@ -80,6 +88,10 @@ export default class Scene {
     } else {
       this.webgl.render(this.mesh, this.camera);
     }
+    G.State.disable(gl.DEPTH_TEST);
+    this.fboHelper.render();
+
+
 
   }
 

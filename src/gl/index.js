@@ -33,6 +33,8 @@ import InvertPass from './post/InvertPass';
 import FXAAPass from './post/FXAAPass';
 import ToonPass from './post/ToonPass';
 
+import FBOHelper from './utils/FBOHelper';
+
 import glm from 'gl-matrix';
 const vanilla = {
   glm,
@@ -73,6 +75,7 @@ const vanilla = {
   NoisePass,
   InvertPass,
   FXAAPass,
-  ToonPass
+  ToonPass,
+  FBOHelper
 }
 export default vanilla;

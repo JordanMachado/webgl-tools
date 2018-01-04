@@ -57,6 +57,8 @@ class CreateContextWebgl {
       this.canvas.width = width * window.devicePixelRatio;
       this.canvas.height = height * window.devicePixelRatio;
       this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
+      this.aspect = this.canvas.width / this.canvas.height;
+
       Debug.print(`Vanilla GL`);
       Debug.print(`https://github.com/JordanMachado/webgl-tools`);
       Debug.log(`${type} created`);
@@ -193,6 +195,7 @@ class CreateContextWebgl {
     this.canvas.style.height = `${window.innerHeight}px`;
     this.canvas.width = window.innerWidth * window.devicePixelRatio;
     this.canvas.height = window.innerHeight * window.devicePixelRatio;
+    this.aspect = this.canvas.width/this.canvas.height;
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
 }
