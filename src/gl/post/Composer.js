@@ -54,8 +54,6 @@ export default class Composer {
   setSize(width, height) {
     this.fboIn = new FrameBuffer(gl, width, height, { depth: true});
     this.fboOut = new FrameBuffer(gl, width, height, { depth: true});
-
-    this.fboEntry = this.fboIn
     this.outputTexture = this.fboIn.colors;
 
   }

@@ -26,7 +26,7 @@ export default class Scene {
     this.webgl.append();
 
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
-    this.camera.lookAt([0,0,500],[0,0,0])
+    this.camera.lookAt([0,0,100],[0,0,0])
 
     this.controls = new OrbitalCameraControl(this.camera.view, 10, window);
 
