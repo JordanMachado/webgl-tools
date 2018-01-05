@@ -2,14 +2,12 @@ import raf from 'raf';
 import assetsLoader from 'assets-loader';
 import domready from 'domready';
 import Query from './dev/Query';
+import AssetManifest from './AssetManifest';
 import Scene from './Scene';
 import SceneDev from './SceneDev';
 
 const loader = assetsLoader({
-  assets: [
-    // 'assets/img/ground_asphalt_05_normal.jpg',
-    // 'assets/img/height.png',
-  ]
+  assets: AssetManifest
 });
 
 window.getAsset = function(id) {
@@ -17,15 +15,20 @@ window.getAsset = function(id) {
 }
 
 domready(()=> {
-  // if()
-  // loader.on('complete', function(assets) {
-   // document.body.classList.remove('loading');
-   // window.assets = assets;
-   // if(Query.debug)
-    // console.table(assets);
-   init();
- // })
- // .start();
+  if(AssetManifest.length > 0) {
+    document.body.classList.add('loading');
+    loader.on('complete', function(assets) {
+     document.body.classList.remove('loading');
+     window.assets = assets;
+     if(Query.debug)
+      console.table(assets);
+      init();
+   })
+   .start();
+  } else {
+    init();
+  }
+
 });
 
 let scene;
