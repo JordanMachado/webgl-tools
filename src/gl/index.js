@@ -69,7 +69,11 @@ const vanilla = {
   ArrayUtils,
   Debug,
   debug:Debug,
+
+  // Math
   Vector3,
+
+  // Composer
   Composer,
   Pass,
   NoisePass,

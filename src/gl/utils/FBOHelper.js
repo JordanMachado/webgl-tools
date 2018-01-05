@@ -15,15 +15,18 @@ export default class FBOHelper {
     this.textures = [];
 
     this.shader = new Shader(`
-      attribute vec3 aPosition;
+      attribute vec2 aPosition;
       attribute vec2 aUv;
+
+      varying vec3 vNormal;
       varying vec2 vUv;
 
       void main() {
-        vec4 p = vec4(aPosition, 1.0);
-        gl_Position =   p;
-        vUv = aUv;
+        vec4 p = vec4(aPosition,0.0, 1.0);
+        gl_Position = p;
+        vUv =  aPosition * .5 + .5;
       }
+
 
       `,`
         precision highp float;
@@ -36,9 +39,8 @@ export default class FBOHelper {
           gl_FragColor = vec4(base.rgb, 1.0);
         }
       `);
-    this.geo = new Geometry(Primitive.quad(1, 1))
+    this.geo = new Geometry(Primitive.bigTriangle(1, 1))
     this.mesh = new Mesh(this.geo, this.shader);
-    console.log(this.geo);
   }
   attach(texture) {
     this.textures.push(texture);
