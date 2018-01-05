@@ -9,7 +9,7 @@ import dat from 'dat.gui/build/dat.gui.min.js';
     this.gui.folders.root = this.gui.addFolder('experiment');
     this.gui.folders.root.open();
     this.gui.folders.root.add(this, 'reload');
-    this.gui.folders.root.add(this, 'save');
+    this.gui.folders.root.add(this, 'log');
     this.controls = {}
 
     if(Query.config) {
@@ -33,9 +33,10 @@ import dat from 'dat.gui/build/dat.gui.min.js';
     window.history.pushState('experiment', 'Title', '/' + params + 'config=' + JSON.stringify(this.config));
 
   }
-  save() {
+  log() {
     this.updateConfig();
     console.log('Should save the config');
+    console.log(this.config);
   }
   reload() {
     this.updateConfig();

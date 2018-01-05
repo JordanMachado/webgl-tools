@@ -58,12 +58,16 @@ export default class Scene {
     glslify('./shaders/base.frag'),
     {})
     this.mesh = new G.Mesh(geo, mat);
-
-    this.mesh2 = new G.Mesh(geo, mat);
+    this.mesh.scale.set(SuperConfig.config.size)
 
     this.fboHelper = new G.FBOHelper(this.webgl);
     console.log(this.fboHelper);
 
+    this.fboHelper.attach(this.composer.fboIn.colors);
+    this.fboHelper.attach(this.composer.fboIn.colors);
+    this.fboHelper.attach(this.composer.fboIn.colors);
+    this.fboHelper.attach(this.composer.fboIn.colors);
+    this.fboHelper.attach(this.composer.fboIn.colors);
     this.fboHelper.attach(this.composer.fboIn.colors);
 
 

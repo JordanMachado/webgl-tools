@@ -32,7 +32,7 @@ export default class FBOHelper {
         varying vec2 vUv;
 
         void main() {
-          vec4 base = texture2D(uTexture,vUv);
+          vec4 base = texture2D(uTexture,vec2(vUv.x, 1.0-vUv.y));
           gl_FragColor = vec4(base.rgb, 1.0);
         }
       `);
@@ -46,10 +46,9 @@ export default class FBOHelper {
   render() {
     if(this.textures.length<1) return;
 
-    // console.log(this.textures[0]);
     for (var i = 0; i < this.textures.length; i++) {
       this.shader.uniforms.uTexture = this.textures[i]
-      this.renderer.gl.viewport(this.size*i, 0, this.size, this.size / this.renderer.aspect);
+      this.renderer.gl.viewport(0, i * this.size, this.size, this.size / this.renderer.aspect);
       this.renderer.render(this.mesh,this.camera)
     }
 
