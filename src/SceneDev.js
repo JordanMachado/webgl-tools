@@ -60,6 +60,10 @@ export default class Scene {
     this.mesh = new G.Mesh(geo, mat);
     this.mesh.scale.set(SuperConfig.config.size)
 
+    this.mesh2 = new G.Mesh(geo, mat);
+    this.mesh2.position.y = 2;
+    this.mesh2.scale.set(SuperConfig.config.size)
+
     this.fboHelper = new G.FBOHelper(this.webgl);
     console.log(this.fboHelper);
 
@@ -70,11 +74,9 @@ export default class Scene {
     this.fboHelper.attach(this.composer.fboIn.colors);
     this.fboHelper.attach(this.composer.fboIn.colors);
 
-
-    let s = 256;
-
-    this.webgl.gl.viewport(0, 0, s, s);
-
+    this.scene = new G.Object3D();
+    this.scene.addChild(this.mesh);
+    this.scene.addChild(this.mesh2);
 
   }
 
@@ -83,14 +85,13 @@ export default class Scene {
     this.frame++;
     this.controls.update();
     this.noise.uniforms.uAmount = Math.cos(this.time)
-
     this.webgl.clear();
     G.State.enable(gl.DEPTH_TEST);
     if(Query.config.postPro) {
-      this.composer.render(this.mesh, this.camera);
+      this.composer.render(this.scene, this.camera);
       this.composer.toScreen();
     } else {
-      this.webgl.render(this.mesh, this.camera);
+      this.webgl.render(this.scene, this.camera);
     }
     G.State.disable(gl.DEPTH_TEST);
     this.fboHelper.render();

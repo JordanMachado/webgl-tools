@@ -12,7 +12,7 @@ export default class Composer {
 
     this.shader = new Shader(glslify('./shaders/default.vert'),glslify('./shaders/default.frag'))
     this.geo = new Geometry(Primitive.bigTriangle(1, 1))
-    this.mesh = new Mesh(this.geo, this.shader);
+    this.bigTriangle = new Mesh(this.geo, this.shader);
     this.setSize(width, height);
 
   }
@@ -32,8 +32,8 @@ export default class Composer {
           this.fboOut.clear();
           pass.uniforms.uTexture = this.fboIn.colors;
           pass.uniforms.uTime += 0.0025;
-          this.mesh.shader = pass;
-          this.renderer.render(this.mesh, camera);
+          this.bigTriangle.shader = pass;
+          this.renderer.render(this.bigTriangle, camera);
         this.fboOut.unbind();
         this.swap();
       }
@@ -42,9 +42,9 @@ export default class Composer {
 
   }
   toScreen() {
-    this.mesh.shader = this.shader;
+    this.bigTriangle.shader = this.shader;
     this.shader.uniforms.uTexture = this.outputTexture;
-    this.renderer.render(this.mesh)
+    this.renderer.render(this.bigTriangle)
   }
   swap() {
     const tmp = this.fboIn;

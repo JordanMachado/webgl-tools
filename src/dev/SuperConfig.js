@@ -1,9 +1,12 @@
 import Query from './Query';
 import dat from 'dat.gui/build/dat.gui.min.js';
-
+import DefaultConfig from '../DefaultConfig';
  class SuperConfig {
   constructor() {
-    if(!Query.debug) return;
+    if(!Query.debug) {
+      this.config = DefaultConfig;
+      return;
+    };
     this.gui = new dat.GUI();
     this.gui.folders = {};
     this.gui.folders.root = this.gui.addFolder('experiment');

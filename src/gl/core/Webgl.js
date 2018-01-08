@@ -90,6 +90,10 @@ class CreateContextWebgl {
     this.gl.useProgram(shader.program);
   }
   setDefaultUniforms(mesh, camera) {
+    // if container
+    if(mesh.parent && !mesh.parent.shader && mesh.parent._needUpdate == true) {
+      mesh.parent._updateMatrix()
+    }
     mesh.shader.program.uniforms.projectionMatrix = camera.projection;
     mesh.shader.program.uniforms.viewMatrix = camera.view;
     mesh.shader.program.uniforms.worldMatrix = mesh.matrixWorld;
@@ -167,20 +171,21 @@ class CreateContextWebgl {
    }
  }
  render(mesh, camera) {
+   if(mesh.shader) {
 
-    mesh.shader.program.bind();
-    if(camera)
-    this.setDefaultUniforms(mesh, camera);
-    this.setUniforms(mesh);
-    this.bindBuffer(mesh);
-    mesh.geometry.indices.bind()
-
-    if(mesh.geometry.instanced) {
-      mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.count);
-    } else {
-      mesh.geometry.indices.draw(mesh.drawType);
-    }
-    this.unbindBuffer(mesh);
+     mesh.shader.program.bind();
+     if(camera)
+      this.setDefaultUniforms(mesh, camera);
+     this.setUniforms(mesh);
+     this.bindBuffer(mesh);
+     mesh.geometry.indices.bind()
+     if(mesh.geometry.instanced) {
+       mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.count);
+     } else {
+       mesh.geometry.indices.draw(mesh.drawType);
+     }
+     this.unbindBuffer(mesh);
+   }
 
     if(mesh.children.length > 0) {
       for (var i = 0; i < mesh.children.length; i++) {

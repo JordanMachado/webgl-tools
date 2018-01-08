@@ -17,6 +17,7 @@ export default class Object3D {
 
     this.position.onChange(()=> {
       this._needUpdate = true;
+      // console.log('cc');
     });
     this.rotation.onChange (() => {
       this._needUpdate = true;

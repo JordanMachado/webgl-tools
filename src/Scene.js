@@ -198,36 +198,6 @@ export default class Scene {
 
 
             this.frame = 0;
-
-
-            // this.position = new G.Vector3();
-
-            // console.log(this.position.x,this.position.y,this.position.z);
-            // this.position.x = 10;
-            // this.position.y = 10;
-            // this.position.z = 10;
-            // this.position.set(1,1,1)
-            // console.log(this.position.get());
-
-            this.mesh = new G.Mesh(
-              new G.Geometry(primitive),
-              new G.Shader(
-              glslify('./shaders/base.vert'),
-              glslify('./shaders/base.frag'),
-              {}
-            ));
-            this.mesh2 = new G.Mesh(
-              new G.Geometry(primitive),
-              new G.Shader(
-              glslify('./shaders/base.vert'),
-              glslify('./shaders/base.frag'),
-              {}
-            ));
-            this.mesh2.position.y = 2;
-            this.mesh.addChild(this.mesh2)
-            console.log(this.mesh.position);
-            console.log(this.mesh.position.get());
-            // this.mesh.position.x = 10;
   }
   render() {
     this.time += 0.1;
@@ -255,6 +225,8 @@ export default class Scene {
     G.State.enable(gl.DEPTH_TEST);
     G.State.enable(gl.CULL_FACE);
     gl.cullFace(gl.BACK);
+
+
     this.webgl.render(this.particles, this.camera);
     G.State.disable(gl.CULL_FACE);
     this.webgl.render(this.floor, this.camera);
