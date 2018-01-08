@@ -33,7 +33,7 @@ import DefaultConfig from '../DefaultConfig';
       params += 'debug=true&';
     if(Query.verbose)
       params += 'verbose=true&';
-    window.history.pushState('experiment', 'Title', '/' + params + 'config=' + JSON.stringify(this.config));
+    window.history.pushState('experiment', 'Title', window.location.origin+window.location.pathname + params + 'config=' + JSON.stringify(this.config));
 
   }
   log() {

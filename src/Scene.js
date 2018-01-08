@@ -233,7 +233,7 @@ export default class Scene {
     G.State.disable(gl.CULL_FACE);
     this.webgl.render(this.floor, this.camera);
 
-
+    if(Query.debug)
     this.fboHelper.render();
 
   }
