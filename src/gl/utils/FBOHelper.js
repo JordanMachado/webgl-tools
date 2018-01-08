@@ -10,7 +10,7 @@ const glslify = require('glslify');
 export default class FBOHelper {
   constructor(renderer, size = 256) {
     this.renderer = renderer;
-    this.size = 256;
+    this.size = size;
     this.camera = new OrthographicCamera(-1,1,-1,1,0.1,100);
     this.textures = [];
 
@@ -38,7 +38,7 @@ export default class FBOHelper {
           vec4 base = texture2D(uTexture,vec2(vUv.x, 1.0-vUv.y));
           gl_FragColor = vec4(base.rgb, 1.0);
         }
-      `);
+      `, {},'FBO helper');
     this.geo = new Geometry(Primitive.bigTriangle(1, 1))
     this.mesh = new Mesh(this.geo, this.shader);
   }
@@ -49,8 +49,8 @@ export default class FBOHelper {
     if(this.textures.length<1) return;
 
     for (var i = 0; i < this.textures.length; i++) {
-      this.shader.uniforms.uTexture = this.textures[i]
-      this.renderer.gl.viewport(0, i * this.size, this.size, this.size / this.renderer.aspect);
+      this.shader.uniforms.uTexture = this.textures[i];
+      this.renderer.gl.viewport(0, i * this.size , this.size, this.size );
       this.renderer.render(this.mesh,this.camera)
     }
 

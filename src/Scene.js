@@ -7,6 +7,7 @@ import OrbitalCameraControl from 'orbital-camera-control';
 import Query from './dev/Query';
 import PingPong from './gl/utils/PingPong';
 import Screenshot from './dev/Screenshot';
+import SuperConfig from './dev/SuperConfig';
 
 import { mat4, mat3 } from 'gl-matrix';
 if(!Query.verbose) {
@@ -118,7 +119,7 @@ export default class Scene {
         fs: glslify('./shaders/particles/position.frag'),
         uniforms: {
           uVelocity:dataVel,
-        }
+        },
       });
       // console.log(G.Utils.hexToRgb('#ff4470'));
 
@@ -163,7 +164,8 @@ export default class Scene {
           uShadowMatrix:this.mvpDepth,
           uLightColor:G.Utils.hexToRgb('#fd003c'),
           fogColor: G.Utils.hexToRgb(this.bgC),
-        }
+        },
+        'GPGPU Particles'
       ));
 
       this.floor = new G.Mesh(
@@ -176,28 +178,28 @@ export default class Scene {
           fogColor: G.Utils.hexToRgb(this.bgC),
           floorColor: G.Utils.hexToRgb('#dac9ff'),
 			    uShadowMatrix:this.mvpDepth
-        }
+        },'Floor'
       ));
       this.floor.position.y = -30;
       this.floor.rotation.x = 90 * Math.PI/180;
 
 
 
-          this.fboDebug = new G.Mesh(
-            new G.Geometry(G.Primitive.quad(0.3, 0.3)),
-            new G.Shader(
-              glslify('./shaders/debug.vert'),
-              glslify('./shaders/texture.frag'), {
-                uTexture: this.fbo.depth
-              }
-            ));
-            this.fboDebug.x = -0.7;
-            // this.fboDebug.y = -0.7;
+
 
 
 
 
             this.frame = 0;
+
+            this.fboHelper = new G.FBOHelper(this.webgl, 300);
+
+
+            this.fboHelper.attach(this.gpgpu.fboOutO.colors);
+            this.fboHelper.attach(this.gpgpuVel.fboOutO.colors);
+            this.fboHelper.attach(this.fbo.colors);
+            this.fboHelper.attach(this.fbo.depth);
+
   }
   render() {
     this.time += 0.1;
@@ -230,8 +232,9 @@ export default class Scene {
     this.webgl.render(this.particles, this.camera);
     G.State.disable(gl.CULL_FACE);
     this.webgl.render(this.floor, this.camera);
-    // // this.webgl.render(this.fboDebug, this.camera);
 
+
+    this.fboHelper.render();
 
   }
   resize() {

@@ -2,6 +2,7 @@ import raf from 'raf';
 import assetsLoader from 'assets-loader';
 import domready from 'domready';
 import Query from './dev/Query';
+import SuperConfig from './dev/SuperConfig';
 import AssetManifest from './AssetManifest';
 import Scene from './Scene';
 import SceneDev from './SceneDev';
@@ -15,14 +16,18 @@ window.getAsset = function(id) {
 }
 
 domready(()=> {
+
   if(AssetManifest.length > 0) {
     document.body.classList.add('loading');
     loader.on('complete', function(assets) {
      document.body.classList.remove('loading');
+     document.title = SuperConfig.config.name;
+
      window.assets = assets;
+     init();
+     
      if(Query.debug)
       console.table(assets);
-      init();
    })
    .start();
   } else {

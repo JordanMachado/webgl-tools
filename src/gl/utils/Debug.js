@@ -4,7 +4,7 @@ class Debug {
   }
   group(message) {
     if (!this.verbose) return;
-    console.group(`%c ${message} `, 'background: #222; color: #ffffff');
+    console.group(`%c ${message} `, 'color: #262626');
   }
   groupEnd() {
     if (!this.verbose) return;
@@ -13,9 +13,13 @@ class Debug {
   print(message) {
     console.log(`%c ${message} `, 'background: #222; color: #ffffff');
   }
+  info(message) {
+    if (!this.verbose) return;
+    console.log(`%c ${message} `, 'color: #106bba');
+  }
   log(message) {
     if (!this.verbose) return;
-    console.log(`%c ${message} `, 'background: #222; color: #ffffff');
+    console.log(`%c ${message} `, 'color: #1ca51c');
   }
   error(message, obj = '') {
     // if (!this.verbose) return;

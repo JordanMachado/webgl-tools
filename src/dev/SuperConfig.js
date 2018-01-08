@@ -38,7 +38,7 @@ import DefaultConfig from '../DefaultConfig';
   }
   log() {
     this.updateConfig();
-    console.log('Should save the config');
+    console.log('Current Config');
     console.log(this.config);
   }
   reload() {

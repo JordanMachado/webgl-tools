@@ -2,7 +2,7 @@ import Debug from '../utils/Debug';
 import Texture from './Texture';
 export default class FBO {
   constructor(gl, width, height, options = {}) {
-    Debug.log(`FBO created width: ${width} height: ${height}`);
+    Debug.info(`FBO created width: ${width} height: ${height}`);
 
     this.gl = gl;
     this.width = width;
@@ -20,7 +20,7 @@ export default class FBO {
     this.colors.uploadData(null, width, height);
 
     if(options.depth) {
-      Debug.log('Use depth texture');
+      Debug.info('Use depth texture');
 
       var depthTextureExt = this.gl.getExtension("WEBGL_depth_texture");
 

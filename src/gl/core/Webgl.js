@@ -27,6 +27,10 @@ class CreateContextWebgl {
     contextOptions = {},
     fallback = null,
   } = {}) {
+    Debug.print(`Vanilla GL`);
+    Debug.print(`https://github.com/JordanMachado/webgl-tools`);
+
+    
     this.canvas = canvas ? canvas : document.createElement('canvas');
 
     this.canvas.style.width = `${width}px`;
@@ -59,9 +63,8 @@ class CreateContextWebgl {
       this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
       this.aspect = this.canvas.width / this.canvas.height;
 
-      Debug.print(`Vanilla GL`);
-      Debug.print(`https://github.com/JordanMachado/webgl-tools`);
-      Debug.log(`${type} created`);
+
+      Debug.info(`${type} created`);
 
     }
   }

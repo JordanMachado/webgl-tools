@@ -8,7 +8,7 @@ class Extension {
     this.gl = gl;
   }
   active(name) {
-    Debug.log(`Activing: ${name}`)
+    Debug.info(`Activing: ${name}`)
 
     let extension = gl.getExtension(name)
     if(extension) {

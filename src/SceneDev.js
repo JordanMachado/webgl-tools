@@ -33,11 +33,11 @@ export default class Scene {
     if(Query.debug) {
       this.screenshot = new Screenshot(this);
     }
-    // this.composer = new G.Composer(this.webgl, window.innerWidth, window.innerHeight);
+
     this.composer = new G.Composer(this.webgl, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
 
     this.fxaa = new G.FXAAPass({
-      uResolution: [window.innerWidth * 2, window.innerHeight * 2]
+      uResolution: [window.innerWidth, window.innerHeight]
     });
     this.composer.add(this.fxaa)
 
@@ -50,7 +50,7 @@ export default class Scene {
     // this.composer.add(this.invert)
 
     this.noise = new G.NoisePass();
-    // this.composer.add(this.noise)
+    this.composer.add(this.noise)
     const primitive = G.Primitive.sphere();
     const geo = new G.Geometry(primitive);
     const mat = new G.Shader(
@@ -65,14 +65,10 @@ export default class Scene {
     this.mesh2.scale.set(SuperConfig.config.size)
 
     this.fboHelper = new G.FBOHelper(this.webgl);
-    console.log(this.fboHelper);
+
 
     this.fboHelper.attach(this.composer.fboIn.colors);
-    this.fboHelper.attach(this.composer.fboIn.colors);
-    this.fboHelper.attach(this.composer.fboIn.colors);
-    this.fboHelper.attach(this.composer.fboIn.colors);
-    this.fboHelper.attach(this.composer.fboIn.colors);
-    this.fboHelper.attach(this.composer.fboIn.colors);
+
 
     this.scene = new G.Object3D();
     this.scene.addChild(this.mesh);
@@ -84,7 +80,6 @@ export default class Scene {
     this.time += 0.05;
     this.frame++;
     this.controls.update();
-    this.noise.uniforms.uAmount = Math.cos(this.time)
     this.webgl.clear();
     G.State.enable(gl.DEPTH_TEST);
     if(Query.config.postPro) {
