@@ -32,6 +32,8 @@ import NoisePass from './post/NoisePass';
 import InvertPass from './post/InvertPass';
 import FXAAPass from './post/FXAAPass';
 import ToonPass from './post/ToonPass';
+import BrightnessContrastPass from './post/BrightnessContrastPass';
+import DofPass from './post/DofPass';
 
 import FBOHelper from './utils/FBOHelper';
 
@@ -80,6 +82,8 @@ const vanilla = {
   InvertPass,
   FXAAPass,
   ToonPass,
+  BrightnessContrastPass,
+  DofPass,
   FBOHelper
 }
 export default vanilla;

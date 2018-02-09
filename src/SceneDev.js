@@ -39,7 +39,7 @@ export default class Scene {
     this.fxaa = new G.FXAAPass({
       uResolution: [window.innerWidth, window.innerHeight]
     });
-    this.composer.add(this.fxaa)
+    // this.composer.add(this.fxaa)
 
     //
     this.toon = new G.ToonPass({
@@ -47,10 +47,26 @@ export default class Scene {
     });
     this.composer.add(this.toon)
     this.invert = new G.InvertPass();
-    // this.composer.add(this.invert)
+    this.composer.add(this.invert)
+
+    this.contrast = new G.BrightnessContrastPass({
+      uBrightness:-0.1,
+      uContrast:0.8,
+    });
+
+    this.dof = new G.DofPass({
+      uBrightness:-0.1,
+      uContrast:0.8,
+    });
+    this.composer.add(this.dof)
+
 
     this.noise = new G.NoisePass();
     this.composer.add(this.noise)
+
+
+
+
     const primitive = G.Primitive.sphere();
     const geo = new G.Geometry(primitive);
     const mat = new G.Shader(
@@ -58,6 +74,8 @@ export default class Scene {
     glslify('./shaders/base.frag'),
     {})
     this.mesh = new G.Mesh(geo, mat);
+    console.log(this.mesh.position);
+    console.log('pos: '+this.mesh.position);
     this.mesh.scale.set(SuperConfig.config.size)
 
     this.mesh2 = new G.Mesh(geo, mat);
@@ -67,7 +85,6 @@ export default class Scene {
     this.fboHelper = new G.FBOHelper(this.webgl);
 
 
-    this.fboHelper.attach(this.composer.fboIn.colors);
 
 
     this.scene = new G.Object3D();

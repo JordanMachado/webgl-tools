@@ -3,12 +3,14 @@ import Geometry from '../high/Geometry';
 import Shader from '../high/Shader';
 import Primitive from '../high/Primitive';
 import FrameBuffer from '../core/FrameBuffer';
+import FBOHelper from '../utils/FBOHelper';
 const glslify = require('glslify');
 
 export default class Composer {
   constructor(renderer, width, height) {
     this.renderer = renderer;
     this.passes = [];
+    this.helper = new FBOHelper(renderer);
 
     this.shader = new Shader(glslify('./shaders/default.vert'),glslify('./shaders/default.frag'))
     this.geo = new Geometry(Primitive.bigTriangle(1, 1))
@@ -26,18 +28,22 @@ export default class Composer {
       this.renderer.render(scene, camera);
     this.fboIn.unbind();
     // apply passes
+    let count = 0;
     this.passes.forEach( pass => {
       if(pass.enable) {
         this.fboOut.bind();
           this.fboOut.clear();
           pass.uniforms.uTexture = this.fboIn.colors;
+          pass.uniforms.uDepth = this.fboIn.depth;
           pass.uniforms.uTime += 0.0025;
           this.bigTriangle.shader = pass;
           this.renderer.render(this.bigTriangle, camera);
         this.fboOut.unbind();
         this.swap();
       }
+      count++;
       this.outputTexture = this.fboIn.colors;
+      this.helper.renderImediate(this.outputTexture,count)
     });
 
   }

@@ -57,4 +57,11 @@ export default class FBOHelper {
     this.renderer.gl.viewport(0, 0, this.renderer.canvas.width, this.renderer.canvas.height);
 
   }
+  renderImediate(texture, index) {
+    this.shader.uniforms.uTexture = texture;
+    this.renderer.gl.viewport(index *this.size, 0, this.size, this.size );
+    this.renderer.render(this.mesh,this.camera)
+    this.renderer.gl.viewport(0, 0, this.renderer.canvas.width, this.renderer.canvas.height);
+
+  }
 }

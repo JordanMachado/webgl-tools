@@ -43,10 +43,13 @@ class Vector3 {
     this._xyz[2] = value;
     this.onChangeCallback();
   }
+  toString(){
+    return `x: ${this.x}, y: ${this.y}, z: ${this.z}`;
+
+  }
 
 
 }
-
 
 Object.assign(Vector3.prototype, {
   onChange: function(fn) {
