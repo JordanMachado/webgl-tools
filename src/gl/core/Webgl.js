@@ -30,7 +30,7 @@ class CreateContextWebgl {
     Debug.print(`Vanilla GL`);
     Debug.print(`https://github.com/JordanMachado/webgl-tools`);
 
-    
+
     this.canvas = canvas ? canvas : document.createElement('canvas');
 
     this.canvas.style.width = `${width}px`;
@@ -181,11 +181,17 @@ class CreateContextWebgl {
       this.setDefaultUniforms(mesh, camera);
      this.setUniforms(mesh);
      this.bindBuffer(mesh);
-     mesh.geometry.indices.bind()
-     if(mesh.geometry.instanced) {
-       mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.count);
+     if (mesh.geometry.indices) {
+       mesh.geometry.indices.bind()
+       if(mesh.geometry.instanced) {
+         mesh.geometry.indices.drawInstance(mesh.drawType,   mesh.geometry.count);
+       } else {
+         mesh.geometry.indices.draw(mesh.drawType);
+       }
+       mesh.geometry.indices.unbind()
+       
      } else {
-       mesh.geometry.indices.draw(mesh.drawType);
+       mesh.geometry.positions.draw(mesh.drawType);
      }
      this.unbindBuffer(mesh);
    }

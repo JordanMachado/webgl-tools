@@ -29,11 +29,14 @@ import Vector3 from './math/Vector3';
 import Composer from './post/Composer';
 import Pass from './post/Pass';
 import NoisePass from './post/NoisePass';
+import BoxBlurPass from './post/BoxBlurPass';
+import FullBoxBlurPass from './post/FullBoxBlurPass';
 import InvertPass from './post/InvertPass';
 import FXAAPass from './post/FXAAPass';
 import ToonPass from './post/ToonPass';
 import BrightnessContrastPass from './post/BrightnessContrastPass';
 import DofPass from './post/DofPass';
+import TiltPass from './post/TiltPass';
 
 import FBOHelper from './utils/FBOHelper';
 
@@ -79,11 +82,14 @@ const vanilla = {
   Composer,
   Pass,
   NoisePass,
+  BoxBlurPass,
   InvertPass,
   FXAAPass,
   ToonPass,
   BrightnessContrastPass,
   DofPass,
+  TiltPass,
+  FullBoxBlurPass,
   FBOHelper
 }
 export default vanilla;

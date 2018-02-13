@@ -22,24 +22,30 @@ export default class Composer {
     this.passes.push(pass);
   }
   render(scene, camera) {
-    this.camera = camera;
+    // render the scene in the fboIn
     this.fboIn.bind();
       this.fboIn.clear();
       this.renderer.render(scene, camera);
     this.fboIn.unbind();
-
-    this.outputTexture = this.fboIn.colors;
-    this.outputTextureDepth = this.fboIn.depth;
+    // apply passes
     let count = 0;
-
     this.passes.forEach( pass => {
-      pass.process(this,(ouput)=>{
-        this.outputTexture = ouput;
-        count++;
-        this.helper.renderImediate(ouput,count)
-
-      });
+      if(pass.enable) {
+        this.fboOut.bind();
+          this.fboOut.clear();
+          pass.uniforms.uTexture = this.fboIn.colors;
+          pass.uniforms.uDepth = this.fboIn.depth;
+          pass.uniforms.uTime += 0.0025;
+          this.bigTriangle.shader = pass;
+          this.renderer.render(this.bigTriangle, camera);
+        this.fboOut.unbind();
+        this.swap();
+      }
+      count++;
+      this.outputTexture = this.fboIn.colors;
+      this.helper.renderImediate(this.outputTexture,count)
     });
+
   }
   toScreen() {
     this.bigTriangle.shader = this.shader;
@@ -54,8 +60,6 @@ export default class Composer {
   setSize(width, height) {
     this.fboIn = new FrameBuffer(gl, width, height, { depth: true});
     this.fboOut = new FrameBuffer(gl, width, height, { depth: true});
-    this.width = width;
-    this.height = height;
     this.outputTexture = this.fboIn.colors;
 
   }

@@ -49,9 +49,10 @@ export default class ArrayBuffer {
     ext.vertexAttribDivisorANGLE(attribute.location, divisor);
   }
   computeLenght(attribSize) {
-    this.length = this._data.length / attribSize;
+    console.log(attribSize);
+    this.length = Math.floor(this._data.length / attribSize);
   }
-  draw(mode, count, offset) {
+  draw(mode, offset = 0) {
     this.gl.drawArrays(mode, offset, this.length);
   }
 }

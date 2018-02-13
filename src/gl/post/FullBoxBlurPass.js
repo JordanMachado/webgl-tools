@@ -1,13 +1,16 @@
-import Pass from './Pass';
-const glslify = require('glslify');
+import Shader from '../high/Shader';
 import FrameBuffer from '../core/FrameBuffer';
 
-export default class DofPass extends Pass {
+const glslify = require('glslify');
+
+export default class FullBoxBlur {
   constructor(config = {}) {
     const uniforms = {}
-    uniforms.uFocalDistance = config.uFocalDistance || 0.01;
-    uniforms.uAperture = config.uAperture || 0.005;
-    super(glslify('./shaders/dof.frag'), uniforms);
+    this.uAmount = config.uAmount || 2;
+
+    this.shader = new Shader(glslify('./shaders/boxBlur.vert'), glslify('./shaders/boxBlur.frag'), uniforms);
+    this.enable = true;
+    this.fbo = null;
   }
   process(composer, cb) {
     if(!this.fboX) {
@@ -16,20 +19,20 @@ export default class DofPass extends Pass {
     }
     this.fboX.bind();
     this.shader.uniforms.uTexture = composer.outputTexture;
-    this.shader.uniforms.uDelta = [1,0];
+    this.shader.uniforms.uResolution = [composer.width, composer.height];
+    this.shader.uniforms.uDelta = [this.uAmount, 0];
     composer.bigTriangle.shader = this.shader;
     composer.renderer.render(composer.bigTriangle, composer.camera);
     this.fboX.unbind();
 
     this.fboY.bind();
     this.shader.uniforms.uTexture = this.fboX.colors;
-    this.shader.uniforms.uDelta = [0,1];
+    this.shader.uniforms.uResolution = [composer.width, composer.height];
+    this.shader.uniforms.uDelta = [0, this.uAmount];
+
     composer.bigTriangle.shader = this.shader;
     composer.renderer.render(composer.bigTriangle, composer.camera);
     this.fboY.unbind();
-
-
-
     cb(this.fboY.colors)
   }
 }

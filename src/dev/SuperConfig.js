@@ -9,10 +9,7 @@ import DefaultConfig from '../DefaultConfig';
     };
     this.gui = new dat.GUI();
     this.gui.folders = {};
-    this.gui.folders.root = this.gui.addFolder('experiment');
-    this.gui.folders.root.open();
-    this.gui.folders.root.add(this, 'reload');
-    this.gui.folders.root.add(this, 'log');
+
     this.controls = {}
 
     if(Query.config) {
@@ -20,9 +17,27 @@ import DefaultConfig from '../DefaultConfig';
       this.gui.folders.config.open();
       this.config = Query.config;
 
+      for(const key in DefaultConfig) {
+        if(!Query.config.hasOwnProperty(key)) {
+          this.config = DefaultConfig;
+        }
+      }
+      for(const key in Query.config) {
+        if(!DefaultConfig.hasOwnProperty(key)) {
+          this.config = DefaultConfig;
+        }
+      }
+
       this.parseConfig(this.config,this.gui.folders.config, 'config');
       this.updateConfig();
+
+
     }
+
+    this.gui.folders.root = this.gui.addFolder('experiment');
+    this.gui.folders.root.open();
+    this.gui.folders.root.add(this, 'reload');
+    this.gui.folders.root.add(this, 'log');
   }
   updateConfig() {
 
@@ -38,7 +53,7 @@ import DefaultConfig from '../DefaultConfig';
   }
   log() {
     this.updateConfig();
-    console.log('Current Config');
+    console.log('Current Config:');
     console.log(this.config);
   }
   reload() {

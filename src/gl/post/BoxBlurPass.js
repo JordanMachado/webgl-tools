@@ -3,9 +3,12 @@ import FrameBuffer from '../core/FrameBuffer';
 
 const glslify = require('glslify');
 
-export default class Pass {
-  constructor(fs , uniforms = {}) {
-    this.shader = new Shader(glslify('./shaders/default.vert'), fs, uniforms);
+export default class BoxBlur {
+  constructor(config = {}) {
+    const uniforms = {}
+    uniforms.uDelta = config.uDelta || [0,0];
+
+    this.shader = new Shader(glslify('./shaders/boxBlur.vert'), glslify('./shaders/boxBlur.frag'), uniforms);
     this.enable = true;
     this.fbo = null;
   }
@@ -15,6 +18,7 @@ export default class Pass {
     }
     this.fbo.bind();
     this.shader.uniforms.uTexture = composer.outputTexture;
+    this.shader.uniforms.uResolution = [composer.width, composer.height];
     composer.bigTriangle.shader = this.shader;
     composer.renderer.render(composer.bigTriangle, composer.camera);
     this.fbo.unbind();

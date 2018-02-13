@@ -11,6 +11,9 @@ export default class ArrayBuffer {
   bind() {
     this.gl.bindBuffer(ELEMENT_ARRAY_BUFFER, this.buffer);
   }
+  unbind() {
+    this.gl.bindBuffer(ELEMENT_ARRAY_BUFFER, null);
+  }
   data(data, usage) {
     this.bind();
     this.gl.bufferData(ELEMENT_ARRAY_BUFFER , new Uint16Array(data), this.usage);
