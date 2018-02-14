@@ -6,6 +6,6 @@ export default class BrightnessContrastPass extends Pass {
     const uniforms = {}
     uniforms.uBrightness = config.uBrightness || 0;
     uniforms.uContrast = config.uContrast || 0;
-    super(glslify('./shaders/brightness-contrast.frag'), uniforms);
+    super(glslify('./shaders/brightness-contrast.frag'), uniforms, 'BrightnessContrastPass');
   }
 }

@@ -5,6 +5,6 @@ export default class FXAAPass extends Pass {
   constructor(config = {}) {
     const uniforms = {};
     uniforms.uAmount = config.uResolution || [1,1];
-    super(glslify('./shaders/fxaa.frag'), uniforms);
+    super(glslify('./shaders/fxaa.frag'), uniforms, 'FXAAPass');
   }
 }

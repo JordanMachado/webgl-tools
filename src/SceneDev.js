@@ -39,7 +39,7 @@ export default class Scene {
     this.fxaa = new G.FXAAPass({
       uResolution: [window.innerWidth, window.innerHeight]
     });
-    // this.composer.add(this.fxaa)
+    this.composer.add(this.fxaa)
 
     //
     this.toon = new G.ToonPass({
@@ -61,8 +61,8 @@ export default class Scene {
 
 
     this.noise = new G.NoisePass();
-    this.tilt = new G.FullBoxBlurPass();
-    this.composer.add(this.tilt)
+    this.bloom = new G.BloomPass();
+    this.composer.add(this.bloom)
     // this.composer.add(this.noise)
     // this.composer.add(this.invert)
 
@@ -196,7 +196,7 @@ export default class Scene {
 
 
 
-    // this.scene.addChild(this.strangeAttractor);
+    this.scene.addChild(this.strangeAttractor);
     // this.scene.addChild(this.mesh);
     this.y = 0;
 

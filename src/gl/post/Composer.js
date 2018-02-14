@@ -12,7 +12,7 @@ export default class Composer {
     this.passes = [];
     this.helper = new FBOHelper(renderer);
 
-    this.shader = new Shader(glslify('./shaders/default.vert'),glslify('./shaders/default.frag'))
+    this.shader = new Shader(glslify('./shaders/default.vert'),glslify('./shaders/default.frag'), {}, 'Composer')
     this.geo = new Geometry(Primitive.bigTriangle(1, 1))
     this.bigTriangle = new Mesh(this.geo, this.shader);
     this.setSize(width, height);
@@ -20,6 +20,7 @@ export default class Composer {
   }
   add(pass) {
     this.passes.push(pass);
+    pass.initialize(this);
   }
   render(scene, camera) {
     this.camera = camera;
@@ -33,13 +34,19 @@ export default class Composer {
     let count = 0;
 
     this.passes.forEach( pass => {
-      pass.process(this,(ouput)=>{
+      pass.process(this.outputTexture, (ouput) => {
         this.outputTexture = ouput;
         count++;
         this.helper.renderImediate(ouput,count)
 
       });
     });
+  }
+  pass(fbo, shader) {
+    fbo.bind()
+    this.bigTriangle.shader = shader;
+    this.renderer.render(this.bigTriangle, this.camera);
+    fbo.unbind()
   }
   toScreen() {
     this.bigTriangle.shader = this.shader;

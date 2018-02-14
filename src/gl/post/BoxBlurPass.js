@@ -8,7 +8,7 @@ export default class BoxBlur {
     const uniforms = {}
     uniforms.uDelta = config.uDelta || [0,0];
 
-    this.shader = new Shader(glslify('./shaders/boxBlur.vert'), glslify('./shaders/boxBlur.frag'), uniforms);
+    this.shader = new Shader(glslify('./shaders/boxBlur.vert'), glslify('./shaders/boxBlur.frag'), uniforms, 'BoxBlurPass');
     this.enable = true;
     this.fbo = null;
   }

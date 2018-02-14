@@ -37,6 +37,8 @@ import ToonPass from './post/ToonPass';
 import BrightnessContrastPass from './post/BrightnessContrastPass';
 import DofPass from './post/DofPass';
 import TiltPass from './post/TiltPass';
+import BlendPass from './post/BlendPass';
+import BloomPass from './post/BloomPass';
 
 import FBOHelper from './utils/FBOHelper';
 
@@ -88,8 +90,10 @@ const vanilla = {
   ToonPass,
   BrightnessContrastPass,
   DofPass,
+  BloomPass,
   TiltPass,
   FullBoxBlurPass,
+  BlendPass,
   FBOHelper
 }
 export default vanilla;

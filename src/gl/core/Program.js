@@ -8,6 +8,7 @@ import {
 import webglNumber from '../const/webglNumber';
 import Debug from '../utils/Debug';
 const uniformMap = {
+ INT: 'uniform1i',
  FLOAT: 'uniform1f',
  FLOAT_VEC2: 'uniform2f',
  FLOAT_VEC3: 'uniform3f',
@@ -19,6 +20,7 @@ const uniformMap = {
 
  const attributesMapSize = {
   FLOAT: 1,
+  INT: 1,
   FLOAT_VEC2: 2,
   FLOAT_VEC3: 3,
   FLOAT_VEC4: 4,
@@ -100,7 +102,7 @@ export default class Program {
       let uniform = this.gl.getActiveUniform(this.program, i);
       let uLocation = this.gl.getUniformLocation( this.program, uniform.name );
       let uFunction = uniformMap[webglNumber[uniform.type]];
-      Debug.log(`Uniform generated: ${uniform.name}`)
+      Debug.log(`Uniform generated: ${uniform.name} | ${webglNumber[uniform.type]}`)
       this.uniforms[uniform.name] = null;
 
       Object.defineProperty(this.uniforms, uniform.name, {
@@ -114,7 +116,11 @@ export default class Program {
 
               if(!value.length) {
                 if(uFunction === 'uniform1i') {
-                  this.gl[uFunction](uLocation, value._bindIndex);
+                  if(webglNumber[uniform.type] === 'INT') {
+                    this.gl[uFunction](uLocation, value);
+                  } else {
+                    this.gl[uFunction](uLocation, value._bindIndex);
+                  }
                 } else {
 
                   this.gl[uFunction](uLocation, value);

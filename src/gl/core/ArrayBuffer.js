@@ -49,7 +49,6 @@ export default class ArrayBuffer {
     ext.vertexAttribDivisorANGLE(attribute.location, divisor);
   }
   computeLenght(attribSize) {
-    console.log(attribSize);
     this.length = Math.floor(this._data.length / attribSize);
   }
   draw(mode, offset = 0) {

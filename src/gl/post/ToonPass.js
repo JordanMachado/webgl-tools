@@ -5,6 +5,6 @@ export default class ToonPass extends Pass {
   constructor(config = {}) {
     const uniforms = {}
     uniforms.uAmount = config.uResolution || [1,1];
-    super(glslify('./shaders/toon.frag'), uniforms);
+    super(glslify('./shaders/toon.frag'), uniforms, 'ToonPass');
   }
 }

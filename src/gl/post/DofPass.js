@@ -7,7 +7,7 @@ export default class DofPass extends Pass {
     const uniforms = {}
     uniforms.uFocalDistance = config.uFocalDistance || 0.01;
     uniforms.uAperture = config.uAperture || 0.005;
-    super(glslify('./shaders/dof.frag'), uniforms);
+    super(glslify('./shaders/dof.frag'), uniforms, 'DofPass');
   }
   process(composer, cb) {
     if(!this.fboX) {
