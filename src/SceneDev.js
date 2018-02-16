@@ -10,7 +10,7 @@ import SuperConfig from './dev/SuperConfig';
 import Screenshot from './dev/Screenshot';
 import PingPong from './gl/utils/PingPong';
 import { mat4, mat3 } from 'gl-matrix';
-
+import colorScheme from 'color-scheme'
 
 if(Query.verbose) {
   G.debug.verbose = true;
@@ -22,13 +22,12 @@ export default class Scene {
     this.webgl = new G.Webgl();
     this.time = 0
     this.bgC = '#000000';
-    this.webgl.clearColor(this.bgC, 1);
     this.webgl.append();
 
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
     this.camera.lookAt([0,0,100],[0,0,0])
 
-    this.controls = new OrbitalCameraControl(this.camera.view, 20, window);
+    this.controls = new OrbitalCameraControl(this.camera.view, 40, window);
 
     if(Query.debug) {
       this.screenshot = new Screenshot(this);
@@ -53,16 +52,16 @@ export default class Scene {
       uContrast:0.8,
     });
 
-    this.dof = new G.DofPass({
-      uBrightness:-0.1,
-      uContrast:0.8,
-    });
-    // this.composer.add(this.dof)
+    this.tilt = new G.TiltPass();
 
 
     this.noise = new G.NoisePass();
-    this.bloom = new G.BloomPass();
+    this.bloom = new G.BloomPass({
+      amount:2
+    });
     this.composer.add(this.bloom)
+    this.composer.add(this.tilt)
+
     // this.composer.add(this.noise)
     // this.composer.add(this.invert)
 
@@ -72,7 +71,7 @@ export default class Scene {
     this.fboHelper = new G.FBOHelper(this.webgl);
 
     let width, height;
-    width = height = ddevice ==='desktop'? 256 : 128;
+    width = height = ddevice ==='desktop'? 256 : 256;
 
     const positions = new Float32Array(width * height * 3)
     const colors = new Float32Array(width * height * 3)
@@ -85,6 +84,29 @@ export default class Scene {
       G.Utils.hexToRgb('#BEA2F6'),
       G.Utils.hexToRgb('#CCB7F6'),
     ]
+
+    var scm = new colorScheme();
+    scm.from_hue(Math.random()* 255)
+   .scheme('triade')
+   .distance(0.1)
+   .add_complement(false)
+   .variation('pastel')
+   .web_safe(true);
+
+this.colors = scm.colors();
+console.log(this.colors);
+this.colors= this.colors.map((color )=> {
+  // console.log(color, ;
+  return G.Utils.hexToRgb('#'+color)
+});
+console.log(this.colors);
+let bgColor = this.colors[Math.floor(Math.random() * this.colors.length)]
+bgColor = bgColor.map(c =>{
+  return c * 0.1
+})
+this.webgl.clearColor(bgColor);
+
+
 
     let count = 0;
 
@@ -122,6 +144,7 @@ export default class Scene {
 
        x = newX, y = newY, z = newZ;
       const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+      // console.log(color);
       // console.log(color,Math.floor(Math.random() * this.colors.length-1));
       colors[count * 3 + 0] = color[0];
       colors[count * 3 + 1] = color[1];
@@ -145,9 +168,10 @@ export default class Scene {
       uvs,
       flat:true
     });
+    geometry.addAttribute('colors', colors, true)
     const material = new G.Shader(
     glslify('./shaders/attractor.vert'),
-    glslify('./shaders/base.frag'),
+    glslify('./shaders/attractor.frag'),
     {
       uPointSize:2.
     })
@@ -173,7 +197,8 @@ export default class Scene {
       glslify('./shaders/base.frag'),
       {
         uPosition:dataText,
-        uUVpos:[0,0.0]
+        uUVpos:[0,0.0],
+        uColor: this.colors[Math.floor(Math.random() * this.colors.length)]
       })
 
 
@@ -183,10 +208,10 @@ export default class Scene {
       // 1/256
       mesh.time = 0.0039062500 * (Math.floor(Math.random()* 256))
       mesh.y = 0
-      // mesh.uvOffset = [0,0]
+
 
       this.scene.addChild(mesh);
-        this.meshes.push(mesh);
+      this.meshes.push(mesh);
     }
     // this.mesh = new G.Mesh(geo, mat);
 

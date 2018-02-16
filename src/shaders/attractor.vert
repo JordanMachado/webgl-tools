@@ -1,5 +1,6 @@
 attribute vec3 aPosition;
 attribute vec2 aUv;
+attribute vec3 aColor;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -14,6 +15,7 @@ uniform sampler2D uPosition;
 varying vec3 vNormal;
 varying vec4 vShadowCoord;
 varying vec2 vUv;
+varying vec3 vColor;
 
 
 void main() {
@@ -21,5 +23,6 @@ void main() {
   gl_Position = projectionMatrix * viewMatrix * worldMatrix * p;
   gl_PointSize = uPointSize;
   vUv = aUv;
+  vColor = aColor;
   vShadowCoord = uShadowMatrix * worldMatrix * p;
 }

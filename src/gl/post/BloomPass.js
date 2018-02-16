@@ -32,8 +32,8 @@ var BlendMode = {
 
 
 export default class Pass {
-  constructor() {
-
+  constructor(config = {}) {
+		this.amount = config.amount || 2;
   }
   initialize(composer) {
     if(!this.fbo) {
@@ -42,7 +42,7 @@ export default class Pass {
     this.composer = composer;
 
     this.fullBoxBlurPass = new FullBoxBlurPass({
-			uAmount:5
+			uAmount:this.amount
 		});
     this.fullBoxBlurPass.initialize(composer);
 

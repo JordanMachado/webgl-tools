@@ -21,7 +21,7 @@ varying vec2 vUv;
 
 void main() {
   vec3 pos = texture2D(uPosition, uUVpos).xyz;
-  vec4 p = vec4(aPosition + pos, 1.0);
+  vec4 p = vec4(aPosition + pos * 3., 1.0);
 
   gl_Position = projectionMatrix * viewMatrix * worldMatrix * p;
   vUv = aUv;

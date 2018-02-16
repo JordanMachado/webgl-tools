@@ -79,8 +79,11 @@ class CreateContextWebgl {
     if(arguments.length === 2) {
        const color = Utils.hexToRgb(r);
       this.gl.clearColor(color[0], color[1], color[2], v);
-    } else {
+    } else if(arguments.length === 4){
       this.gl.clearColor(r, v, b, a);
+    } else {
+      this.gl.clearColor(r[0],r[1],r[2],1);
+
     }
 
   }
@@ -189,7 +192,7 @@ class CreateContextWebgl {
          mesh.geometry.indices.draw(mesh.drawType);
        }
        mesh.geometry.indices.unbind()
-       
+
      } else {
        mesh.geometry.positions.draw(mesh.drawType);
      }
