@@ -7,9 +7,10 @@ import FBOHelper from '../utils/FBOHelper';
 const glslify = require('glslify');
 
 export default class Composer {
-  constructor(renderer, width, height) {
+  constructor(renderer, width, height, debug = true) {
     this.renderer = renderer;
     this.passes = [];
+    if(debug)
     this.helper = new FBOHelper(renderer);
 
     this.shader = new Shader(glslify('./shaders/default.vert'),glslify('./shaders/default.frag'), {}, 'Composer')
@@ -37,10 +38,13 @@ export default class Composer {
       pass.process(this.outputTexture, (ouput) => {
         this.outputTexture = ouput;
         count++;
+        if(this.helper)
         this.helper.renderImediate(ouput,count)
 
       });
     });
+    this.toScreen();
+
   }
   pass(fbo, shader) {
     fbo.bind()

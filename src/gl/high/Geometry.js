@@ -47,4 +47,9 @@ export default class Geometry {
     });
     return this;
   }
+  generateFaces() {
+    const faces = ArrayUtils.generateFaces(this.positions._data, this.indices._data);
+    this.faces = faces;
+    return this.faces;
+  }
 }

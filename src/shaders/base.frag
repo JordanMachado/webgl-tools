@@ -1,26 +1,23 @@
 precision mediump float;
-
-uniform sampler2D uShadowMap;
-uniform vec3 uColor;
-
-varying vec3 vNormal;
 varying vec2 vUv;
-varying vec4 vShadowCoord;
+varying vec3 vCenter;
+varying vec3 vNormal;
+varying vec3 vVel;
 
+float diffuse(vec3 N, vec3 L) {
+    return max(dot(N, normalize(L)), 0.0);
+}
+
+
+vec3 diffuse(vec3 N, vec3 L, vec3 C) {
+    return diffuse(N, L) * C;
+}
 
 
 void main() {
-  //
-  // vec4 shadowCoord = vShadowCoord / vShadowCoord.w;
-  // vec2 uv = shadowCoord.xy;
-  // // vec4 shadow = texture2D( uShadowMap, uv.xy );
-  // // vec4 shadow = texture2D( uShadowMap, vUv );
-  // float visibility = 1.0;
-  //
-  // if ( shadow.r < shadowCoord.z - 0.005){
-  //   visibility = 0.0;
-  // }
-  // gl_FragColor = vec4(vec3(visibility) * vec3(1.0), 1.0);
-  // gl_FragColor = vec4(vec3(shadow.rgb), 1.0);
-  gl_FragColor = vec4(uColor, 1.0);
+  vec3 color = vCenter;
+  vec3 light =  diffuse(vNormal, vec3(0.0,1.0,1.0), vec3(1.0));
+
+  // color = vVel;
+  gl_FragColor = vec4( vNormal - light + vVel * 0.05, 1.0);
 }

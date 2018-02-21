@@ -1,6 +1,6 @@
 //https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/bufferData
 import { ELEMENT_ARRAY_BUFFER, STATIC_DRAW, UNSIGNED_SHORT } from '../const/webglConst';
-export default class ArrayBuffer {
+export default class IndexBuffer {
   constructor({ context, data, usage }) {
     this.gl = context;
     this.buffer = this.gl.createBuffer();
@@ -18,6 +18,8 @@ export default class ArrayBuffer {
     this.bind();
     this.gl.bufferData(ELEMENT_ARRAY_BUFFER , new Uint16Array(data), this.usage);
     this.gl.bindBuffer(ELEMENT_ARRAY_BUFFER , null);
+    this._data = data;
+    
   }
   draw(mode, offset) {
     // console.log(this.length);

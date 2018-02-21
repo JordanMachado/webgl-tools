@@ -43,7 +43,8 @@ const primtives = {
       positions,
       indices,
       normals,
-      uvs
+      uvs,
+      flat:true
     }
 
 

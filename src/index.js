@@ -21,17 +21,15 @@ domready(()=> {
     document.body.classList.add('loading');
     loader.on('complete', function(assets) {
      document.body.classList.remove('loading');
-     document.title = SuperConfig.config.name;
-
      window.assets = assets;
      init();
-     
      if(Query.debug)
       console.table(assets);
    })
    .start();
   } else {
     init();
+
   }
 
 });
@@ -39,6 +37,8 @@ domready(()=> {
 let scene;
 
 function init() {
+  document.title = SuperConfig.config.name;
+
   if(Query.develop) {
     scene = new SceneDev()
   } else {

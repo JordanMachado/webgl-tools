@@ -1,13 +1,11 @@
 const config = {
-  name: 'Experiment',
-  postPro:false,
-  a:5,
-  b:15,
-  c:1,
-  interval:0.01,
-  x:0.05,
-  y:0.05,
-  z:0.05,
+  name: 'Verlet',
+  postPro: true,
+  sphereSize:2,
+  friction: 0.999,
+  gravity:0.001,
+  forceMultiplier:0.1,
+  drawType:'TRIANGLES'
 }
 
 export default config;

@@ -18,13 +18,17 @@ import Geometry from './high/Geometry';
 import Mesh from './high/Mesh';
 import Shader from './high/Shader';
 import Primitive from './high/Primitive';
+import BasicMaterial from './high/BasicMaterial';
 
 
 
 import Utils from './utils/Utils';
 import ArrayUtils from './utils/ArrayUtils';
+import ObjParser from './utils/ObjParser';
 import Debug from './utils/Debug';
+import HitDetect from './utils/HitDetect';
 import Vector3 from './math/Vector3';
+
 
 import Composer from './post/Composer';
 import Pass from './post/Pass';
@@ -69,6 +73,7 @@ const vanilla = {
   Shader,
   Primitive,
   State,
+  BasicMaterial,
 
   // Utils
   Utils,
@@ -94,6 +99,8 @@ const vanilla = {
   TiltPass,
   FullBoxBlurPass,
   BlendPass,
-  FBOHelper
+  FBOHelper,
+  ObjParser,
+  HitDetect,
 }
 export default vanilla;

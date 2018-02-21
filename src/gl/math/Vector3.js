@@ -9,7 +9,7 @@ class Vector3 {
     return this._xyz;
   }
   set (x, y, z) {
-    if(arguments > 1) {
+    if(arguments.length > 1) {
       this._xyz[0]  = x;
       this._xyz[1]  = y;
       this._xyz[2]  = z;

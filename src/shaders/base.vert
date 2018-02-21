@@ -3,28 +3,34 @@ precision highp float;
 attribute vec3 aPosition;
 attribute vec3 aNormal;
 attribute vec2 aUv;
+attribute vec2 aOffset;
+attribute vec3 aCenter;
+attribute vec2 aUvsCenter;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 worldMatrix;
 uniform mat4 uShadowMatrix;
 uniform mat3 normalMatrix;
+uniform float uForce;
+uniform sampler2D uTexture;
 
-uniform sampler2D uPosition;
-uniform float uPointSize;
-uniform vec2 uUVpos;
 
 varying vec3 vNormal;
-varying vec4 vShadowCoord;
+varying vec3 vCenter;
+varying vec3 vVel;
 varying vec2 vUv;
 
 
-void main() {
-  vec3 pos = texture2D(uPosition, uUVpos).xyz;
-  vec4 p = vec4(aPosition + pos * 3., 1.0);
 
+void main() {
+  vec4 p = vec4(aPosition, 1.0);
+  vec4 off = texture2D(uTexture, aUv);
+  p.xyz += off.xyz * uForce;
   gl_Position = projectionMatrix * viewMatrix * worldMatrix * p;
+  gl_PointSize = 10.0;
   vUv = aUv;
-  vNormal = normalize(normalMatrix * aNormal);
-  vShadowCoord = uShadowMatrix * worldMatrix * p;
+  vNormal = aNormal;
+  vCenter = vec3(aUvsCenter,1.0);
+  vVel = vec3(off);
 }

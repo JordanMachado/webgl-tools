@@ -26,10 +26,11 @@ function _generateMeshes(o) {
     const indices = new Uint16Array(o.indices)
 
     return {
-      coords,
+      uvs:coords,
       positions,
       normals,
-      indices
+      indices,
+      flat:true
     };
 }
 
