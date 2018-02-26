@@ -46,7 +46,7 @@ class HitDetect extends EventEmitter {
 
 
 		this.ray = new Ray([0, 0, 0], [0, 0, 0]);
-		this.hit = vec3.fromValues(-999, -999, -999);
+		this.hit = vec3.fromValues(0, 0, 0);
 
 
 		this.b_onDown = this._onDown.bind(this);

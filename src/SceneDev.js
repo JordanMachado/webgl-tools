@@ -44,9 +44,9 @@ export default class Scene {
 
     if(Query.debug) {
       this.screenshot = new Screenshot(this);
+      this.fboHelper = new G.FBOHelper(this.webgl);
 
     }
-    this.fboHelper = new G.FBOHelper(this.webgl);
 
 
     this.composer = new G.Composer(this.webgl, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
@@ -164,7 +164,7 @@ export default class Scene {
     this.mesh = new G.Mesh(geo, mat);
     this.mesh.drawType = gl[SuperConfig.config.drawType];
 
-    // this.scene.addChild(this.mesh);
+    this.scene.addChild(this.mesh);
 
 
     //
@@ -179,13 +179,17 @@ export default class Scene {
 
 
     this.quad = new G.Mesh(new G.Geometry(G.Primitive.plane()), new G.BasicMaterial());
-    this.scene.addChild(this.quad)
+    this.quad.scale.set(100);
+    // this.scene.addChild(this.quad)
 
-    this.sphere = new G.Mesh(new G.Geometry(G.Primitive.sphere()), new G.BasicMaterial());
+    this.sphere = new G.Mesh(new G.Geometry(G.Primitive.sphere()), new G.BasicMaterial({
+      // color: [1,0,0],
+      // texture: dataText
+    }));
     this.sphere.scale.set(0.2)
     this.scene.addChild(this.sphere)
 
-    // this.hitDetect = new G.HitDetect(this.quad, this.camera)
+    this.hitDetect = new G.HitDetect(this.quad, this.camera)
 
 
 
@@ -197,7 +201,7 @@ export default class Scene {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }
   updatePoints() {
-    const friction = SuperConfig.config.friction
+    const friction = 1
     for (var i = 0; i < this.points.length; i++) {
       const p = this.points[i];
       if(!p.pinned) {
@@ -241,6 +245,11 @@ export default class Scene {
 
       }
     }
+    // setInterval(()=>{
+    //   for (var i = 0; i < this.points.length; i++) {
+    //     this.points[i].oldx = Math.random() * 0.1
+    //   }
+    // },4000)
   }
 
   render() {
@@ -273,12 +282,15 @@ export default class Scene {
     } else {
       this.webgl.render(this.scene, this.camera);
     }
-
-    // this.fboHelper.render();
-    this.points[this.points.length-1].x += (this.mouse.x - this.points[this.points.length-1].x) * 0.1
-    this.points[this.points.length-1].y += (this.mouse.y - this.points[this.points.length-1].y) * 0.1
+    if(this.fboHelper)
+    this.fboHelper.render();
+    this.points[this.points.length-1].x = this.hitDetect.hit[0]
+    this.points[this.points.length-1].y = this.hitDetect.hit[1]
+    // console.log(this.points[this.points.length-1].x);
     // this.quad.position.x = 2;
 
+    this.sphere.position.x += (this.hitDetect.hit[0] - this.sphere.position.x) * 0.1
+    this.sphere.position.y += (this.hitDetect.hit[1] - this.sphere.position.y) * 0.1
 
     // this.sphere.position.set(this.hitDetect.hit[0],this.hitDetect.hit[1],this.hitDetect.hit[2])
 

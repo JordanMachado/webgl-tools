@@ -14,7 +14,23 @@ vec3 diffuse(vec3 N, vec3 L, vec3 C) {
 }
 
 
+#ifdef COLOR
+uniform vec3 uColor;
+#endif
+
+#ifdef TEXTURE
+uniform sampler2D uTexture;
+#endif
 void main() {
+  vec4 finalColor = vec4(1.0);
   vec3 light = diffuse(vNormal, vec3(0.0,0.0,1.0), vec3(1.0));
-  gl_FragColor = vec4( light, 1.0);
+
+  #ifdef TEXTURE
+    finalColor = texture2D(uTexture, vUv);
+  #endif
+
+  #ifdef COLOR
+    finalColor.rgb *= uColor;
+  #endif
+  gl_FragColor = vec4(finalColor.rgb, finalColor.a);
 }
