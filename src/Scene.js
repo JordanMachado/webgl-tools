@@ -2,241 +2,329 @@ import G from './gl';
 const glslify = require('glslify');
 import deviceType from 'ua-device-type';
 window.ddevice = deviceType(navigator.userAgent);
-
-import OrbitalCameraControl from 'orbital-camera-control';
+window.G = G;
+import OrbitalCameraControl from './gl/utils/OrbitalCameraControl';
 import Query from './dev/Query';
-import PingPong from './gl/utils/PingPong';
-import Screenshot from './dev/Screenshot';
 import SuperConfig from './dev/SuperConfig';
 
+import Screenshot from './dev/Screenshot';
+import PingPong from './gl/utils/PingPong';
 import { mat4, mat3 } from 'gl-matrix';
-if(!Query.verbose) {
-  G.debug.verbose = false;
-}
+import colorScheme from 'color-scheme'
+import sphere from './sphere'
 
+if(Query.verbose) {
+  G.debug.verbose = true;
+}
 
 export default class Scene {
   constructor() {
     window.scene = this;
     this.webgl = new G.Webgl();
-
-    this.bgC = '#f7e0ff';
-    this.webgl.clearColor(this.bgC, 1);
+    this.time = 0
+    this.bgC = '#000000';
     this.webgl.append();
 
-    this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
-    this.camera.lookAt([0,0,100],[0,0,0])
-    let s = 50;
-    this.cameraShadow = new G.OrthographicCamera(-s,s,-s,s, 0.1 ,300);
-    this.cameraShadow.lookAt([0,50,0.1],[0,0,0])
-    // console.log(this.cameraShadow.projection,this.cameraShadow.view);
+    this.mouse = {
+      x:0,
+      y:0,
+    }
+    window.addEventListener('mousemove', (e)=> {
+      this.mouse.x = ((e.clientX/ window.innerWidth) - 0.5 )* 2;
+      this.mouse.y = -((e.clientY/ window.innerWidth) - 0.5 )* 2;
+      this.mouse.x *=5;
+      this.mouse.y *=5;
 
-    this.mvpDepth = mat4.create();
-		mat4.multiply(this.mvpDepth, this.cameraShadow.projection, this.cameraShadow.view)
-		const biaMatrix = mat4.fromValues(
-			0.5, 0.0, 0.0, 0.0,
-			0.0, 0.5, 0.0, 0.0,
-			0.0, 0.0, 0.5, 0.0,
-			0.5, 0.5, 0.5, 1.0
-		);
-		mat4.multiply(this.mvpDepth, biaMatrix, this.mvpDepth);
-		// mat4.multiply(this.mvpDepth,  this.mvpDepth,biaMatrix);
+    });
 
-    this.controls = new OrbitalCameraControl(this.camera.view, 100, window);
-    this.mouse = [0.1,0.1,1];
-    // this.mouse = [1,1,1];
-    window.addEventListener('mousemove', (e)=>{
-      this.mouse[0] = (e.clientX/window.innerWidth) * 70
-      this.mouse[1] = -(e.clientY/window.innerHeight) * 100 + 100
+    this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
+
+
+    this.controls = new OrbitalCameraControl(this.camera, 10, window);
+
+    if(Query.debug) {
+      this.screenshot = new Screenshot(this);
+      this.fboHelper = new G.FBOHelper(this.webgl);
+
+    }
+
+    this.composer = new G.Composer(this.webgl, window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, !!Query.debug);
+    // this.fxaa = new G.FXAAPass()
+    // this.fxaa.enable = SuperConfig.config.fxaa;
+    // this.composer.add(this.fxaa)
+    // SuperConfig.addChange(SuperConfig.controls.config.fxaa, (value)=>{
+    //   this.fxaa.enable = SuperConfig.config.fxaa;
+    //
+    // })
+
+    this.noise = new G.NoisePass({
+      uSpeed:1,
+      uAmount:0.2,
     })
-    // this.controls.lock(true)
-    // this.controls.lockZoom(true)
-    this.time = 0;
+    this.noise.enable = SuperConfig.config.noise;
+
+    // SuperConfig.addChange(SuperConfig.controls.config.noise, (value)=>{
+    //   this.noise.enable = SuperConfig.config.noise;
+    //
+    // })
+    this.composer.add(this.noise)
+    this.invert = new G.InvertPass();
+    this.invert.enable = SuperConfig.config.invert;
+    // SuperConfig.addChange(SuperConfig.controls.config.invert, (value)=>{
+    //   this.invert.enable = SuperConfig.config.invert;
+    //
+    // })
+
+    this.composer.add(this.invert)
+    this.bloom = new G.BloomPass({amount:3})
+
+    this.composer.add(this.bloom)
+    this.bloom.enable = SuperConfig.config.bloom;
+    // SuperConfig.addChange(SuperConfig.controls.config.bloom, (value)=>{
+    //   this.bloom.enable = SuperConfig.config.bloom;
+    //
+    // })
+    this.scene = new G.Object3D();
 
 
-      if(Query.debug) {
-        this.screenshot = new Screenshot(this);
+    // console.log(G.ObjParser(sphere),G.ArrayUtils.flatten(this.centers).length);
+    const primitive = G.ObjParser(sphere);
+
+    // console.log(primitive);
+    const faces = G.ArrayUtils.generateFaces(primitive.positions, primitive.indices);
+
+
+    function center(a,b,c) {
+      var centerX = ((a[0] + b[0] + c[0]) / 3);
+      var centerY = ((a[1] + b[1] + c[1]) / 3);
+      var centerZ = ((a[2] + b[2] + c[2]) / 3);
+      return [centerX, centerY, centerZ];
+    }
+
+    this.colors = [
+      G.Utils.hexToRgb('#A684EE'),
+      G.Utils.hexToRgb('#8775AD'),
+      G.Utils.hexToRgb('#492593'),
+      G.Utils.hexToRgb('#BEA2F6'),
+      G.Utils.hexToRgb('#CCB7F6'),
+    ]
+
+
+    this.centers = new Float32Array(primitive.positions.length)
+    this.uvsCenter = new Float32Array(primitive.uvs.length)
+    let count = 0;
+    this.points = [];
+    let counter = 0;
+    for (var i = 0; i < faces.length; i++) {
+      let face = faces[i];
+      let _center = center(face.vertices[0],face.vertices[1],face.vertices[2])
+
+      const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        this.points.push({
+          x:_center[0],
+          y:_center[1],
+          z:_center[2],
+          oldx:_center[0],
+          oldy:_center[1],
+          oldz:_center[2],
+          pinned:false
+        })
+      for (var l = 0; l < 3; l++) {
+        this.centers[count] = _center[0]
+        this.centers[count +1] = _center[1]
+        this.centers[count +2] = _center[2]
+
+        this.uvsCenter[ count* 2 + 0] = (counter % 12) / 12;
+        this.uvsCenter[ count * 2 + 1] = Math.floor(counter / 12) / 12;
+        // console.log((counter % 24) / 24, Math.floor(counter / 24) / 24);
+        // count += 3;
+        // counter++;
+
       }
 
+    }
+    this.points.push({
+      x:0,
+      y:0,
+      z:0,
+      oldx:0,
+      oldy:0,
+      oldz:0,
+      pinned:false
+    })
+    // console.log(this.centers.length);
 
-      const width = ddevice ==='desktop'? 256 : 128;
-      const height = ddevice ==='desktop' ? 256 : 128;
-      const offsets = new Float32Array(width * height * 4)
-      const velocity = new Float32Array(width * height * 4)
-      const colors = new Float32Array(width * height * 3)
-      const uvs = new Float32Array(width * height * 2);
-      // A684EE	8775AD	492593	BEA2F6	CCB7F6
-      this.colors = [
-        G.Utils.hexToRgb('#A684EE'),
-        G.Utils.hexToRgb('#8775AD'),
-        G.Utils.hexToRgb('#492593'),
-        G.Utils.hexToRgb('#BEA2F6'),
-        G.Utils.hexToRgb('#CCB7F6'),
-      ]
+    this.sticks = [];
+    for (var i = 0; i < this.points.length; i++) {
 
-      let count = 0;
-      for (var i = 0; i < width * height * 4; i+=4) {
-        const r = Math.random() * (Math.PI*2);
-        // console.log( Math.cos(r));
-        offsets[i] = Math.cos(r) *( Math.random() * (4 + 4) - 4)
-        offsets[i + 1] = Math.sin(r) * (Math.random() * (4 + 4) - 4)
-        offsets[i + 2] = Math.random() * (4 + 4) - 4
-        offsets[i + 3] = Math.random();
-        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
-        // console.log(color,Math.floor(Math.random() * this.colors.length-1));
-        colors[count * 3 + 0] = color[0];
-        colors[count * 3 + 1] = color[1];
-        colors[count * 3 + 2] = color[2];
+        this.sticks.push({
+          p0: this.points[i],
+          p1: this.points[this.points.length-1],
+          length: this.distance(this.points[this.points.length-1], this.points[i])
+        })
+    }
+    const dataText = this.dataText = new G.Texture(gl);
+    dataText.format = gl.RGB;
+    dataText.type = gl.FLOAT;
+    // dataText.repeat()
+    dataText.uploadData(this.centers, 12,12);
+    if(this.fboHelper)
+    this.fboHelper.attach(dataText)
 
-        uvs[count * 2 + 0] = (count % width) / width;
-        uvs[count * 2 + 1] = Math.floor(count / width) / height;
-
-        velocity[i] =Math.random();
-        velocity[i + 1] =Math.random();
-        velocity[i + 2] =Math.random();
-
-         count++;
-      }
-
-      const dataText = new G.Texture(gl);
-      dataText.format = gl.RGBA;
-      dataText.type = gl.FLOAT;
-      dataText.uploadData(offsets, width, height);
-
-      const dataVel = new G.Texture(gl);
-      dataVel.format = gl.RGBA;
-      dataVel.type = gl.FLOAT;
-      dataVel.uploadData(velocity, width, height);
+    // console.log(primitive);
+    const geo = new G.Geometry(G.Primitive.sphere(SuperConfig.config.sphereSize,12));
+    // const geo = new G.Geometry(primitive);
+    // geo.generateFaces();
 
 
-      this.gpgpu = new PingPong({
-        data: dataText,
-        width: width,
-        height: height,
-        renderer: this.webgl,
-        camera: this.camera,
-        vs: glslify('./shaders/particles/base.vert'),
-        fs: glslify('./shaders/particles/position.frag'),
-        uniforms: {
-          uVelocity:dataVel,
-        },
-      });
-      // console.log(G.Utils.hexToRgb('#ff4470'));
+    geo.addAttribute('centers', this.centers)
+    // geo.addAttribute('uvsCenters', this.uvsCenter)
+
+    const mat = new G.Shader(
+    glslify('./shaders/base.vert'),
+    glslify('./shaders/base.frag'),
+    {
+      uTexture:dataText,
+      uForce: SuperConfig.config.forceMultiplier
+    })
+    this.mesh = new G.Mesh(geo, mat);
+    this.mesh.drawType = gl[SuperConfig.config.drawType];
+
+    this.scene.addChild(this.mesh);
 
 
-      this.gpgpuVel = new PingPong({
-        data: dataText,
-        width: width,
-        height: height,
-        renderer: this.webgl,
-        camera: this.camera,
-        vs: glslify('./shaders/particles/base.vert'),
-        fs: glslify('./shaders/particles/velocity.frag'),
-        uniforms: {
-          mouse: [0,0,0],
-          uPositions:dataText,
-        }
-      });
+    //
+    this.points[this.points.length-1].pinned = true;
 
-
-      const primitive = G.Primitive.cube(1,0.2,0.2);
-      const geometry = new G.Geometry(primitive);
-      geometry.addInstancedAttribute('offsets', offsets, 1, true);
-      geometry.addInstancedAttribute('uv2s', uvs, 1, true);
-      geometry.addInstancedAttribute('colors', colors, 1, true);
-      geometry.addCount(offsets.length/4);
-
-      let shadowMapSize = ddevice ==='desktop' ? 512 : 256;
-      this.fbo = new G.FrameBuffer(gl, shadowMapSize, shadowMapSize, {
-        depth:true,
-      });
-
-      this.particles = new G.Mesh(
-        geometry,
-        new G.Shader(
-        glslify('./shaders/particles/particle.vert'),
-        glslify('./shaders/particles/particle.frag'),
-        {
-          uPositions:dataText,
-          uBuffer:this.gpgpu.fboOutO.colors,
-          uBufferVel:this.gpgpuVel.fboOutO.colors,
-          uShadowMap: this.fbo.depth,
-          uShadowMatrix:this.mvpDepth,
-          uLightColor:G.Utils.hexToRgb('#fd003c'),
-          fogColor: G.Utils.hexToRgb(this.bgC),
-        },
-        'GPGPU Particles'
-      ));
-
-      this.floor = new G.Mesh(
-        new G.Geometry(G.Primitive.plane(500,500, 10,10)),
-        new G.Shader(
-        glslify('./shaders/floor.vert'),
-        glslify('./shaders/floor.frag'),
-        {
-          uShadowMap: this.fbo.depth,
-          fogColor: G.Utils.hexToRgb(this.bgC),
-          floorColor: G.Utils.hexToRgb('#dac9ff'),
-			    uShadowMatrix:this.mvpDepth
-        },'Floor'
-      ));
-      this.floor.position.y = -30;
-      this.floor.rotation.x = 90 * Math.PI/180;
+    this.tick = 0;
+    window.r = 0
+    setInterval(()=>{
+      window.r = Math.random() * (5+5) - 5;
+    },1000)
 
 
 
+    this.quad = new G.Mesh(new G.Geometry(G.Primitive.plane()), new G.BasicMaterial());
+    this.quad.scale.set(100);
+    // this.scene.addChild(this.quad)
+
+    this.sphere = new G.Mesh(new G.Geometry(G.Primitive.sphere()), new G.BasicMaterial({
+      // color: [1,0,0],
+      // texture: dataText
+    }));
+    this.sphere.scale.set(0.2)
+    this.scene.addChild(this.sphere)
+
+    this.hitDetect = new G.HitDetect(this.quad, this.camera)
 
 
-
-
-
-            this.frame = 0;
-
-            this.fboHelper = new G.FBOHelper(this.webgl, 300);
-
-
-            this.fboHelper.attach(this.gpgpu.fboOutO.colors);
-            this.fboHelper.attach(this.gpgpuVel.fboOutO.colors);
-            this.fboHelper.attach(this.fbo.colors);
-            this.fboHelper.attach(this.fbo.depth);
 
   }
+  distance(a, b) {
+    let dx = b.x - a.x;
+    let dy = b.y - a.y;
+    let dz = b.z - a.z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+  updatePoints() {
+    const friction = 1
+    for (var i = 0; i < this.points.length; i++) {
+      const p = this.points[i];
+      if(!p.pinned) {
+        let vx = (p.x - p.oldx) * friction;
+        let vy = (p.y - p.oldy) * friction - SuperConfig.config.gravity;
+        let vz = (p.z - p.oldz) * friction;
+
+        p.oldx = p.x;
+        p.oldy = p.y;
+        p.oldz = p.z;
+        p.x+= vx;
+        p.y+= vy;
+        p.z+= vz;
+      }
+
+    }
+  }
+  updateStiks() {
+    for (var i = 0; i < this.sticks.length; i++) {
+      const s = this.sticks[i];
+      let dx = s.p1.x - s.p0.x;
+      let dy = s.p1.y - s.p0.y;
+      let dz = s.p1.z - s.p0.z;
+      let distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      let diff = s.length - distance;
+      let percent = diff / distance /2;
+
+      let offsetX = dx* percent;
+      let offsetY = dy* percent;
+      let offsetZ = dz* percent;
+      if(!s.p0.pinned) {
+        s.p0.x -=offsetX;
+        s.p0.y -=offsetY;
+        s.p0.z -=offsetZ;
+
+      }
+      if(!s.p1.pinned) {
+        s.p1.x +=offsetX;
+        s.p1.y +=offsetY;
+        s.p1.z -=offsetZ;
+
+      }
+    }
+    // setInterval(()=>{
+    //   for (var i = 0; i < this.points.length; i++) {
+    //     this.points[i].oldx = Math.random() * 0.1
+    //   }
+    // },4000)
+  }
+
   render() {
-    this.time += 0.1;
-    this.frame++;
+    this.tick+= 0.05;
+    if(this.controls)
     this.controls.update();
+
     this.webgl.clear();
-    G.State.enable(gl.CULL_FACE);
-    //
-    this.fbo.bind();
-    this.fbo.clear();
-    // // FRONT
-    gl.cullFace(gl.FRONT);
-    this.webgl.render(this.particles, this.cameraShadow);
-    this.fbo.unbind();
-    //
-    G.State.disable(gl.CULL_FACE);
-    this.gpgpuVel.quad.shader.uniforms.uPositions = this.gpgpu.fboOutO.colors;
-    this.gpgpu.quad.shader.uniforms.uVelocity = this.gpgpuVel.fboOutO.colors;
+    this.updatePoints();
+    this.updateStiks();
 
-    this.gpgpuVel.update();
-    this.gpgpu.update();
-    this.gpgpuVel.quad.shader.uniforms.mouse = this.mouse
-    this.particles.shader.uniforms.mouse = this.mouse
-    this.particles.shader.uniforms.uBuffer = this.gpgpu.fboOutO.colors;
+    let count = 0;
+    for (var i = 0; i < this.points.length; i++) {
+      for (var j = 0; j < 3; j++) {
+    //
+        this.centers[count] = this.points[i].x
+        this.centers[count +1] = this.points[i].y
+        this.centers[count +2] = this.points[i].z
+    //
+        count+=3;
+      }
+    }
+    this.dataText.uploadData(this.centers, 15,15);
+
+
+
     G.State.enable(gl.DEPTH_TEST);
-    G.State.enable(gl.CULL_FACE);
-    gl.cullFace(gl.BACK);
-
-
-    this.webgl.render(this.particles, this.camera);
-    G.State.disable(gl.CULL_FACE);
-    this.webgl.render(this.floor, this.camera);
-
-    if(Query.debug)
+    if(Query.config.postPro) {
+      this.composer.render(this.scene, this.camera);
+    } else {
+      this.webgl.render(this.scene, this.camera);
+    }
+    if(this.fboHelper)
     this.fboHelper.render();
+    // this.points[this.points.length-1].x = this.hitDetect.hit[0]
+    // this.points[this.points.length-1].y = this.hitDetect.hit[1]
+    this.points[this.points.length-1].x += (this.hitDetect.hit[0] - this.points[this.points.length-1].x) * 0.1
+    this.points[this.points.length-1].y += (this.hitDetect.hit[1] - this.points[this.points.length-1].y) * 0.1
+    // console.log(this.points[this.points.length-1].x);
+    // this.quad.position.x = 2;
+
+    this.sphere.position.x += (this.hitDetect.hit[0] - this.sphere.position.x) * 0.1
+    this.sphere.position.y += (this.hitDetect.hit[1] - this.sphere.position.y) * 0.1
+
+    // this.sphere.position.set(this.hitDetect.hit[0],this.hitDetect.hit[1],this.hitDetect.hit[2])
+
 
   }
+
   resize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.webgl.resize();

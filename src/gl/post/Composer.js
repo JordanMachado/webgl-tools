@@ -35,13 +35,23 @@ export default class Composer {
     let count = 0;
 
     this.passes.forEach( pass => {
-      pass.process(this.outputTexture, (ouput) => {
-        this.outputTexture = ouput;
-        count++;
-        if(this.helper)
-        this.helper.renderImediate(ouput,count)
 
-      });
+      if(pass.enable) {
+        // TODO check if pass is complex or not for uploading default uniforms
+        if(pass.shader) {
+          if(pass.shader.uniforms) {
+            pass.shader.uniforms.uResolution = [this.width, this.height];
+          }
+        }
+        pass.process(this.outputTexture, (ouput) => {
+          this.outputTexture = ouput;
+          count++;
+          if(this.helper)
+          this.helper.renderImediate(ouput,count)
+
+        });
+      }
+
     });
     this.toScreen();
 

@@ -1,6 +1,6 @@
 class Debug {
   constructor() {
-    this.verbose = true;
+    this.verbose = false;
   }
   group(message) {
     if (!this.verbose) return;
