@@ -51,24 +51,29 @@ export default class Pingpong {
         this.renderer.render(this.quad,this.camera);
       this.fboOut.unbind();
 
+      this.width = width;
+      this.height = height;
+
 
       this.time = 0;
   }
   update() {
     this.time += 0.01;
     this.quad.shader.uniforms.uTime = this.time
+    this.quad.shader.uniforms.width = this.width
+    this.quad.shader.uniforms.height = this.height
     // this.renderer.render(this.fboDebug, this.camera)
+
+
+    this.fboOut.bind()
+    this.quad.shader.uniforms.uTexture = this.fboIn.colors;
+    this.quad.shader.uniforms.uTextureOld = this.fboOut.colors;
+      this.renderer.render(this.quad,this.camera);
+    this.fboOut.unbind()
 
     let temp = this.fboIn;
      this.fboIn = this.fboOut;
      this.fboOut = temp;
-
-    this.fboOut.bind()
-    this.quad.shader.uniforms.uTexture = this.fboIn.colors;
-    this.quad.shader.uniforms.uTexture = this.fboIn.colors;
-      this.renderer.render(this.quad,this.camera);
-    this.fboOut.unbind()
-
 
 
   }

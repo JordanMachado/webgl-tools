@@ -72,14 +72,14 @@ import DefaultConfig from '../DefaultConfig';
         if(parent) {
           if(!this.controls[parent][name]) this.controls[parent][name] = {};
           this.controls[parent][name][key] = folder.add(object, key);
-          console.log(this.controls[parent][name][key]);
+          // console.log(this.controls[parent][name][key]);
           this.addChange(this.controls[parent][name][key],()=>{
             this.updateConfig();
           })
         } else {
           if(!this.controls[name]) this.controls[name] = {};
           this.controls[name][key] = folder.add(object, key);
-          console.log(this.controls[name][key]);
+          // console.log(this.controls[name][key]);
           this.addChange(this.controls[name][key],()=>{
             this.updateConfig();
           })

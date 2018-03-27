@@ -47,7 +47,9 @@
     "glslify": "^6.0.1",
     "gsap": "^1.19.1",
     "jsartoolkit": "0.0.0",
+    "nice-color-palettes": "^2.0.0",
     "parse-obj": "0.0.0",
+    "primitive-sphere": "^3.0.0",
     "querystringparser": "^0.1.1",
     "raf": "^3.3.0",
     "simplex-noise": "^2.3.0"

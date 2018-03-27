@@ -2,6 +2,7 @@ precision highp float;
 #define GLSLIFY 1
 
 uniform sampler2D uTexture;
+uniform sampler2D uTextureOld;
 uniform sampler2D uOrigin;
 
 uniform float uTime;
@@ -154,19 +155,35 @@ void main() {
   vec4 pos = texture2D(uTexture,vUv);
   vec4 opos = texture2D(uOrigin,vUv);
   vec3 noise = curlNoise(pos.xyz + vec3(0.0, 0.0, uTime)) * 0.01;
-  pos.xyz += noise;
-  pos.y += 0.005;
+  // pos.xyz += noise;
+  // pos.y += 0.005;
 
   float life = pos.a;
-  life -= 0.0020;
-  if(life < 0.1) {
-    life = 1.0;
-    pos.xyz = opos.xyz;
-  }
-  if(vUv.x < 1.0/width) {
-    pos.xyz = vec3(1.0);
 
+  if(vUv.x < 1.0/width) {
+    pos.xyz += noise * 2.5;
+    // pos.x += cos(uTime) * 0.1;
+    // pos.y += sin(uTime) * 0.1;
+    // pos.y += sin(uTime) * 0.5;
+  } else {
+    pos.xyz = texture2D(uTexture, vec2(vUv.x - 1.0/width, vUv.y)).xyz;
   }
+
+
+  life -= 0.0025;
+  if(life < 0.01) {
+    life = 1.0;
+    pos.xyz =  texture2D(uOrigin, vec2(1.0/width, vUv.y)).xyz;
+  }
+
+
+  // if(life == 1.0) {
+    // pos.xyz = texture2D(uTexture, vec2(1.0/width, vUv.y)).xyz + 0.001;
+  // }
+
+
+
+
 
   gl_FragColor = vec4(pos.xyz, life);
 }

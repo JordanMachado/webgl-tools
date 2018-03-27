@@ -26,8 +26,8 @@ function getMouse(e) {
 		x, y
 	};
 }
-
-const getVector = (v, target, modelMatrix) => {
+let t = mat4.create();
+const getVector = (target, v, modelMatrix) => {
   vec3.transformMat4(target, v, modelMatrix);
 };
 
@@ -154,6 +154,7 @@ class HitDetect extends EventEmitter {
 			let object;
 
 			object = this.objects[i];
+			object._needUpdate = true;
 			if(!object.geometry.faces) {
 				object.geometry.generateFaces();
 			}
@@ -163,10 +164,9 @@ class HitDetect extends EventEmitter {
 				let vertices;
 
 				vertices = faces[j].vertices;
-				getVector(vertices[0], v0, object.matrixWorld)
-				getVector(vertices[1], v1, object.matrixWorld)
-				getVector(vertices[2], v2, object.matrixWorld)
-
+				getVector(v0,vertices[0], object.matrixWorld)
+				getVector(v1, vertices[1], object.matrixWorld)
+				getVector(v2, vertices[2], object.matrixWorld)
 
 					hit = this.ray.intersectTriangle(v0, v1, v2);
 					if(hit) {
