@@ -2,7 +2,20 @@ import * as glm from 'gl-matrix';
 import Vector3 from '../math/Vector3';
 import uuid from '../utils/UIID'
 
-export default class Object3D {
+class Object3D {
+  /**
+    * Constructs a new Object3D
+    * @property {boolean} visible=true
+    * @property {string} uuid
+    * @property {object} position
+    * @property {object} rotation
+    * @property {object} scale
+    * @property {object} parent=null
+    * @property {array} children
+    * @property {array} matrix
+    * @property {array} matrixWorld
+    * @property {array} positionWorld
+    */
   constructor() {
     this.visible = true;
     this.uuid = uuid();
@@ -81,6 +94,12 @@ export default class Object3D {
     if (this._needUpdate) this._updateMatrix();
     return this._matrix;
   }
+  /**
+  * @func  addChild
+  * @description  Add a child to the object
+  * @param {object} child an Object3D
+  * @memberof Object3D.prototype
+  */
   addChild(object) {
     if(object.parent) {
       const ndx = object.parent.children.indexOf(this);
@@ -92,3 +111,5 @@ export default class Object3D {
     this.children.push(object);
   }
 }
+
+export default Object3D;

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Object3D.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="nav">
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayBuffer.html">ArrayBuffer</a><ul class='methods'><li data-type='method'><a href="ArrayBuffer.html#attribPointer">attribPointer</a></li><li data-type='method'><a href="ArrayBuffer.html#attribPointerInstanced">attribPointerInstanced</a></li><li data-type='method'><a href="ArrayBuffer.html#bind">bind</a></li><li data-type='method'><a href="ArrayBuffer.html#computeLenght">computeLenght</a></li><li data-type='method'><a href="ArrayBuffer.html#data">data</a></li><li data-type='method'><a href="ArrayBuffer.html#draw">draw</a></li><li data-type='method'><a href="ArrayBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Extension.html">Extension</a><ul class='methods'><li data-type='method'><a href="Extension.html#active">active</a></li><li data-type='method'><a href="Extension.html#setGl">setGl</a></li></ul></li><li><a href="FrameBuffer.html">FrameBuffer</a><ul class='methods'><li data-type='method'><a href="FrameBuffer.html#bind">bind</a></li><li data-type='method'><a href="FrameBuffer.html#clear">clear</a></li><li data-type='method'><a href="FrameBuffer.html#setSize">setSize</a></li><li data-type='method'><a href="FrameBuffer.html#unbind">unbind</a></li></ul></li><li><a href="IndexBuffer.html">IndexBuffer</a><ul class='methods'><li data-type='method'><a href="IndexBuffer.html#bind">bind</a></li><li data-type='method'><a href="IndexBuffer.html#data">data</a></li><li data-type='method'><a href="IndexBuffer.html#draw">draw</a></li><li data-type='method'><a href="IndexBuffer.html#drawInstance">drawInstance</a></li><li data-type='method'><a href="IndexBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Object3D.html">Object3D</a><ul class='methods'><li data-type='method'><a href="Object3D.html#addChild">addChild</a></li></ul></li><li><a href="Program.html">Program</a><ul class='methods'><li data-type='method'><a href="Program.html#bind">bind</a></li><li data-type='method'><a href="Program.html#buildAttributeGetter">buildAttributeGetter</a></li><li data-type='method'><a href="Program.html#buildUniformsGetterSetter">buildUniformsGetterSetter</a></li><li data-type='method'><a href="Program.html#createProgram">createProgram</a></li><li data-type='method'><a href="Program.html#createShader">createShader</a></li><li data-type='method'><a href="Program.html#destroy">destroy</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method'><a href="State.html#disable">disable</a></li><li data-type='method'><a href="State.html#enable">enable</a></li></ul></li><li><a href="Webgl.html">Webgl</a><ul class='methods'><li data-type='method'><a href="Webgl.html#append">append</a></li><li data-type='method'><a href="Webgl.html#attr">attr</a></li><li data-type='method'><a href="Webgl.html#bindBuffer">bindBuffer</a></li><li data-type='method'><a href="Webgl.html#clear">clear</a></li><li data-type='method'><a href="Webgl.html#clearColor">clearColor</a></li><li data-type='method'><a href="Webgl.html#render">render</a></li><li data-type='method'><a href="Webgl.html#resize">resize</a></li><li data-type='method'><a href="Webgl.html#setDefaultUniforms">setDefaultUniforms</a></li><li data-type='method'><a href="Webgl.html#setUniforms">setUniforms</a></li><li data-type='method'><a href="Webgl.html#unbindBuffer">unbindBuffer</a></li><li data-type='method'><a href="Webgl.html#useProgram">useProgram</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Object3D.js</h1>
+    
+
+    <!--container.tmpl-->
+
+
+
+
+    <!--source.tmpl-->
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as glm from 'gl-matrix';
+import Vector3 from '../math/Vector3';
+import uuid from '../utils/UIID'
+
+class Object3D {
+  /**
+    * Constructs a new Object3D
+    * @property {boolean} visible=true
+    * @property {string} uuid
+    * @property {object} position
+    * @property {object} rotation
+    * @property {object} scale
+    * @property {object} parent=null
+    * @property {array} children
+    * @property {array} matrix
+    * @property {array} matrixWorld
+    * @property {array} positionWorld
+    */
+  constructor() {
+    this.visible = true;
+    this.uuid = uuid();
+
+    this._needUpdate = true;
+
+    this.position = new Vector3();
+
+    this.rotation = new Vector3();
+
+    this.scale = new Vector3(1,1,1);
+
+    this.position.onChange(()=> {
+      this._needUpdate = true;
+      // console.log('cc');
+    });
+    this.rotation.onChange (() => {
+      this._needUpdate = true;
+    });
+    this.scale.onChange (() => {
+      this._needUpdate = true;
+    });
+
+    this._matrix = glm.mat4.create();
+    this._matrixWorld = glm.mat4.create();
+    this._matrixRotation = glm.mat4.create();
+    this._matrixScale = glm.mat4.create();
+    this._matrixTranslation = glm.mat4.create();
+    this._matrixIdentity = glm.mat4.create();
+
+    this.parent = null;
+    this.children = [];
+  }
+  _updateMatrix() {
+    if(!this.visible) {
+      return;
+    }
+
+    glm.mat4.rotateX(this._matrixRotation, this._matrixIdentity, this.rotation.x);
+    glm.mat4.rotateY(this._matrixRotation, this._matrixRotation, this.rotation.y);
+    glm.mat4.rotateZ(this._matrixRotation, this._matrixRotation, this.rotation.z);
+
+    glm.mat4.scale(this._matrixScale, this._matrixIdentity, this.scale.get());
+    glm.mat4.translate(this._matrixTranslation, this._matrixIdentity, this.position.get());
+
+    glm.mat4.mul(this._matrix, this._matrixTranslation, this._matrixRotation);
+    glm.mat4.mul(this._matrix, this._matrix, this._matrixScale);
+    this._updateMatrixWorld();
+    this._needUpdate = false;
+
+  }
+  _updateMatrixWorld() {
+    if(!this.visible) {
+      return;
+    }
+
+    if (this.parent) {
+      glm.mat4.multiply(this._matrixWorld, this.parent._matrixWorld, this._matrix);
+    } else {
+      glm.mat4.copy(this._matrixWorld, this._matrix);
+    }
+
+    for (let i = 0, l = this.children.length; i &lt; l; i += 1) {
+      this.children[i]._updateMatrixWorld();
+    }
+  }
+  get positionWorld() {
+    if (!this.parent) return this.position.get();
+    return [this.parent.position.x + this.position.x, this.parent.position.y + this.position.y, this.parent.position.z + this.position.z];
+  }
+  get matrixWorld() {
+    if (this._needUpdate) this._updateMatrix();
+    return this._matrixWorld;
+  }
+  get matrix() {
+    if (this._needUpdate) this._updateMatrix();
+    return this._matrix;
+  }
+  /**
+  * @func  addChild
+  * @description  Add a child to the object
+  * @param {object} child an Object3D
+  * @memberof Object3D.prototype
+  */
+  addChild(object) {
+    if(object.parent) {
+      const ndx = object.parent.children.indexOf(this);
+      if(ndx >= 0) {
+        object.parent.children.splice(ndx, 1);
+      }
+    }
+    object.parent = this;
+    this.children.push(object);
+  }
+}
+
+export default Object3D;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 28 2018 12:29:33 GMT+0100 (BST) using the LOKE theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

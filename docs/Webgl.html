@@ -1,0 +1,2623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Webgl - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="nav">
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayBuffer.html">ArrayBuffer</a><ul class='methods'><li data-type='method'><a href="ArrayBuffer.html#attribPointer">attribPointer</a></li><li data-type='method'><a href="ArrayBuffer.html#attribPointerInstanced">attribPointerInstanced</a></li><li data-type='method'><a href="ArrayBuffer.html#bind">bind</a></li><li data-type='method'><a href="ArrayBuffer.html#computeLenght">computeLenght</a></li><li data-type='method'><a href="ArrayBuffer.html#data">data</a></li><li data-type='method'><a href="ArrayBuffer.html#draw">draw</a></li><li data-type='method'><a href="ArrayBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Extension.html">Extension</a><ul class='methods'><li data-type='method'><a href="Extension.html#active">active</a></li><li data-type='method'><a href="Extension.html#setGl">setGl</a></li></ul></li><li><a href="FrameBuffer.html">FrameBuffer</a><ul class='methods'><li data-type='method'><a href="FrameBuffer.html#bind">bind</a></li><li data-type='method'><a href="FrameBuffer.html#clear">clear</a></li><li data-type='method'><a href="FrameBuffer.html#setSize">setSize</a></li><li data-type='method'><a href="FrameBuffer.html#unbind">unbind</a></li></ul></li><li><a href="IndexBuffer.html">IndexBuffer</a><ul class='methods'><li data-type='method'><a href="IndexBuffer.html#bind">bind</a></li><li data-type='method'><a href="IndexBuffer.html#data">data</a></li><li data-type='method'><a href="IndexBuffer.html#draw">draw</a></li><li data-type='method'><a href="IndexBuffer.html#drawInstance">drawInstance</a></li><li data-type='method'><a href="IndexBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Object3D.html">Object3D</a><ul class='methods'><li data-type='method'><a href="Object3D.html#addChild">addChild</a></li></ul></li><li><a href="Program.html">Program</a><ul class='methods'><li data-type='method'><a href="Program.html#bind">bind</a></li><li data-type='method'><a href="Program.html#buildAttributeGetter">buildAttributeGetter</a></li><li data-type='method'><a href="Program.html#buildUniformsGetterSetter">buildUniformsGetterSetter</a></li><li data-type='method'><a href="Program.html#createProgram">createProgram</a></li><li data-type='method'><a href="Program.html#createShader">createShader</a></li><li data-type='method'><a href="Program.html#destroy">destroy</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method'><a href="State.html#disable">disable</a></li><li data-type='method'><a href="State.html#enable">enable</a></li></ul></li><li><a href="Webgl.html">Webgl</a><ul class='methods'><li data-type='method'><a href="Webgl.html#append">append</a></li><li data-type='method'><a href="Webgl.html#attr">attr</a></li><li data-type='method'><a href="Webgl.html#bindBuffer">bindBuffer</a></li><li data-type='method'><a href="Webgl.html#clear">clear</a></li><li data-type='method'><a href="Webgl.html#clearColor">clearColor</a></li><li data-type='method'><a href="Webgl.html#render">render</a></li><li data-type='method'><a href="Webgl.html#resize">resize</a></li><li data-type='method'><a href="Webgl.html#setDefaultUniforms">setDefaultUniforms</a></li><li data-type='method'><a href="Webgl.html#setUniforms">setUniforms</a></li><li data-type='method'><a href="Webgl.html#unbindBuffer">unbindBuffer</a></li><li data-type='method'><a href="Webgl.html#useProgram">useProgram</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Webgl</h1>
+    
+
+    <!--container.tmpl-->
+
+
+
+
+
+<section>
+
+
+
+<header data-tmpl="container.tmpl">
+    
+        <h2>
+        Webgl
+        </h2>
+        
+    
+
+    
+      <div class="bs-callout bs-callout-default">
+        <h5>Members</h5>
+        <br />
+        <dl class="dl-horizontal methods-members">
+        <dt>Methods</dt><dd><ul>
+            <li><a href="#append">append</a></li>
+            
+            <li><a href="#attr">attr</a></li>
+            
+            <li><a href="#bindBuffer">bindBuffer</a></li>
+            
+            <li><a href="#clear">clear</a></li>
+            
+            <li><a href="#clearColor">clearColor</a></li>
+            
+            <li><a href="#render">render</a></li>
+            
+            <li><a href="#resize">resize</a></li>
+            
+            <li><a href="#setDefaultUniforms">setDefaultUniforms</a></li>
+            
+            <li><a href="#setUniforms">setUniforms</a></li>
+            
+            <li><a href="#unbindBuffer">unbindBuffer</a></li>
+            
+            <li><a href="#useProgram">useProgram</a></li>
+            </ul></dd></dl></div>
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        <!--method.tmpl-->
+<div class="method-details">
+
+
+
+
+
+    
+
+    
+      <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line34">34</a>
+  </code>
+</div>
+
+    
+
+    <h4 class="name" id="Webgl">
+      <a href="#params-Webgl"><span class="type-signature"></span>new Webgl</a><span class="signature">(params<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Constructs a new WebglRenderer
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-Webgl">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-Webgl" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">context type
+                <h6>Properties</h6>
+                <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    webgl
+                
+                </td>
+            
+
+            <td class="description last">context type</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">canvas to attach the renderer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    window.innerWidth
+                
+                </td>
+            
+
+            <td class="description last">width of the renderer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    window.innerHeight
+                
+                </td>
+            
+
+            <td class="description last">height of the renderer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contextOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">options to pass to the webgl context</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">function called when webgl is not possible</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * Constructs a new WebglRenderer\n  * @param {object} [params={}]  context type\n  * @param {string} [params.type=webgl]  context type\n  * @param {object} [params.canvas=null]  canvas to attach the renderer\n  * @param {number} [params.width=window.innerWidth]  width of the renderer\n  * @param {number} [params.height=window.innerHeight]  height of the renderer\n  * @param {object} [params.contextOptions={}]  options to pass to the webgl context\n  * @param {function} [params.fallback=null]  function called when webgl is not possible\n  */","meta":{"range":[1302,2682],"filename":"Webgl.js","lineno":34,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{"id":"astnode100005939","name":"Webgl","type":"MethodDefinition","paramnames":[""]},"vars":{"":null},"shortpath":"Webgl.js"},"description":"Constructs a new WebglRenderer","params":[{"type":{"names":["object"]},"optional":true,"defaultvalue":"{}","description":"context type","name":"params","subparams":[{"type":{"names":["string"]},"optional":true,"defaultvalue":"webgl","description":"context type","name":"type"},{"type":{"names":["object"]},"optional":true,"defaultvalue":null,"description":"canvas to attach the renderer","name":"canvas"},{"type":{"names":["number"]},"optional":true,"defaultvalue":"window.innerWidth","description":"width of the renderer","name":"width"},{"type":{"names":["number"]},"optional":true,"defaultvalue":"window.innerHeight","description":"height of the renderer","name":"height"},{"type":{"names":["object"]},"optional":true,"defaultvalue":"{}","description":"options to pass to the webgl context","name":"contextOptions"},{"type":{"names":["function"]},"optional":true,"defaultvalue":null,"description":"function called when webgl is not possible","name":"fallback"}]},null,null,null,null,null,null],"name":"Webgl","longname":"Webgl","kind":"class","scope":"global","___id":"T000003R000009","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"Webgl","signature":"<span class=\"signature\">(params<span class=\"signature-attributes\">opt</span>)</span><span class=\"type-signature\"></span>","ancestors":[]}
+</pre>
+-->
+</div>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line81">81</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="append">
+      <a href="#params-append"><span class="type-signature"></span>append</a><span class="signature">(container<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Append the renderer into an htmlElement
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-append">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-append" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>container</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    document.body
+                
+                </td>
+            
+
+            <td class="description last">html element to add the canvas</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  append\n  * @description  Append the renderer into an htmlElement\n  * @param {object} [container=document.body]  html element to add the canvas\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":81,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"append","description":"Append the renderer into an htmlElement","params":[{"type":{"names":["object"]},"optional":true,"defaultvalue":"document.body","description":"html element to add the canvas","name":"container"}],"memberof":"Webgl","longname":"Webgl#append","scope":"instance","___id":"T000002R001004","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"append","signature":"<span class=\"signature\">(container<span class=\"signature-attributes\">opt</span>)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line220">220</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="attr">
+      <a href="#params-attr"><span class="type-signature"></span>attr</a><span class="signature">(mesh)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Add all the attributes of a mesh
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-attr">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-attr" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mesh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Mesh</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n * @func  attr\n * @description  Add all the attributes of a mesh\n * @param {object} mesh instance of a Mesh\n * @memberof Webgl.prototype\n */","meta":{"filename":"Webgl.js","lineno":220,"columnno":1,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"attr","description":"Add all the attributes of a mesh","params":[{"type":{"names":["object"]},"description":"instance of a Mesh","name":"mesh"}],"memberof":"Webgl","longname":"Webgl#attr","scope":"instance","___id":"T000002R001033","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"attr","signature":"<span class=\"signature\">(mesh)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line181">181</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="bindBuffer">
+      <a href="#params-bindBuffer"><span class="type-signature"></span>bindBuffer</a><span class="signature">(mesh)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Bind all the buffer of a mesh
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-bindBuffer">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-bindBuffer" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mesh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Mesh</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  bindBuffer\n  * @description  Bind all the buffer of a mesh\n  * @param {object} mesh instance of a Mesh\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":181,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"bindBuffer","description":"Bind all the buffer of a mesh","params":[{"type":{"names":["object"]},"description":"instance of a Mesh","name":"mesh"}],"memberof":"Webgl","longname":"Webgl#bindBuffer","scope":"instance","___id":"T000002R001026","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"bindBuffer","signature":"<span class=\"signature\">(mesh)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line115">115</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="clear">
+      <a href="#params-clear"><span class="type-signature"></span>clear</a><span class="signature">()</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Clear the color buffer & depth buffer
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-clear">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  clear\n  * @description  Clear the color buffer & depth buffer\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":115,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"clear","description":"Clear the color buffer & depth buffer","memberof":"Webgl","longname":"Webgl#clear","scope":"instance","___id":"T000002R001009","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"clear","signature":"<span class=\"signature\">()</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line94">94</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="clearColor">
+      <a href="#params-clearColor"><span class="type-signature"></span>clearColor</a><span class="signature">(r, v, b, a)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Set clearColor of the renderer
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-clearColor">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-clearColor" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>r</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">red channel</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>v</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">green channel</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>b</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">blue channel</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>a</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">alpha channel</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  clearColor\n  * @description  Set clearColor of the renderer\n  * @param {number} r  red channel\n  * @param {number} v  green channel\n  * @param {number} b  blue channel\n  * @param {number} a  alpha channel\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":94,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"clearColor","description":"Set clearColor of the renderer","params":[{"type":{"names":["number"]},"description":"red channel","name":"r"},{"type":{"names":["number"]},"description":"green channel","name":"v"},{"type":{"names":["number"]},"description":"blue channel","name":"b"},{"type":{"names":["number"]},"description":"alpha channel","name":"a"}],"memberof":"Webgl","longname":"Webgl#clearColor","scope":"instance","___id":"T000002R001006","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"clearColor","signature":"<span class=\"signature\">(r, v, b, a)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line246">246</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="render">
+      <a href="#params-render"><span class="type-signature"></span>render</a><span class="signature">(mesh, camera)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Render to the canvas
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-render">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-render" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mesh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+|
+
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Mesh or array of Mesh</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>camera</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Camera</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n * @func  render\n * @description  Render to the canvas\n * @param {object|array} mesh instance of a Mesh or array of Mesh\n * @param {object} camera instance of a Camera\n * @memberof Webgl.prototype\n */","meta":{"filename":"Webgl.js","lineno":246,"columnno":1,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"render","description":"Render to the canvas","params":[{"type":{"names":["object","array"]},"description":"instance of a Mesh or array of Mesh","name":"mesh"},{"type":{"names":["object"]},"description":"instance of a Camera","name":"camera"}],"memberof":"Webgl","longname":"Webgl#render","scope":"instance","___id":"T000002R001038","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"render","signature":"<span class=\"signature\">(mesh, camera)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line282">282</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="resize">
+      <a href="#params-resize"><span class="type-signature"></span>resize</a><span class="signature">()</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Resize the canvas
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-resize">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  resize\n  * @description  Resize the canvas\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":282,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"resize","description":"Resize the canvas","memberof":"Webgl","longname":"Webgl#resize","scope":"instance","___id":"T000002R001041","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"resize","signature":"<span class=\"signature\">()</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line134">134</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="setDefaultUniforms">
+      <a href="#params-setDefaultUniforms"><span class="type-signature"></span>setDefaultUniforms</a><span class="signature">(mesh, camera)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Set default uniforms to a mesh
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-setDefaultUniforms">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-setDefaultUniforms" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mesh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Mesh</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>camera</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Camera</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  setDefaultUniforms\n  * @description  Set default uniforms to a mesh\n  * @param {object} mesh instance of a Mesh\n  * @param {object} camera instance of a Camera\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":134,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"setDefaultUniforms","description":"Set default uniforms to a mesh","params":[{"type":{"names":["object"]},"description":"instance of a Mesh","name":"mesh"},{"type":{"names":["object"]},"description":"instance of a Camera","name":"camera"}],"memberof":"Webgl","longname":"Webgl#setDefaultUniforms","scope":"instance","___id":"T000002R001014","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"setDefaultUniforms","signature":"<span class=\"signature\">(mesh, camera)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line160">160</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="setUniforms">
+      <a href="#params-setUniforms"><span class="type-signature"></span>setUniforms</a><span class="signature">(mesh)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Set all the uniforms of a mesh
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-setUniforms">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-setUniforms" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mesh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Mesh</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  setUniforms\n  * @description  Set all the uniforms of a mesh\n  * @param {object} mesh instance of a Mesh\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":160,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"setUniforms","description":"Set all the uniforms of a mesh","params":[{"type":{"names":["object"]},"description":"instance of a Mesh","name":"mesh"}],"memberof":"Webgl","longname":"Webgl#setUniforms","scope":"instance","___id":"T000002R001021","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"setUniforms","signature":"<span class=\"signature\">(mesh)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line202">202</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="unbindBuffer">
+      <a href="#params-unbindBuffer"><span class="type-signature"></span>unbindBuffer</a><span class="signature">(mesh)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Unbind all the buffer of a mesh
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-unbindBuffer">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-unbindBuffer" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mesh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Mesh</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n * @func  unbindBuffer\n * @description  Unbind all the buffer of a mesh\n * @param {object} mesh instance of a Mesh\n * @memberof Webgl.prototype\n */","meta":{"filename":"Webgl.js","lineno":202,"columnno":1,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"unbindBuffer","description":"Unbind all the buffer of a mesh","params":[{"type":{"names":["object"]},"description":"instance of a Mesh","name":"mesh"}],"memberof":"Webgl","longname":"Webgl#unbindBuffer","scope":"instance","___id":"T000002R001028","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"unbindBuffer","signature":"<span class=\"signature\">(mesh)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+            <!--method.tmpl-->
+<div class="method-details">
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Webgl.js.html">Webgl.js</a>:<a href="Webgl.js.html#line123">123</a>
+  </code>
+</div>
+
+
+
+
+    
+
+    
+
+    <h4 class="name" id="useProgram">
+      <a href="#params-useProgram"><span class="type-signature"></span>useProgram</a><span class="signature">(program)</span><span class="type-signature"></span>
+
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="description">
+    Set the current program
+</div>
+
+
+
+
+
+
+
+
+<div class="collapse_" id="methodCollapse-useProgram">
+
+  
+
+  
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+  <div id="params-useProgram" class="bs-callout bs-callout-primary">
+    <h5>Parameters</h5>
+    <!--params.tmpl-->
+
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>program</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">instance of a Shader</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--
+<pre>
+{"comment":"/**\n  * @func  useProgram\n  * @description  Set the current program\n  * @param {object} program instance of a Shader\n  * @memberof Webgl.prototype\n  */","meta":{"filename":"Webgl.js","lineno":123,"columnno":2,"path":"/Users/jojo/workspace/jojo/webgl-tools-git/src/gl/core","code":{},"shortpath":"Webgl.js"},"kind":"function","name":"useProgram","description":"Set the current program","params":[{"type":{"names":["object"]},"description":"instance of a Shader","name":"program"}],"memberof":"Webgl","longname":"Webgl#useProgram","scope":"instance","___id":"T000002R001011","___s":true,"attribs":"<span class=\"type-signature\"></span>","id":"useProgram","signature":"<span class=\"signature\">(program)</span><span class=\"type-signature\"></span>","ancestors":["<a href=\"Webgl.html\">Webgl</a>#"]}
+</pre>
+-->
+</div>
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 28 2018 12:29:33 GMT+0100 (BST) using the LOKE theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

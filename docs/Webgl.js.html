@@ -1,4 +1,52 @@
-import { COLOR_BUFFER_BIT, DEPTH_BUFFER_BIT } from '../const/webglConst';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Webgl.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="nav">
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayBuffer.html">ArrayBuffer</a><ul class='methods'><li data-type='method'><a href="ArrayBuffer.html#attribPointer">attribPointer</a></li><li data-type='method'><a href="ArrayBuffer.html#attribPointerInstanced">attribPointerInstanced</a></li><li data-type='method'><a href="ArrayBuffer.html#bind">bind</a></li><li data-type='method'><a href="ArrayBuffer.html#computeLenght">computeLenght</a></li><li data-type='method'><a href="ArrayBuffer.html#data">data</a></li><li data-type='method'><a href="ArrayBuffer.html#draw">draw</a></li><li data-type='method'><a href="ArrayBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Extension.html">Extension</a><ul class='methods'><li data-type='method'><a href="Extension.html#active">active</a></li><li data-type='method'><a href="Extension.html#setGl">setGl</a></li></ul></li><li><a href="FrameBuffer.html">FrameBuffer</a><ul class='methods'><li data-type='method'><a href="FrameBuffer.html#bind">bind</a></li><li data-type='method'><a href="FrameBuffer.html#clear">clear</a></li><li data-type='method'><a href="FrameBuffer.html#setSize">setSize</a></li><li data-type='method'><a href="FrameBuffer.html#unbind">unbind</a></li></ul></li><li><a href="IndexBuffer.html">IndexBuffer</a><ul class='methods'><li data-type='method'><a href="IndexBuffer.html#bind">bind</a></li><li data-type='method'><a href="IndexBuffer.html#data">data</a></li><li data-type='method'><a href="IndexBuffer.html#draw">draw</a></li><li data-type='method'><a href="IndexBuffer.html#drawInstance">drawInstance</a></li><li data-type='method'><a href="IndexBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Object3D.html">Object3D</a><ul class='methods'><li data-type='method'><a href="Object3D.html#addChild">addChild</a></li></ul></li><li><a href="Program.html">Program</a><ul class='methods'><li data-type='method'><a href="Program.html#bind">bind</a></li><li data-type='method'><a href="Program.html#buildAttributeGetter">buildAttributeGetter</a></li><li data-type='method'><a href="Program.html#buildUniformsGetterSetter">buildUniformsGetterSetter</a></li><li data-type='method'><a href="Program.html#createProgram">createProgram</a></li><li data-type='method'><a href="Program.html#createShader">createShader</a></li><li data-type='method'><a href="Program.html#destroy">destroy</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method'><a href="State.html#disable">disable</a></li><li data-type='method'><a href="State.html#enable">enable</a></li></ul></li><li><a href="Webgl.html">Webgl</a><ul class='methods'><li data-type='method'><a href="Webgl.html#append">append</a></li><li data-type='method'><a href="Webgl.html#attr">attr</a></li><li data-type='method'><a href="Webgl.html#bindBuffer">bindBuffer</a></li><li data-type='method'><a href="Webgl.html#clear">clear</a></li><li data-type='method'><a href="Webgl.html#clearColor">clearColor</a></li><li data-type='method'><a href="Webgl.html#render">render</a></li><li data-type='method'><a href="Webgl.html#resize">resize</a></li><li data-type='method'><a href="Webgl.html#setDefaultUniforms">setDefaultUniforms</a></li><li data-type='method'><a href="Webgl.html#setUniforms">setUniforms</a></li><li data-type='method'><a href="Webgl.html#unbindBuffer">unbindBuffer</a></li><li data-type='method'><a href="Webgl.html#useProgram">useProgram</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Webgl.js</h1>
+    
+
+    <!--container.tmpl-->
+
+
+
+
+    <!--source.tmpl-->
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { COLOR_BUFFER_BIT, DEPTH_BUFFER_BIT } from '../const/webglConst';
 import _fallback from '../utils/fallback';
 import Debug from '../utils/Debug';
 import { mat4, mat3 } from 'gl-matrix';
@@ -114,7 +162,7 @@ class Webgl {
   }
   /**
   * @func  clear
-  * @description  Clear the color buffer & depth buffer
+  * @description  Clear the color buffer &amp; depth buffer
   * @memberof Webgl.prototype
   */
   clear() {
@@ -140,7 +188,7 @@ class Webgl {
   */
   setDefaultUniforms(mesh, camera) {
     // if container
-    if(mesh.parent && !mesh.parent.shader && mesh.parent._needUpdate == true) {
+    if(mesh.parent &amp;&amp; !mesh.parent.shader &amp;&amp; mesh.parent._needUpdate == true) {
       mesh.parent._updateMatrix()
     }
     mesh.shader.program.uniforms.projectionMatrix = camera.projection;
@@ -186,7 +234,7 @@ class Webgl {
   */
   bindBuffer(mesh) {
     // TODO
-    // if(gl.createVertexArray && !mesh.vao && true) {
+    // if(gl.createVertexArray &amp;&amp; !mesh.vao &amp;&amp; true) {
     //   mesh.vao = gl.createVertexArray();
     //   gl.bindVertexArray(mesh.vao);
     //   this.attr(mesh);
@@ -274,7 +322,7 @@ class Webgl {
    }
 
     if(mesh.children.length > 0) {
-      for (var i = 0; i < mesh.children.length; i++) {
+      for (var i = 0; i &lt; mesh.children.length; i++) {
         this.render(mesh.children[i], camera);
       }
     }
@@ -296,3 +344,23 @@ class Webgl {
 }
 
 export default Webgl;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 28 2018 12:29:33 GMT+0100 (BST) using the LOKE theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

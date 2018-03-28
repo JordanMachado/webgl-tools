@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Extension.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="nav">
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayBuffer.html">ArrayBuffer</a><ul class='methods'><li data-type='method'><a href="ArrayBuffer.html#attribPointer">attribPointer</a></li><li data-type='method'><a href="ArrayBuffer.html#attribPointerInstanced">attribPointerInstanced</a></li><li data-type='method'><a href="ArrayBuffer.html#bind">bind</a></li><li data-type='method'><a href="ArrayBuffer.html#computeLenght">computeLenght</a></li><li data-type='method'><a href="ArrayBuffer.html#data">data</a></li><li data-type='method'><a href="ArrayBuffer.html#draw">draw</a></li><li data-type='method'><a href="ArrayBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Extension.html">Extension</a><ul class='methods'><li data-type='method'><a href="Extension.html#active">active</a></li><li data-type='method'><a href="Extension.html#setGl">setGl</a></li></ul></li><li><a href="FrameBuffer.html">FrameBuffer</a><ul class='methods'><li data-type='method'><a href="FrameBuffer.html#bind">bind</a></li><li data-type='method'><a href="FrameBuffer.html#clear">clear</a></li><li data-type='method'><a href="FrameBuffer.html#setSize">setSize</a></li><li data-type='method'><a href="FrameBuffer.html#unbind">unbind</a></li></ul></li><li><a href="IndexBuffer.html">IndexBuffer</a><ul class='methods'><li data-type='method'><a href="IndexBuffer.html#bind">bind</a></li><li data-type='method'><a href="IndexBuffer.html#data">data</a></li><li data-type='method'><a href="IndexBuffer.html#draw">draw</a></li><li data-type='method'><a href="IndexBuffer.html#drawInstance">drawInstance</a></li><li data-type='method'><a href="IndexBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Object3D.html">Object3D</a><ul class='methods'><li data-type='method'><a href="Object3D.html#addChild">addChild</a></li></ul></li><li><a href="Program.html">Program</a><ul class='methods'><li data-type='method'><a href="Program.html#bind">bind</a></li><li data-type='method'><a href="Program.html#buildAttributeGetter">buildAttributeGetter</a></li><li data-type='method'><a href="Program.html#buildUniformsGetterSetter">buildUniformsGetterSetter</a></li><li data-type='method'><a href="Program.html#createProgram">createProgram</a></li><li data-type='method'><a href="Program.html#createShader">createShader</a></li><li data-type='method'><a href="Program.html#destroy">destroy</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method'><a href="State.html#disable">disable</a></li><li data-type='method'><a href="State.html#enable">enable</a></li></ul></li><li><a href="Webgl.html">Webgl</a><ul class='methods'><li data-type='method'><a href="Webgl.html#append">append</a></li><li data-type='method'><a href="Webgl.html#attr">attr</a></li><li data-type='method'><a href="Webgl.html#bindBuffer">bindBuffer</a></li><li data-type='method'><a href="Webgl.html#clear">clear</a></li><li data-type='method'><a href="Webgl.html#clearColor">clearColor</a></li><li data-type='method'><a href="Webgl.html#render">render</a></li><li data-type='method'><a href="Webgl.html#resize">resize</a></li><li data-type='method'><a href="Webgl.html#setDefaultUniforms">setDefaultUniforms</a></li><li data-type='method'><a href="Webgl.html#setUniforms">setUniforms</a></li><li data-type='method'><a href="Webgl.html#unbindBuffer">unbindBuffer</a></li><li data-type='method'><a href="Webgl.html#useProgram">useProgram</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Extension.js</h1>
+    
+
+    <!--container.tmpl-->
+
+
+
+
+    <!--source.tmpl-->
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Debug from '../utils/Debug';
+
+class Extension {
+  /**
+    * Constructs a new Extension manager
+    */
+  constructor() {
+
+  }
+  /**
+  * @func  setGl
+  * @description  Set the webgl context
+  * @memberof Extension.prototype
+  */
+  setGl(gl) {
+    this.gl = gl;
+  }
+  /**
+  * @func  active
+  * @description  Active a webgl extension
+  * @param {string} name name of the extension
+  * @memberof Extension.prototype
+  */
+  active(name) {
+    Debug.info(`Activing: ${name}`)
+
+    let extension = gl.getExtension(name)
+    if(extension) {
+      Debug.log(`Actived`)
+
+      for (const key in extension) {
+        if(typeof extension[key] === 'function') {
+          const keyWithoutSuff = key.replace(/OES|MOZ_OES|WEBKIT_OES/g, '');
+          this.gl[keyWithoutSuff] = extension[key].bind(extension);
+          // console.log(keyWithoutSuff);
+        }
+      }
+    } else {
+      Debug.error(`Extension: {name} is not available on this device`);
+    }
+
+
+  }
+}
+
+export default new Extension();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 28 2018 12:29:33 GMT+0100 (BST) using the LOKE theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

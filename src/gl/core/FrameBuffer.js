@@ -1,6 +1,14 @@
 import Debug from '../utils/Debug';
 import Texture from './Texture';
-export default class FBO {
+class FrameBuffer {
+  /**
+    * Constructs a new FrameBuffer
+    * @param {object} gl  webgl context
+    * @param {number} width width
+    * @param {number} height height
+    * @param {object} [options={}]  options
+    * @param {boolean} [options.depth=false]  using depthTexture
+    */
   constructor(gl, width, height, options = {}) {
     Debug.info(`FBO created width: ${width} height: ${height}`);
 
@@ -52,24 +60,40 @@ export default class FBO {
     this.unbind();
 
   }
+  /**
+  * @func  bind
+  * @description  Bind the framebuffer
+  * @memberof FrameBuffer.prototype
+  */
   bind() {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.fbo);
     this.gl.viewport(0, 0, this.width, this.height );
-
   }
+  /**
+  * @func  clear
+  * @description  Clear the framebuffer
+  * @memberof FrameBuffer.prototype
+  */
   clear() {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
-
   }
+  /**
+  * @func  unbind
+  * @description  Unbind the framebuffer
+  * @memberof FrameBuffer.prototype
+  */
   unbind() {
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height );
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
-
     this.colors.unbind();
-
-
   }
+  /**
+  * @func  setSize
+  * @description  Set the size of the framebuffer
+  * @param {number} width width
+  * @param {number} height height
+  * @memberof FrameBuffer.prototype
+  */
   setSize(width, height) {
     this.bind();
     this.fbo.width = width;
@@ -77,3 +101,5 @@ export default class FBO {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
   }
 }
+
+export default FrameBuffer;

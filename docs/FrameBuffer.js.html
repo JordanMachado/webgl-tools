@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FrameBuffer.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="nav">
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayBuffer.html">ArrayBuffer</a><ul class='methods'><li data-type='method'><a href="ArrayBuffer.html#attribPointer">attribPointer</a></li><li data-type='method'><a href="ArrayBuffer.html#attribPointerInstanced">attribPointerInstanced</a></li><li data-type='method'><a href="ArrayBuffer.html#bind">bind</a></li><li data-type='method'><a href="ArrayBuffer.html#computeLenght">computeLenght</a></li><li data-type='method'><a href="ArrayBuffer.html#data">data</a></li><li data-type='method'><a href="ArrayBuffer.html#draw">draw</a></li><li data-type='method'><a href="ArrayBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Extension.html">Extension</a><ul class='methods'><li data-type='method'><a href="Extension.html#active">active</a></li><li data-type='method'><a href="Extension.html#setGl">setGl</a></li></ul></li><li><a href="FrameBuffer.html">FrameBuffer</a><ul class='methods'><li data-type='method'><a href="FrameBuffer.html#bind">bind</a></li><li data-type='method'><a href="FrameBuffer.html#clear">clear</a></li><li data-type='method'><a href="FrameBuffer.html#setSize">setSize</a></li><li data-type='method'><a href="FrameBuffer.html#unbind">unbind</a></li></ul></li><li><a href="IndexBuffer.html">IndexBuffer</a><ul class='methods'><li data-type='method'><a href="IndexBuffer.html#bind">bind</a></li><li data-type='method'><a href="IndexBuffer.html#data">data</a></li><li data-type='method'><a href="IndexBuffer.html#draw">draw</a></li><li data-type='method'><a href="IndexBuffer.html#drawInstance">drawInstance</a></li><li data-type='method'><a href="IndexBuffer.html#unbind">unbind</a></li></ul></li><li><a href="Object3D.html">Object3D</a><ul class='methods'><li data-type='method'><a href="Object3D.html#addChild">addChild</a></li></ul></li><li><a href="Program.html">Program</a><ul class='methods'><li data-type='method'><a href="Program.html#bind">bind</a></li><li data-type='method'><a href="Program.html#buildAttributeGetter">buildAttributeGetter</a></li><li data-type='method'><a href="Program.html#buildUniformsGetterSetter">buildUniformsGetterSetter</a></li><li data-type='method'><a href="Program.html#createProgram">createProgram</a></li><li data-type='method'><a href="Program.html#createShader">createShader</a></li><li data-type='method'><a href="Program.html#destroy">destroy</a></li></ul></li><li><a href="State.html">State</a><ul class='methods'><li data-type='method'><a href="State.html#disable">disable</a></li><li data-type='method'><a href="State.html#enable">enable</a></li></ul></li><li><a href="Webgl.html">Webgl</a><ul class='methods'><li data-type='method'><a href="Webgl.html#append">append</a></li><li data-type='method'><a href="Webgl.html#attr">attr</a></li><li data-type='method'><a href="Webgl.html#bindBuffer">bindBuffer</a></li><li data-type='method'><a href="Webgl.html#clear">clear</a></li><li data-type='method'><a href="Webgl.html#clearColor">clearColor</a></li><li data-type='method'><a href="Webgl.html#render">render</a></li><li data-type='method'><a href="Webgl.html#resize">resize</a></li><li data-type='method'><a href="Webgl.html#setDefaultUniforms">setDefaultUniforms</a></li><li data-type='method'><a href="Webgl.html#setUniforms">setUniforms</a></li><li data-type='method'><a href="Webgl.html#unbindBuffer">unbindBuffer</a></li><li data-type='method'><a href="Webgl.html#useProgram">useProgram</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">FrameBuffer.js</h1>
+    
+
+    <!--container.tmpl-->
+
+
+
+
+    <!--source.tmpl-->
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Debug from '../utils/Debug';
+import Texture from './Texture';
+class FrameBuffer {
+  /**
+    * Constructs a new FrameBuffer
+    * @param {object} gl  webgl context
+    * @param {number} width width
+    * @param {number} height height
+    * @param {object} [options={}]  options
+    * @param {boolean} [options.depth=false]  using depthTexture
+    */
+  constructor(gl, width, height, options = {}) {
+    Debug.info(`FBO created width: ${width} height: ${height}`);
+
+    this.gl = gl;
+    this.width = width;
+    this.height = height;
+    this.fbo = gl.createFramebuffer();
+
+    this.colors = new Texture(gl);
+    this.colors.format = gl.RGBA;
+    this.colors.minFilter = gl.NEAREST;
+    this.colors.magFilter = gl.NEAREST;
+    this.colors.wrapT = gl.CLAMP_TO_EDGE;
+    this.colors.wrapS = gl.CLAMP_TO_EDGE;
+    var ext = this.gl.getExtension("OES_texture_float");
+    this.colors.type = this.gl.FLOAT;
+    this.colors.uploadData(null, width, height);
+
+    if(options.depth) {
+      Debug.info('Use depth texture');
+
+      var depthTextureExt = this.gl.getExtension("WEBGL_depth_texture");
+
+      //
+      // this.renderBuffer = gl.createRenderbuffer();
+      this.depth = new Texture(gl, width, height, gl.UNSIGNED_SHORT,gl.DEPTH_COMPONENT);
+      this.depth.minFilter = gl.NEAREST;
+      this.depth.magFilter = gl.NEAREST;
+      this.depth.wrapT = gl.CLAMP_TO_EDGE;
+      this.depth.wrapS = gl.CLAMP_TO_EDGE;
+      this.depth.type = gl.UNSIGNED_SHORT;
+      this.depth.format = gl.DEPTH_COMPONENT;
+
+
+      this.depth.uploadData(null, width, height,true);
+
+
+    }
+
+
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.fbo);
+    this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this.colors.id, 0);
+    if(options.depth)
+    this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.DEPTH_ATTACHMENT, this.gl.TEXTURE_2D, this.depth.id, 0);
+
+    this.setSize(width, height);
+
+
+    this.unbind();
+
+  }
+  /**
+  * @func  bind
+  * @description  Bind the framebuffer
+  * @memberof FrameBuffer.prototype
+  */
+  bind() {
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.fbo);
+    this.gl.viewport(0, 0, this.width, this.height );
+  }
+  /**
+  * @func  clear
+  * @description  Clear the framebuffer
+  * @memberof FrameBuffer.prototype
+  */
+  clear() {
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+  }
+  /**
+  * @func  unbind
+  * @description  Unbind the framebuffer
+  * @memberof FrameBuffer.prototype
+  */
+  unbind() {
+    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height );
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+    this.colors.unbind();
+  }
+  /**
+  * @func  setSize
+  * @description  Set the size of the framebuffer
+  * @param {number} width width
+  * @param {number} height height
+  * @memberof FrameBuffer.prototype
+  */
+  setSize(width, height) {
+    this.bind();
+    this.fbo.width = width;
+    this.fbo.height = height;
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+  }
+}
+
+export default FrameBuffer;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 28 2018 12:29:33 GMT+0100 (BST) using the LOKE theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

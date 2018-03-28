@@ -1,12 +1,26 @@
 import Debug from '../utils/Debug';
 
 class Extension {
-  constructor(gl) {
+  /**
+    * Constructs a new Extension manager
+    */
+  constructor() {
 
   }
+  /**
+  * @func  setGl
+  * @description  Set the webgl context
+  * @memberof Extension.prototype
+  */
   setGl(gl) {
     this.gl = gl;
   }
+  /**
+  * @func  active
+  * @description  Active a webgl extension
+  * @param {string} name name of the extension
+  * @memberof Extension.prototype
+  */
   active(name) {
     Debug.info(`Activing: ${name}`)
 
