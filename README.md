@@ -16,6 +16,7 @@ npm start
 
 ## [http://exp.jojo.ninja/](http://exp.jojo.ninja/)
 
+* [Instanced lines](http://jojo.ninja/gl/instanced-lines/)
 * [Shadow particles](http://jojo.ninja/gl/shadow-particles/)
 * [Verlet](http://jojo.ninja/gl/verlet/)
 * [Strange attractor](http://jojo.ninja/gl/strange-attractor/)
