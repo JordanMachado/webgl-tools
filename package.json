@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "budo ./src/index.js:main.js --dir ./public --open --live -- -t babelify -t glslify",
     "build": "browserify -t babelify -g glslify ./src/index.js | uglifyjs -o public/main.js",
-    "doc": "jsdoc src/gl -r -d docs -t node_modules/loke-jsdoc-theme"
+    "doc": "jsdoc src/gl -r -d docs -t node_modules/loke-jsdoc-theme --readme ./README.md"
   },
   "repository": {
     "type": "git",
