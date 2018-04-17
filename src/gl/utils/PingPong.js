@@ -11,7 +11,7 @@ export default class Pingpong {
     camera,
     fs,
     vs,
-    uniforms
+    uniforms = {}
   }) {
     this.renderer = renderer;
     this.camera = camera;

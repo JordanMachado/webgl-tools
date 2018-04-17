@@ -163,10 +163,7 @@ void main() {
     life = 1.0;
     pos.xyz = opos.xyz;
   }
-  if(vUv.x < 1.0/width) {
-    pos.xyz = vec3(1.0);
 
-  }
 
   gl_FragColor = vec4(pos.xyz, life);
 }

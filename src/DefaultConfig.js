@@ -1,8 +1,6 @@
 const config = {
-  name: 'Lines',
+  name: 'Curly',
   controls:false,
-  textureSize:512,
-  thickness:0.1,
 
 }
 

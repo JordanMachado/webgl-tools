@@ -234,7 +234,7 @@ class Webgl {
        if(mesh.shader.program.attributes[aKey])
         mesh.geometry.attributes[key].attribPointerInstanced(mesh.shader.program.attributes[aKey], mesh.geometry.attributes[key].divisor);
        else {
-         Debug.error(`Attribute ${aKey} not used`);
+         Debug.errorOnce(`Attribute ${aKey} not used in shader : ${mesh.shader.name}`);
        }
      } else {
 

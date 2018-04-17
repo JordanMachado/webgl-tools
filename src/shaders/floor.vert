@@ -7,32 +7,28 @@ uniform mat4 viewMatrix;
 uniform mat4 worldMatrix;
 uniform mat3 normalMatrix;
 
-uniform mat4 uShadowMatrix;
-
 varying vec3 vNormal;
 varying vec2 vUv;
-varying vec4 vShadowCoord;
+varying vec4 clipSpace;
+
 
 // fog chunk
-const float density = 0.007;
+const float density = 0.05;
 const float gradient = 5.1;
 varying float fogFactor;
 
 
 void main() {
   vec4 p = vec4(aPosition, 1.0);
-  vUv= aUv;
-  vec4 wp = worldMatrix * p;
+  clipSpace = projectionMatrix * viewMatrix * p;
   gl_Position =  projectionMatrix * viewMatrix * worldMatrix * p;
-  vShadowCoord = uShadowMatrix * vec4(wp.xyz, 1.0);
+  vUv = aUv;
 
   vec4 postoCam = viewMatrix * worldMatrix * p;
-  // postoCam.z = 5.;
-  float dist = length(postoCam.xyz);
-
-
+	float dist = length(postoCam.xyz);
+  gl_PointSize = 20.0;
   fogFactor = exp(-pow(dist*density,gradient));
-  fogFactor = clamp(fogFactor, 0.0, 1.0);
+	fogFactor = clamp(fogFactor, 0.0, 1.0);
 
-
+  vNormal = normalize(normalMatrix * aNormal);
 }

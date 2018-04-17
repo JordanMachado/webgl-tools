@@ -8,6 +8,7 @@ export default class Shader {
       fragmentShader: fs,
       name
     });
+    this.name = name;
     this.uniforms = uniforms;
   }
 }

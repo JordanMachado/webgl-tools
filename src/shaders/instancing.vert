@@ -3,7 +3,7 @@ attribute vec3 aNormal;
 attribute vec2 aTwouv;
 attribute vec2 aUv;
 
-attribute vec4 aOffset;
+// attribute vec4 aOffset;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -33,7 +33,7 @@ mat3 rotationMatrix(vec3 axis, float angle)
 
 
 void main() {
-  vec4 p = vec4(aPosition + aOffset.xyz, 1.0);
+  // vec4 p = vec4(aPosition + aOffset.xyz, 1.0);
 
   vec2 uv2 = aTwouv;
   vec4 buffer = texture2D( uBuffer, uv2);
