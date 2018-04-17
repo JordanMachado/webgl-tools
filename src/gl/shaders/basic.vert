@@ -27,11 +27,11 @@ void main() {
   vUv = aUv;
   vNormal = normalize(normalMatrix * aNormal);
 
+  #HOOK_VERTEX_MAIN
 
   vec4 worldPos = projectionMatrix * viewMatrix * worldMatrix * p;
   vViewPosition = worldPos.xyz;
 
-  #HOOK_VERTEX_MAIN
 
 
   gl_Position = worldPos;
