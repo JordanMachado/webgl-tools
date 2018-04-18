@@ -87,6 +87,7 @@ import DefaultConfig from '../DefaultConfig';
         }
      } else {
        this.gui.folders[key] = this.gui.folders.config.addFolder(key)
+       this.gui.folders[key].open();
        this.parseConfig(object[key], this.gui.folders[key], key, name)
      }
     }

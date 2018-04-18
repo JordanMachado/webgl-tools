@@ -2,6 +2,7 @@
 // https://fr.wikipedia.org/wiki/L-Syst%C3%A8me
 import G from './gl';
 import { mat4, mat3, quat, vec3 } from 'gl-matrix';
+import SuperConfig from './dev/SuperConfig';
 
 let len = 50;
 
@@ -14,12 +15,13 @@ export default class LSystem {
   constructor() {
     this.rules = [
       {
-        a:'F',
-        b:'FF+[+F-F-F]-[-F+F+F]'
+        a:SuperConfig.config.rule.a,
+        b:SuperConfig.config.rule.b
       },
 
     ]
-    let axiom = 'F';
+    console.log(SuperConfig.config);
+    let axiom = SuperConfig.config.axiom;
 
 
     for (var i = 0; i < 4; i++) {
@@ -103,17 +105,17 @@ export default class LSystem {
           this.buildEl(state);
 
           break;
-        case '+':
-          state.rotation[1] += Math.PI/180 * 25;
-          state.rotation[2] += Math.PI/180 * 90;
+        case '_':
+          state.rotation[1] += Math.PI/180 * SuperConfig.config.rotation.y;
+          state.rotation[2] += Math.PI/180 * SuperConfig.config.rotation.z;
           break;
         case '-':
-          state.rotation[1] -= Math.PI/180 * 25;
-          state.rotation[2] -= Math.PI/180 * 90;
+          state.rotation[1] -= Math.PI/180 * SuperConfig.config.rotation.y;
+          state.rotation[2] -= Math.PI/180 * SuperConfig.config.rotation.z;
           break;
         case '[':
           stateStack.push(clone(state));
-          state.scale[1] *= 0.65;
+          state.scale[1] *= SuperConfig.config.scaleDivisor;
 
           break;
         case ']':

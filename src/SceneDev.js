@@ -29,6 +29,30 @@ export default class Scene {
     this.webgl.append();
     this.webgl.clearColor(0.03,0.03,0.03,1);
 
+    this.mouse = {
+      x:0,
+      y:0,
+    }
+    this.mouseEase = {
+      x:0,
+      y:0,
+    }
+
+    window.addEventListener('mousemove', (e)=> {
+      this.mouse.x = ((e.clientX/ window.innerWidth) - 0.5 )* 2;
+      this.mouse.y = -((e.clientY/ window.innerWidth) - 0.5 )* 2;
+      this.mouse.x *= 10;
+      this.mouse.y *= 5;
+
+    });
+    window.addEventListener('touchmove', (e)=> {
+      this.mouse.x = ((e.touches[0].clientX/ window.innerWidth) - 0.5 )* 2;
+      this.mouse.y = -((e.touches[0].clientY/ window.innerWidth) - 0.5 )* 2;
+      this.mouse.x *= 10;
+      this.mouse.y *= 5;
+
+    });
+
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
 
     this.controls = new OrbitalCameraControl(this.camera, 30, window);
@@ -37,7 +61,6 @@ export default class Scene {
     const system = new LSystem();
     this.scene = new G.Object3D();
     this.scene.system = system
-    this.scene.position.y = -6;
     const fog = {
       density:0.03,
       gradient:2,
@@ -91,7 +114,7 @@ export default class Scene {
     let count = 0;
     for (var i = 0; i < l * 3; i+=3) {
       offset[count * 3] = Math.random() * (30 + 30 )- 30
-      offset[count * 3 + 1] = -Math.random() * 0.9
+      offset[count * 3 + 1] = Math.random() * 1
       offset[count * 3 + 2] = Math.random() * (40 + 40 )- 40
       count ++;
     }
@@ -111,6 +134,8 @@ export default class Scene {
     const floor2 = new G.Mesh(geomFloor,shader2);
     floor2.scale.set(0.5);
     this.scene.addChild(floor2);
+    this.scene.position.y = -6;
+
 
 
 
@@ -131,8 +156,19 @@ export default class Scene {
 
   render() {
 
-    if(this.controls)
-    this.controls.update();
+
+
+    if(SuperConfig.config.controls) {
+      this.controls.update();
+    //
+    } else {
+      console.log();
+      this.camera.lookAt([this.mouseEase.x,this.mouseEase.y,30], [0,0,0], [0,1,0]);
+    //
+    }
+
+    this.mouseEase.x += (this.mouse.x - this.mouseEase.x) * 0.05;
+    this.mouseEase.y += (this.mouse.y - this.mouseEase.y) * 0.05;
 
     this.webgl.clear();
 
