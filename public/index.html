@@ -46,9 +46,28 @@
       .dg.ac {
         z-index: 10!important;
       }
+      #experiments-list {
+        display: none;
+        text-align: center;
+      }
+      button {
+        background: transparent;
+        padding: 10px;
+        border: 2px solid black;
+        font-size: 20px;
+        cursor:pointer;
+        transition: all 0.3s;
+      }
+      button:hover {
+        background: black;
+        color:white;
+      }
     </style>
   </head>
   <body>
+    <div id="experiments-list">
+      <h1>All experiments</h1>
+    </div>
     <script type="text/javascript" src="main.js"></script>
   </body>
 </html>

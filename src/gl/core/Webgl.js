@@ -258,6 +258,14 @@ class Webgl {
       this.setDefaultUniforms(mesh, camera);
      this.setUniforms(mesh);
      this.bindBuffer(mesh);
+
+     if(mesh.depthTest) {
+       gl.enable(gl.DEPTH_TEST);
+
+     } else {
+       gl.disable(gl.DEPTH_TEST);
+
+     }
      if (mesh.geometry.indices) {
        mesh.geometry.indices.bind()
        if(mesh.geometry.instanced) {

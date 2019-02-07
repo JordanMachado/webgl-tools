@@ -54,6 +54,7 @@ if(Query.verbose) {
 
 export default class Scene {
   constructor() {
+
     const _colors = [
       ["#452632", "#91204d", "#e4844a", "#e8bf56", "#e2f7ce"],
       ["#c2412d", "#d1aa34", "#a7a844", "#a46583", "#5a1e4a"],
@@ -90,17 +91,11 @@ export default class Scene {
     this.webgl.append();
     this.webgl.clearColor(colors[0], 1)
 
-    this.mouse = {
-      x:0,
-      y:0,
-    }
 
 
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
 
-    let s = 8;
     this.cameraShadow = new G.PerspectiveCamera(45, 1, 0.1, 100);
-    // this.cameraShadow =  new G.OrthographicCamera(-s,s,-s,s, 1, 50);
     this.cameraShadow.lookAt([0,20,1], [0,0,0], [0,1,0]);
     this.mvpDepth = mat4.create();
     mat4.multiply(this.mvpDepth, this.cameraShadow.projection, this.cameraShadow.view)
@@ -310,8 +305,6 @@ export default class Scene {
     this.fboHelper.attach(this.fbo.colors);
 
 
-
-
    let path = []
    let uvs = [];
    let uvsy = [];
@@ -411,7 +404,13 @@ lifes.push(Math.random())
   render() {
 
     if(this.controls)
-    this.controls.update();
+    if(SuperConfig.config.controls) {
+      this.controls.update();
+
+    } else {
+      this.camera.lookAt([this.mouseEase.x,this.mouseEase.y,18], [0,0,0], [0,1,0]);
+
+    }
 
     this.webgl.clear();
 
@@ -431,7 +430,7 @@ lifes.push(Math.random())
     this.mouseEase.x += (this.mouse.x - this.mouseEase.x) * 0.05;
     this.mouseEase.y += (this.mouse.y - this.mouseEase.y) * 0.05;
 
-    this.camera.lookAt([this.mouseEase.x,this.mouseEase.y,18], [0,0,0], [0,1,0]);
+
 
     G.State.enable(gl.DEPTH_TEST);
      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);

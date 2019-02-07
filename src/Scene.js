@@ -1,4 +1,4 @@
-import G from './gl';
+import G from 'gl';
 const glslify = require('glslify');
 import deviceType from 'ua-device-type';
 window.ddevice = deviceType(navigator.userAgent);

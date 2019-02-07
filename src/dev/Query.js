@@ -6,7 +6,13 @@ class Query {
   constructor() {
     this.parseQuery();
   }
+  init(config) {
+    if(!this.config) {
+      this.config = config ? config : defaultConfig;
+    }
+  }
   parseQuery() {
+
     const parsed = url.parse(window.location.search, true);
     for(const key in parsed.query) {
       if(parsed.query[key] === 'true') {
@@ -18,9 +24,7 @@ class Query {
       }
     }
 
-    if(!this.config) {
-      this.config = defaultConfig;
-    }
+
   }
 
 }

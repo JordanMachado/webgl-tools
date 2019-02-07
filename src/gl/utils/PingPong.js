@@ -11,12 +11,14 @@ export default class Pingpong {
     camera,
     fs,
     vs,
-    uniforms
+    uniforms,
+    timeAdd = 0.1,
   }) {
     this.renderer = renderer;
     this.camera = camera;
     this.uniforms = uniforms;
     this.uniforms.uTime = 0;
+    this.timeAdd = timeAdd;
     this.uniforms.uTexture = data;
     this.uniforms.uOrigin = data;
     this.quad = new G.Mesh(
@@ -58,7 +60,7 @@ export default class Pingpong {
       this.time = 0;
   }
   update() {
-    this.time += 0.01;
+    this.time += this.timeAdd;
     this.quad.shader.uniforms.uTime = this.time
     this.quad.shader.uniforms.width = this.width
     this.quad.shader.uniforms.height = this.height

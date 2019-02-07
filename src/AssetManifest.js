@@ -1,5 +1,5 @@
 const manifest = [
-  // 'assets/img/ground_asphalt_05_normal.jpg'
+  'assets/img/normal.png'
 ]
 
 export default manifest;
