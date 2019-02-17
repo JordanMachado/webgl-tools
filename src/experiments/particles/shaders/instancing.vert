@@ -20,6 +20,10 @@ varying vec2 vUv;
 varying vec2 vUv2;
 varying vec3 vColor;
 varying vec3 vViewPosition;
+varying vec4 vOffset;
+
+uniform sampler2D colorsText;
+
 
 void main() {
     vec4 offset = texture2D(uBuffer, aTwouv);
@@ -29,10 +33,14 @@ void main() {
     vViewPosition = worldPos.xyz;
     vShadowCoord = uShadowMatrix * worldMatrix * p;
 
+    vec4 cc = texture2D(colorsText, vec2(aPosition.xy ));
+
+
     gl_Position = worldPos;
     gl_PointSize = 20.  * (aSize * clamp(offset.a,0.2,1.));
     // gl_PointSize = 20.;
     vColor = aColor;
+    // vColor = cc.xyz * 0.2;
 
 
 

@@ -11,7 +11,6 @@ class SuperConfig
 
     }
     init(conf) {
-      console.log('here',conf);
       const configggg =conf ? conf: DefaultConfig
       Query.init(conf);
       if (!Query.debug)

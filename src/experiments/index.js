@@ -7,7 +7,7 @@ const experiments = {
       name:'Particles',
     },
     manifest: [
-      'assets/img/normal.png'
+      'assets/img/normal.png',
     ]
   }
 }

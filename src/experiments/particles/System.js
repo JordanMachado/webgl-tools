@@ -14,8 +14,8 @@ export default class System {
     let colors = new Float32Array(width * height * 3);
     let size = new Float32Array(width * height * 1);
 
-    const _colors = ["#0d543f", "#09424b", "#09424b", "#09424b", "#09424b", "#b0bfc8"];
-    // const _colors =   ["#00a8c6", "#40c0cb", "#f9f2e7", "#aee239", "#8fbe00"];
+    // const _colors = ["#0d543f", "#09424b", "#09424b", "#09424b", "#09424b", "#b0bfc8"];
+    const _colors =   ["#d3e9ff", "#ffd5d5", "#ffa0ad", "#509be1", "#ff71b2"];
     let count = 0;
     for (let i = 0, l = width * height * 4; i < l; i += 4) {
 
@@ -25,7 +25,7 @@ export default class System {
         const v = Math.random();
         const theta = 2 * Math.PI * u;
         const phi = Math.acos(2 * v - 1);
-        const radius = Math.random() * 0.1;
+        const radius = Math.random() * 0.2;
         const x =  (radius * Math.sin(phi) * Math.cos(theta)) ;
         const y =  (radius * Math.sin(phi) * Math.sin(theta));
         const z =  (radius * Math.cos(phi));

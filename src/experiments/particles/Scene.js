@@ -8,20 +8,18 @@ const glslify = require('glslify');
 
 export default class Scene {
   constructor() {
-    console.log('Particles');
     this.webgl = new G.Webgl();
-    this.webgl.clearColor("#afbdc9", 1)
+    this.webgl.clearColor("#ffe1d9", 1)
 
     this.webgl.append();
     this.camera = new G.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
-    this.controls = new OrbitalCameraControl(this.camera, 15, window);
-    console.log(this.controls);
+    this.controls = new OrbitalCameraControl(this.camera, 20, window);
     this.controls.center = [4,0,0]
     this.fboHelper = new G.FBOHelper(this.webgl,256);
 
 
     // this.cameraShadow = new G.PerspectiveCamera(45, 1, 0.1, 100);
-    let s = 10;
+    let s = 15;
     this.cameraShadow =  new G.OrthographicCamera(-s,s,-s,s, 1, 100);
     this.cameraShadow.lookAt([0,50 ,0.1], [0,0,0], [0,1,0]);
     this.mvpDepth = mat4.create();
@@ -34,7 +32,7 @@ export default class Scene {
       );
     mat4.multiply(this.mvpDepth, biaMatrix, this.mvpDepth);
 
-    this.fbo = new G.FrameBuffer(gl, window.innerWidth, window.innerHeight , { depth: true});
+    this.fbo = new G.FrameBuffer(gl, 1024,1024 , { depth: true});
     this.fboHelper.attach(this.fbo.depth);
     this.fboHelper.attach(this.fbo.colors);
 
@@ -43,21 +41,22 @@ export default class Scene {
 
 
 
-    const system = this.system = new System(512, this)
+    const system = this.system = new System(256, this)
     this.scene.addChild(system.mesh);
 
 
-    this.quad = new G.Mesh(new G.Geometry(G.Primitive.plane(10,10, 20, 20)), new G.BasicMaterial({
+    this.quad = new G.Mesh(new G.Geometry(G.Primitive.plane(20,20, 20, 20)), new G.BasicMaterial({
       color: G.Utils.hexToRgb("#ffffff"),
       uniforms: {
         uShadowMap: this.fbo.depth,
         uShadowMatrix: this.mvpDepth,
       },
       fog: {
-        density:0.04,
+        density:0.02,
         gradient:2,
-        color:G.Utils.hexToRgb("#afbdc9"),
+        color:G.Utils.hexToRgb("#ffe1d9")
       },
+
       vertex: {
         start: `
         uniform mat4 uShadowMatrix;
@@ -73,20 +72,37 @@ export default class Scene {
         start: `
           uniform sampler2D uShadowMap;
           varying vec4 vShadowCoord;
+          float rand(vec2 co){
+              return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+          }
+
+          float sampleShadow(vec3 coord) {
+          	return step(coord.z, texture2D(uShadowMap, coord.xy).r + rand(coord.xy) * 0.03);
+          }
+
         `,
         main: `
           vec4 shadowCoord = vShadowCoord / vShadowCoord.w;
           vec2 uv = shadowCoord.xy;
-          vec4 shadow = texture2D( uShadowMap, uv.xy );
-          float visibility = 1.0;
 
-          if ( shadow.r < shadowCoord.z - 0.005){
-            visibility = 0.5;
-          }
+          float shadow = 0.0;
+          float offset = 0.001;
+
+          shadow += sampleShadow(shadowCoord.xyz);
+          shadow += sampleShadow(shadowCoord.xyz + vec3(   0.0, -offset, 0.0));
+          shadow += sampleShadow(shadowCoord.xyz + vec3(-offset,    0.0, 0.0));
+          shadow += sampleShadow(shadowCoord.xyz + vec3(   0.0,    0.0, 0.0));
+          shadow += sampleShadow(shadowCoord.xyz + vec3( offset,    0.0, 0.0));
+          shadow += sampleShadow(shadowCoord.xyz + vec3(   0.0,  offset, 0.0));
+          shadow /= 5.0;
+
+
           `,
           end: `
-          gl_FragColor = vec4(vec3(visibility) * vec3(1.0), 1.0);
-          // gl_FragColor = vec4( vec3(visibility) *finalColor.rgb + light, finalColor.a);
+
+          gl_FragColor = vec4( finalColor.rgb + light, finalColor.a);
+          gl_FragColor.rgb *= vec3(smoothstep(0.0, 1.0, shadow+0.65));
+
 
 
           `
