@@ -49,7 +49,7 @@ class ArrayBuffer {
     this.bind();
     this.gl.bufferData(ARRAY_BUFFER , new Float32Array(data), this.usage);
     this.gl.bindBuffer(ARRAY_BUFFER , null);
-    this._data = data;
+    this._data = new Float32Array(data);
 
   }
   /**

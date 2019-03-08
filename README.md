@@ -1,7 +1,8 @@
 # Webgl tools [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
 ## Doc only for fun
-http://jojo.ninja/gl/doc/
+
+## [http://gl.jojo.ninja/doc](http://gl.jojo.ninja/doc)
 
 ## Instalation
 ```bash
@@ -16,25 +17,15 @@ npm start
 
 ### Experiments
 
-## [http://exp.jojo.ninja/](http://exp.jojo.ninja/)
+## [http://gl.jojo.ninja/](http://gl.jojo.ninja/)
 
-* [Instanced lines](http://jojo.ninja/gl/instanced-lines/)
-* [Shadow particles](http://jojo.ninja/gl/shadow-particles/)
-* [Verlet](http://jojo.ninja/gl/verlet/)
-* [Strange attractor](http://jojo.ninja/gl/strange-attractor/)
-* [Curly](http://jojo.ninja/gl/curly/)
-* [Reflection](http://jojo.ninja/gl/reflection/)
-* [Curl noise instancing](http://jojo.ninja/gl/curl/)
-* [CubeMap](http://jojo.ninja/gl/cubemap/)
-* [Circle](http://jojo.ninja/gl/circle/)
-* [Instancinglookat](http://jojo.ninja/gl/instancinglookat/)
-* [Pattern](http://jojo.ninja/gl/pattern1/)
-* [Gradient-sphere](http://jojo.ninja/gl/gradient-sphere/)
-* [Instancingcube2](http://jojo.ninja/gl/instancingcube2/)
-* [Waves](http://jojo.ninja/gl/waves/)
-* [3D texture](http://jojo.ninja/gl/3dtexture/)
+* [Particles](http://gl.jojo.ninja/experiments/particles/)
+* [Instanced lines](http://gl.jojo.ninja/experiments/instanced-lines/)
+* [Shadow particles](http://gl.jojo.ninja/experiments/shadow-particles/)
+* [Curly](http://gl.jojo.ninja/experiments/curly/)
 
-![Alt text](http://jojo.ninja/gl/demo.png "demos")
+
+![Alt text](http://gl.jojo.ninja/demo.png "demos")
 
 
 
@@ -55,6 +46,3 @@ npm start
 * [learningwebgl](http://learningwebgl.com/blog/?page_id=1217)
 
 * [tojicode]( https://blog.tojicode.com/) by [tojiro](https://twitter.com/Tojiro?lang=fr)
-
-
-
