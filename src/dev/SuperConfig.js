@@ -8,52 +8,53 @@ class SuperConfig
     {
         window.superConf = this;
         this.query = Query;
-
     }
-    init(conf) {
-      const configggg =conf ? conf: DefaultConfig
-      Query.init(conf);
-      if (!Query.debug)
-      {
-          this.config = configggg;
-          return;
-      }
-      this.gui = new dat.GUI();
-      this.gui.folders = {};
+    init(conf)
+    {
+        const configggg = conf ? conf : DefaultConfig;
 
-      this.controls = {};
+        Query.init(conf);
+        if (!Query.debug)
+        {
+            this.config = configggg;
 
-      console.log(this.config);
+            return;
+        }
+        this.gui = new dat.GUI();
+        this.gui.folders = {};
 
-      if (Query.config)
-      {
-          this.gui.folders.config = this.gui.addFolder('config');
-          this.gui.folders.config.open();
-          this.config = Query.config;
+        this.controls = {};
 
+        console.log(this.config);
 
-          for (const key in configggg)
-          {
-              if (!Query.config.hasOwnProperty(key))
-              {
-                  this.config = configggg;
-              }
-          }
-          for (const key in Query.config)
-          {
-              if (!configggg.hasOwnProperty(key))
-              {
-                  this.config = configggg;
-              }
-          }
-          this.parseConfig(this.config, this.gui.folders.config);
-          this.updateConfig();
-      }
+        if (Query.config)
+        {
+            this.gui.folders.config = this.gui.addFolder('config');
+            this.gui.folders.config.open();
+            this.config = Query.config;
 
-      this.gui.folders.root = this.gui.addFolder('experiment');
-      this.gui.folders.root.open();
-      this.gui.folders.root.add(this, 'reload');
-      this.gui.folders.root.add(this, 'log');
+            for (const key in configggg)
+            {
+                if (!Query.config.hasOwnProperty(key))
+                {
+                    this.config = configggg;
+                }
+            }
+            for (const key in Query.config)
+            {
+                if (!configggg.hasOwnProperty(key))
+                {
+                    this.config = configggg;
+                }
+            }
+            this.parseConfig(this.config, this.gui.folders.config);
+            this.updateConfig();
+        }
+
+        this.gui.folders.root = this.gui.addFolder('experiment');
+        this.gui.folders.root.open();
+        this.gui.folders.root.add(this, 'reload');
+        this.gui.folders.root.add(this, 'log');
     }
     updateConfig()
     {
@@ -68,7 +69,8 @@ class SuperConfig
         { params += 'debug=true&'; }
         if (Query.verbose)
         { params += 'verbose=true&'; }
-        window.history.pushState('experiment', 'Title', `${window.location.origin + window.location.pathname + params}config=${JSON.stringify(this.config)}`);
+        window.history.pushState('experiment', 'Title',
+            `${window.location.origin + window.location.pathname + params}config=${JSON.stringify(this.config)}`);
     }
     log()
     {

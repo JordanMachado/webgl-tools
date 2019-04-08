@@ -1,6 +1,8 @@
-module.exports = function fallback (message) {
-    if(!message) message = 'Webgl 2 not supported by your browser';
+module.exports = function fallback(message)
+{
+    if (!message) message = 'Webgl 2 not supported by your browser';
     const el = document.createElement('div');
+
     el.classList = 'fallback';
     el.style.position = 'absolute';
     el.style.backgroundColor = 'black';
@@ -12,6 +14,7 @@ module.exports = function fallback (message) {
     el.style.zIndex = '99';
 
     const p = document.createElement('p');
+
     p.style.position = 'absolute';
     p.style.top = '50%';
     p.style.left = '50%';
@@ -21,4 +24,4 @@ module.exports = function fallback (message) {
     p.innerHTML = message;
     el.appendChild(p);
     document.body.appendChild(el);
-}
+};

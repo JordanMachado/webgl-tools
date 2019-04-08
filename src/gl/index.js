@@ -20,15 +20,12 @@ import Shader from './high/Shader';
 import Primitive from './high/Primitive';
 import BasicMaterial from './high/BasicMaterial';
 
-
-
 import Utils from './utils/Utils';
 import ArrayUtils from './utils/ArrayUtils';
 import ObjParser from './utils/ObjParser';
 import Debug from './utils/Debug';
 import HitDetect from './utils/HitDetect';
 import Vector3 from './math/Vector3';
-
 
 import Composer from './post/Composer';
 import Pass from './post/Pass';
@@ -48,59 +45,60 @@ import FBOHelper from './utils/FBOHelper';
 
 import glm from 'gl-matrix';
 const vanilla = {
-  glm,
-  // core
-  Webgl,
-  Texture,
-  TextureCube,
-  Program,
-  Object3D,
-  FrameBuffer,
-  IndexBuffer,
-  ArrayBuffer,
+    glm,
+    // core
+    Webgl,
+    Texture,
+    TextureCube,
+    Program,
+    Object3D,
+    FrameBuffer,
+    IndexBuffer,
+    ArrayBuffer,
 
-  // camera
-  OrthographicCamera,
-  PerspectiveCamera,
+    // camera
+    OrthographicCamera,
+    PerspectiveCamera,
 
-  // const
-  GLNumber,
-  GLConst,
+    // const
+    GLNumber,
+    GLConst,
 
-  // high api
-  Geometry,
-  Mesh,
-  Shader,
-  Primitive,
-  State,
-  BasicMaterial,
+    // high api
+    Geometry,
+    Mesh,
+    Shader,
+    Primitive,
+    State,
+    BasicMaterial,
 
-  // Utils
-  Utils,
-  utils:Utils,
-  ArrayUtils,
-  Debug,
-  debug:Debug,
+    // Utils
+    Utils,
+    utils: Utils,
+    ArrayUtils,
+    Debug,
+    debug: Debug,
 
-  // Math
-  Vector3,
+    // Math
+    Vector3,
 
-  // Composer
-  Composer,
-  Pass,
-  NoisePass,
-  BoxBlurPass,
-  InvertPass,
-  FXAAPass,
-  ToonPass,
-  BrightnessContrastPass,
-  DofPass,
-  BloomPass,
-  TiltPass,
-  FullBoxBlurPass,
-  BlendPass,
-  FBOHelper,
-  ObjParser,
-  HitDetect,
-}
+    // Composer
+    Composer,
+    Pass,
+    NoisePass,
+    BoxBlurPass,
+    InvertPass,
+    FXAAPass,
+    ToonPass,
+    BrightnessContrastPass,
+    DofPass,
+    BloomPass,
+    TiltPass,
+    FullBoxBlurPass,
+    BlendPass,
+    FBOHelper,
+    ObjParser,
+    HitDetect,
+};
+
 export default vanilla;
