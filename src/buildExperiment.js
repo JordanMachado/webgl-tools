@@ -20,7 +20,7 @@ const loader = assetsLoader({
     assets: manifest,
 });
 
-window.getAsset = function (id)
+window.getAsset = function getAsset(id)
 {
     return loader.get(`assets/${id}`);
 };
@@ -30,7 +30,7 @@ domready(() =>
     if (manifest.length > 0)
     {
         document.body.classList.add('loading');
-        loader.on('complete', function (assets)
+        loader.on('complete', function loaded(assets)
         {
             document.body.classList.remove('loading');
             window.assets = assets;

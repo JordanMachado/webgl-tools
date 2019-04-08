@@ -3,12 +3,9 @@ import assetsLoader from 'assets-loader';
 import domready from 'domready';
 import Query from 'dev/Query';
 import SuperConfig from 'dev/SuperConfig';
-import AssetManifest from './AssetManifest';
-import Scene from './Scene';
-import SceneDev from './SceneDev';
 import AllExperiments from './Experiments';
 
-let manifest = AssetManifest;
+let manifest = [];
 
 if (Query.experiment && AllExperiments[Query.experiment])
 {
@@ -21,7 +18,7 @@ const loader = assetsLoader({
     assets: manifest,
 });
 
-window.getAsset = function (id)
+window.getAsset = function getAsset(id)
 {
     return loader.get(`assets/${id}`);
 };
@@ -31,7 +28,7 @@ domready(() =>
     if (manifest.length > 0)
     {
         document.body.classList.add('loading');
-        loader.on('complete', function (assets)
+        loader.on('complete', function loaded(assets)
         {
             document.body.classList.remove('loading');
             window.assets = assets;
@@ -73,16 +70,12 @@ function init()
             {
                 const params = `?experiment="${id}"`;
 
-                window.history.pushState('experiment', 'Title', `${window.location.origin + window.location.pathname + params}`);
+                window.history.pushState('experiment', 'Title',
+                    `${window.location.origin + window.location.pathname + params}`);
                 window.location.reload();
             });
             container.appendChild(btn);
         }
-    // if(Query.develop) {
-    //   scene = new SceneDev()
-    // } else {
-    //   scene = new Scene();
-    // }
     }
 
     render();

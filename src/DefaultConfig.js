@@ -1,5 +1,5 @@
 const config = {
-    name: 'Lines',
+    name: 'Experiment',
     controls: true,
 
 };
